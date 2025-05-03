@@ -1,0 +1,36 @@
+<p>task-manager works!</p>
+<p>queris works!</p>
+<!-- 
+<h5>PrimgNg 6 - Table Columns Toggle </h5> -->
+<div>
+	<p-table [columns]="selectedColumns" [value]="carsData">
+		<ng-template pTemplate="caption">
+			<div style="text-align:left">
+				<p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header" 
+                selectedItemsLabel="{0} columns selected"
+				 [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+			</div>
+		</ng-template>
+
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+				<th *ngFor="let col of columns">
+					{{col.header}}
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-rowData let-columns="columns">
+			<tr>
+				<td *ngFor="let col of columns" class="ui-resizable-column">
+					{{rowData[col.field]}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+<!-- <hr>
+<label><b>Selected Columns : </b></label>
+{{selectedColumns | json}}
+<hr>
+<label><b>Columns : </b></label>
+{{columns | json}} -->

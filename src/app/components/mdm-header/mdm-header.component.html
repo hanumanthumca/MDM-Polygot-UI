@@ -1,0 +1,59 @@
+<p>mdm-header works </p>
+
+<!-- 
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor
+    labore sunt tenetur! Cupiditate deserunt facere impedit, officiis porro
+    suscipit ullam! Ad error eveniet harum minus provident quas quia voluptate?
+  </p>
+  
+  <p-button
+    (click)="showDialog()"
+    label="Show Form Dialog"
+    icon="pi pi-external-link"
+  />
+  -->
+  <div class="container">
+    <div class="header">
+    <nav>
+      <!-- <a routerLink="/home" routerLinkActive="active">Home</a>
+      <a routerLink="/about" routerLinkActive="active">About</a> -->
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  
+      <p-button label="Home" routerLink="/home" icon="pi pi-home"/>
+ &nbsp;&nbsp;&nbsp;<p-button label="Queries" routerLink="/query" icon="pi pi-search-plus"/>
+ &nbsp;&nbsp;&nbsp;<p-button label="Task Manger" routerLink="/taskManager"  icon="pi pi-search-plus"/>
+ <!-- <a routerLink="/home" class="p-button font-bold"> 
+    Router
+</a> -->
+ <p-button style="float:right !important;" label="Login" icon="pi pi-external-link" severity="info"  (click)="showDialog()" />
+</nav>
+</div>
+
+<p-dialog
+  header="Login"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem' }"
+>
+  <!-- <span class="p-text-secondary block mb-5">Update your information.</span> -->
+  <div class="flex align-items-center gap-4 mb-4">
+    <label for="username" class="font-semibold w-6rem">Username</label>
+    <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="userName" />
+  </div>
+  <div class="flex align-items-center gap-4 mb-5">
+    <label for="email" class="font-semibold w-6rem"> Password </label>
+    <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="password" />
+  </div>
+  <div class="flex justify-end gap-2">
+    <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+    <p-button label="Submit" (click)="validateLogin()" />
+<!-- (click)="visible = false" -->
+  </div>
+</p-dialog>
+    <!-- <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+      <h2>footer</h2>
+    </div> -->
+  </div>
