@@ -9,6 +9,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from "primeng/multiselect";
+import { Select } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +25,7 @@ import { CustomerViewComponent } from '../customer-view/customer-view.component'
 @Component({
   selector: 'app-queris',
   standalone: true,
-  imports: [MenuModule, MenubarModule, FormsModule, SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  imports: [MenuModule, MenubarModule, FormsModule, Select,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   templateUrl: './queris.component.html',
   providers:[MessageService,DialogService],
   styleUrl: './queris.component.scss'
@@ -39,14 +40,25 @@ export class QuerisComponent {
   ) {}
   columns = [];
   addressColumns = [];
+  tables = [];
+  selectedTable='';
   carsData = [];;
   selectedColumns = [];
   selectedColumnsForAddress = [];
+  submitColumnsForQuery = [];
   queryTableDisplay:boolean =false;
   customers: any[]=[];
   userName = '';
+  custDropDOwnDisplay:boolean =false;
+  custAddressDropDOwnDisplay:boolean =false;
+  custRelationShipTableDisplay:boolean =false;
   ngOnInit() {
+    this.tables = [
+      { name: 'CUSTOMER', value: 'CUSTOMER' },
+      { name: 'CUSTOMER_ADDRESS', value: 'CUSTOMER_ADDRESS' },
+      { name: 'CUSTOMER_RELATIONSHIP', value: 'CUSTOMER_RELATIONSHIP' },
 
+  ];
     this.carsData = [
       { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
       { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
@@ -73,10 +85,10 @@ export class QuerisComponent {
     ];
 
     this.addressColumns = [
-      { field: 'CITY', headerVal: 'CB.CITY' },
-      { field: 'STATE', headerVal: 'CB.STATE' },
-      { field: 'COUNTRY', headerVal: 'CB.COUNTRY' },
-      { field: 'ZIP_CODE', headerVal: 'CB.ZIP_CODE' },
+      { field: 'CITY', headerVal: 'CA.CITY' },
+      { field: 'STATE', headerVal: 'CA.STATE' },
+      { field: 'COUNTRY', headerVal: 'CA.COUNTRY' },
+      { field: 'ZIP_CODE', headerVal: 'CA.ZIP_CODE' },
 
     ];
 
@@ -88,6 +100,23 @@ export class QuerisComponent {
     this.first = event.first;
     this.rows = event.rows;
  }
+ handleTableChange(event){
+  console.log('selected table is',this.selectedTable);
+  this.customers=[];
+  let selectedOne=this.selectedTable;
+  if(selectedOne==='CUSTOMER'){
+    this.custDropDOwnDisplay=true;
+    this.custAddressDropDOwnDisplay=false;
+   
+  }else if(selectedOne==='CUSTOMER_ADDRESS'){
+    this.custDropDOwnDisplay=false;
+    this.custAddressDropDOwnDisplay=true;
+  }else{
+
+  }
+
+ }
+
  viewCustomer(id:any){
   const viewComponentForCust =this.dialogService.open(CustomerViewComponent,{
 
@@ -112,6 +141,7 @@ export class QuerisComponent {
     },
     width:"89vw",
     header:"View Customer",
+    modal:true,
     closable:true
   });
   viewComponentForCust.onClose.subscribe((result) =>{
@@ -129,6 +159,14 @@ export class QuerisComponent {
     console.log('slected quey is', custQueryString);
     console.log('slected quey is', custAddressQueryString);
    
+
+  
+
+      if(this.selectedTable==='CUSTOMER'){
+        this.submitColumnsForQuery=this.selectedColumns;
+      }else{
+        this.submitColumnsForQuery=this.selectedColumnsForAddress;
+      }
 
     let objectArrayForColumns =this.selectedColumns.map(item =>({name:item,condition:'',value:''}))
     
@@ -180,8 +218,10 @@ export class QuerisComponent {
     console.log('query data from generated table is',data);
 
    let  custQueryString ='';
+   
+  //  if(index !=this.selectedColumns.length-1){
     data.forEach((element,index) =>{
-      if(index !=this.selectedColumns.length-1){
+      if(index !=this.submitColumnsForQuery.length-1){
         if(element['Name']=== 'C.AGE'){
         custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] +' and '
         }else{
@@ -190,8 +230,15 @@ export class QuerisComponent {
 
         }
     
-         }else{
-          custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] 
+         }
+         else{
+          if(element['Name']=== 'C.AGE'){
+            custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] 
+            }else{
+              let valueQuery= element['Value'];
+              custQueryString =custQueryString+element['Name']+element['Operator']+`'${valueQuery}'`
+    
+            }
   
       }
     });

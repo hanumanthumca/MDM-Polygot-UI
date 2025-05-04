@@ -1,6 +1,45 @@
 @use 'primeflex/primeflex.css';
 @use 'primeicons/primeicons.css';
 
+
 html {
   font-family: system-ui, sans-serif;
+}
+
+
+::ng-deep .p-button {
+  background-color: #1266f1;
+}
+::ng-deep .p-table {
+  border: 2px solid #ccc;
+  font-size: 14px;
+}
+
+::ng-deep .p-table th {
+  background-color: #2196f3;
+  color: #2196f3;
+
+}
+
+::ng-deep .p-table td {
+  padding: 10px;
+  color: #444;
+}
+
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #1266f1;
+  color: white;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #e0f7fa;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr.p-highlight {
+  background-color: #aed581;
+  color: white;
 }
