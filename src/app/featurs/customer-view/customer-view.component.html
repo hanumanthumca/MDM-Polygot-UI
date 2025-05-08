@@ -45,19 +45,19 @@
                     </div>
                     <div class="flex-auto">
                         <label for="age" class="block font-semibold mb-2">Age </label>
-                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"  readonly   value="{{customerResult['AGE']}}">
+                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"    [(ngModel)]="custAge"  >
                     </div>
                     <div class="flex-auto">
                         <label for="age" class="block font-semibold mb-2">Gender</label>
-                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"  readonly   value="{{customerResult['GENDER_CD']}}">
+                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"   [(ngModel)]="custGender"   >
                     </div>
                     <div class="flex-auto">
                         <label for="bdate" class="block font-semibold mb-2">Birth Date </label>
-                        <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;" value="{{customerResult['BIRTH_DATE']}}"/>
+                        <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;" readonly value="{{customerResult['BIRTH_DATE']}}"/>
                     </div>
                     <div class="flex-auto">
                         <label for="loyolity" class="block font-semibold mb-2">Loyality Score </label>
-                        <input type="text" pInputText id="loyolity" class="w-full"  style="border: 1px solid black;" value="{{customerResult['LOYALTY_SCORE']}}"/>
+                        <input type="text" pInputText id="loyolity" class="w-full"  style="border: 1px solid black;" [(ngModel)]="loyolScore" />
                     </div>
                 </div>
 

@@ -52,6 +52,11 @@ loyolScore='';
     this.custLastName=this.customerResult['LAST_NAME'];;
     this.custEmail=this.customerResult['EMAIL'];
     this.custPhone=this.customerResult['PHONE'];
+
+    this.custAge=this.customerResult['AGE'];;
+    this.custGender=this.customerResult['GENDER_CD'];
+    this.loyolScore=this.customerResult['LOYALTY_SCORE'];
+
     console.log('this config data is',this.dynamicDialogConfig.data['custId']);
   }
   updateRecord(){
@@ -63,13 +68,16 @@ loyolScore='';
   //let builtString='where C.AGE=27';
   let builtString=queryForAPI;
   let apiUrl = 'http://localhost:3000/api/updateDetails';
- // let custObject={email:'hello',password:'pwds'};
+
   let custObject={
     custId: this.custId,
     custFirstName: this.custFirstName,
     custLastName:this.custLastName,
     custEmail:this.custEmail,
     custPhone:this.custPhone,
+    custAge: this.custAge,
+    custGender:this.custGender,
+    loyolScore:this.loyolScore
   };
 
   return new Promise((resolve,rejects) =>{
