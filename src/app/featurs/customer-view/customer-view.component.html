@@ -1,30 +1,270 @@
- 
-<div class="container-fluid">
-    <span class="p-text-secondary block mb-8">Customer information.</span>
-    <div class="row">
-        <div class="col-md-8">
+<!-- <p>home worksw!</p> -->
+<!-- <p-menubar [model]="menuItems"></p-menubar> -->
 
-        </div>
-        <div class="col-md-4">
-            Cust id: {{custId}} 
-            <table>
-<tr>
-    <td >{{customerResult['FIRST_NAME']}}</td>
-				<td >{{customerResult['LAST_NAME']}}</td>
-				<td>{{customerResult['BIRTH_DATE']}}</td>
-				<td>{{customerResult['EMAIL']}}</td>
-				<td>{{customerResult['AGE']}}</td>
-				<td >{{customerResult['GENDER_CD']}}</td>
-				
-				<td>{{customerResult['PHONE']}}</td>
-				<td>{{customerResult['CITY']}}</td>
-			  
-				<td>{{customerResult['ZIP_CODE']}}</td>
-				<td>{{customerResult['STATE']}}</td>
-				<td>{{customerResult['COUNTRY']}}</td>
-</tr>
-            </table>
+<!-- <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu> -->
+
+<div class="p-tabmenu-nav-content">
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab style="border-bottom: 2px solid blue" value="0">Update information &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="1">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="2">History View &nbsp;&nbsp;&nbsp;</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">
+          
             
-        </div>
-    </div>
+            <div class="flex flex-col gap-6 w-full sm:w-auto">
+                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                   <strong >Customer Details :  </strong> 
+                  </h2>
+                  
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <div class="flex-auto">
+                        <label for="customer" class="block font-semibold mb-2"> Customer ID</label>
+                        <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black;" readonly value="{{customerResult['CUSTOMER_ID']}}"/>
+                    </div>
+                    <div class="flex-auto">
+                        <label for="firstname" class="block font-semibold mb-2">First name</label>
+                        <input type="text" pInputText id="firstname" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custFirstName"  />
+                    </div>
+                    <div class="flex-auto">
+                        <label for="lastname" class="block font-semibold mb-2">Last Name</label>
+                        <input type="text" pInputText id="lastname" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custLastName" />
+                    </div>
+                    <div class="flex-auto">
+                        <label for="email" class="block font-semibold mb-2">Email </label>
+                        <input type="text" pInputText id="email" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custEmail" />
+                    </div>
+                </div>
+              
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <div class="flex-auto">
+                        <label for="phone" class="block font-semibold mb-2"> Phone </label>
+                        <input type="text" pInputText id="phone" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custPhone" />
+                    </div>
+                    <div class="flex-auto">
+                        <label for="age" class="block font-semibold mb-2">Age </label>
+                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"  readonly   value="{{customerResult['AGE']}}">
+                    </div>
+                    <div class="flex-auto">
+                        <label for="age" class="block font-semibold mb-2">Gender</label>
+                        <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"  readonly   value="{{customerResult['GENDER_CD']}}">
+                    </div>
+                    <div class="flex-auto">
+                        <label for="bdate" class="block font-semibold mb-2">Birth Date </label>
+                        <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;" value="{{customerResult['BIRTH_DATE']}}"/>
+                    </div>
+                    <div class="flex-auto">
+                        <label for="loyolity" class="block font-semibold mb-2">Loyality Score </label>
+                        <input type="text" pInputText id="loyolity" class="w-full"  style="border: 1px solid black;" value="{{customerResult['LOYALTY_SCORE']}}"/>
+                    </div>
+                </div>
+
+
+                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    <strong >Address  :  </strong> 
+                   </h2>
+                   
+                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                     <div class="flex-auto">
+                         <label for="city" class="block font-semibold mb-2"> City</label>
+                         <input type="text" pInputText id="city" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['CITY']}}"/>
+                     </div>
+                     <div class="flex-auto">
+                         <label for="State" class="block font-semibold mb-2">State</label>
+                         <input type="State" pInputText id="State" class="w-full"  style="border: 1px solid black;" value="{{customerResult['STATE']}}"/>
+                     </div>
+                     <div class="flex-auto">
+                         <label for="Country" class="block font-semibold mb-2">Country</label>
+                         <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
+                     </div>
+                     <div class="flex-auto">
+                         <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
+                         <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
+                     </div>
+                 </div>
+                 <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    <strong >Relation Type  :  </strong> 
+                   </h2>
+                   
+                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                     <div class="flex-auto">
+                         <label for="relationship" class="block font-semibold mb-2"> Relation Ship Type</label>
+                         <input type="text" pInputText id="relationship" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['RELATIONSHIP_TYPE_CD']}}"/> 
+                     </div>
+                     <div class="flex-auto">
+                         <label for="custmdmid" class="block font-semibold mb-2">Customer MDM ID</label>
+                         <input type="text" pInputText id="custmdmid" class="w-full"  style="border: 1px solid black;" value="{{customerResult['CUSTOMER_BUS_REL_MDM_ID']}}"/>
+                     </div>
+                
+                 </div>
+
+                 <div class="flex items-center gap-4">
+
+                    <p-button style="float:right !important; margin-left: 820px !important;" label="Cancel" icon="pi pi-external-link" severity="info"  />
+                    <p-button style="float:right !important;" label="Update" icon="pi pi-external-link" severity="info"  (click)="updateRecord()" />
+                    <!-- <p-button
+                        label="Cancel"
+                        styleClass="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        [text]="true"
+                      
+                        class="w-full"
+                    /> -->
+                    <!-- <p-button
+                        label="Update"
+                    
+                        [text]="true"
+                        styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
+                        class="w-full"
+                    /> -->
+                </div>
+               
+            </div>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+            <!-- <p class="m-0">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+                aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+                dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
+                modi.
+            </p> -->
+            
+            <div class="containerForPanel">
+                <div class="firstForPanel" >
+                    <table style=" border-collapse: collapse;
+              width: 100%;">
+             
+              <tr style=" padding: 8px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;">
+                  <td ><b>Customer  Id: </b>{{customerResult['CUSTOMER_ID']}}</td></tr>
+                        <tr style=" padding: 8px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;">
+                            <td ><b>First Name: </b>{{customerResult['FIRST_NAME']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">	<td ><b>Last Name: </b> {{customerResult['LAST_NAME']}}</td> </tr>
+                             <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>EMAIL: </b> {{customerResult['EMAIL']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>AGE: </b>{{customerResult['AGE']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td > <b>GENDER_CD: </b> {{customerResult['GENDER_CD']}}</td></tr>
+                                  <tr style=" padding: 8px;
+                                  text-align: left;
+                                  border-bottom: 1px solid #ddd;">		<td> <b>BIRTH DATE: </b> {{customerResult['BIRTH_DATE']}}</td></tr>
+                        <tr style=" padding: 8px;   
+                          text-align: left;
+                          border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	
+            
+            <!--               
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td><b>CITY: </b> {{customerResult['CITY']}}</td></tr>	
+                                      
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td><b>ZIP CODE: </b> {{customerResult['ZIP_CODE']}}</td> </tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td><b>STATE: </b> {{customerResult['STATE']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>COUNTRY: </b>{{customerResult['COUNTRY']}}</td> </tr>
+                         -->
+                                    </table>
+                </div>
+
+                <div class="secondForPanel" >
+
+                    <table style=" border-collapse: collapse;
+              width: 100%;">
+            
+            <!-- <td pFrozenColumn>{{customer.CUSTOMER_ID}}</td> -->
+                        <!-- <tr style=" padding: 8px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;">
+                            <td  ><b>First Name: </b>{{customerResult['FIRST_NAME']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">	<td ><b>Last Name: </b> {{customerResult['LAST_NAME']}}</td> </tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>BIRTH DATE: </b> {{customerResult['BIRTH_DATE']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>EMAIL: </b> {{customerResult['EMAIL']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> <b>AGE: </b>{{customerResult['AGE']}}</td></tr>
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td > <b>GENDER_CD: </b> {{customerResult['GENDER_CD']}}</td></tr>
+                                        
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	 -->
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp;<b>CITY: </b> {{customerResult['CITY']}}</td></tr>	
+                             <tr style=" padding: 8px;
+                             text-align: left;
+                             border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp; <b>STATE: </b> {{customerResult['STATE']}}</td></tr>
+                             <tr style=" padding: 8px;
+                             text-align: left;
+                             border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp; <b>COUNTRY: </b>{{customerResult['COUNTRY']}}</td> </tr>
+                                
+                            <tr style=" padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp; <b>ZIP CODE: </b> {{customerResult['ZIP_CODE']}}</td> </tr>
+                              
+                                    </table>
+                </div>
+
+            </div>
+        </p-tabpanel>
+       
+        <p-tabpanel value="2">
+          
+            <p class="m-0">
+                History view <br/>
+                1st tab
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                anim id est laborum.
+            </p>
+            <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2">Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Email</th>
+                    <th class="border border-gray-300 px-4 py-2">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Alice</td>
+                    <td class="border border-gray-300 px-4 py-2">alice example.com</td>
+                    <td class="border border-gray-300 px-4 py-2">Admin</td>
+                  </tr>
+                  <!-- More rows... -->
+                </tbody>
+              </table>
+              
+        </p-tabpanel>
+      
+       
+    </p-tabpanels>
+</p-tabs>
 </div>

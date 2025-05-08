@@ -1,7 +1,15 @@
-<p>queris works!</p>
-
-
-<div class="flex align-items-center gap-4 mb-4">
+<!-- <p>queris works!</p>
+<div class="p-grid">
+    <div class="p-col-6">Column 1</div>
+    <div class="p-col-6">Column 2</div>
+  </div> -->
+<div>
+	<br/>
+	<br/>
+	
+</div>
+<div class="flex align-items-center gap-4 mb-4" style="margin-left:30px !important;">
+	
 	<div class="card flex justify-center">
 		<p-select [options]="tables" [(ngModel)]="selectedTable" optionLabel="name" 
 		optionValue="value"  placeholder="Select a Table" class="w-full md:w-56" 
@@ -99,9 +107,9 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 			</span> -->
 
 			<p-iconfield iconPosition="left" class="ml-auto" >
-				<!-- <p-inputicon>
+				<p-inputicon>
 					<i class="pi pi-search"></i>
-				</p-inputicon> -->
+				</p-inputicon>
 				<input pInputText type="text" (input)="myCustAddressTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search " />
 			</p-iconfield>
 
@@ -150,7 +158,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 				<td>{{customer.STATE}}</td>
 				<td>{{customer.COUNTRY}}</td> 
 			  
-				<td><p-button icon="pi pi-eye"  (click)="viewCustomerTest(customer);" /></td>
+				<td><p-button    label="Detailed View" (click)="viewCustomerTest(customer);" /></td>
 		
 			   
 				<!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>
@@ -189,9 +197,9 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 			</span> -->
 
 			<p-iconfield iconPosition="left" class="ml-auto" >
-				<!-- <p-inputicon>
+				<p-inputicon>
 					<i class="pi pi-search"></i>
-				</p-inputicon> -->
+				</p-inputicon>
 				<input pInputText type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search " />
 			</p-iconfield>
 
@@ -240,7 +248,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 				<td>{{customer.STATE}}</td>
 				<td>{{customer.COUNTRY}}</td> -->
 			  
-				<td><p-button icon="pi pi-eye"  (click)="viewCustomerTest(customer);" /></td>
+				<td><p-button label="Detailed View"  (click)="viewCustomerTest(customer);" /></td>
 		
 			   
 				<!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>

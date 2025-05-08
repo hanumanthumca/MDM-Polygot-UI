@@ -1,45 +1,15 @@
-@use 'primeflex/primeflex.css';
-@use 'primeicons/primeicons.css';
+/* Tailwind Directives — must be at the top */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 
-html {
-  font-family: system-ui, sans-serif;
+// "node_modules/primeicons/primeicons.css",
+/* Optional custom styles below */
+body {
+  @apply bg-gray-50 text-gray-800;
 }
 
-
-::ng-deep .p-button {
-  background-color: #1266f1;
-}
-::ng-deep .p-table {
-  border: 2px solid #ccc;
-  font-size: 14px;
-}
-
-::ng-deep .p-table th {
-  background-color: #2196f3;
-  color: #2196f3;
-
-}
-
-::ng-deep .p-table td {
-  padding: 10px;
-  color: #444;
-}
-
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  background-color: #1266f1;
-  color: white;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
-  background-color: #e0f7fa;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr.p-highlight {
-  background-color: #aed581;
-  color: white;
+h1 {
+  @apply text-3xl font-bold mb-4;
 }

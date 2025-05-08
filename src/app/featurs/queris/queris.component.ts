@@ -28,7 +28,8 @@ import { CustomerViewComponent } from '../customer-view/customer-view.component'
   imports: [MenuModule, MenubarModule, FormsModule, Select,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   templateUrl: './queris.component.html',
   providers:[MessageService,DialogService],
-  styleUrl: './queris.component.scss'
+  styleUrl: './queris.component.scss',
+   
 })
 export class QuerisComponent {
   @ViewChild("myCustTable") myCustTable:Table | undefined;
@@ -140,7 +141,7 @@ export class QuerisComponent {
       customerObj:customer,
     },
     width:"89vw",
-    header:"View Customer",
+    header:"Customer Information",
     modal:true,
     closable:true
   });
@@ -223,20 +224,20 @@ export class QuerisComponent {
     data.forEach((element,index) =>{
       if(index !=this.submitColumnsForQuery.length-1){
         if(element['Name']=== 'C.AGE'){
-        custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] +' and '
+        custQueryString =custQueryString+element['Name']+'  '+element['Operator']+element['Value'] +' and '
         }else{
           let valueQuery= element['Value'];
-          custQueryString =custQueryString+element['Name']+element['Operator']+`'${valueQuery}'`+' and '
+          custQueryString =custQueryString+element['Name']+'  '+element['Operator']+`'${valueQuery}'`+' and '
 
         }
     
          }
          else{
           if(element['Name']=== 'C.AGE'){
-            custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] 
+            custQueryString =custQueryString+element['Name']+'  '+element['Operator']+element['Value'] 
             }else{
               let valueQuery= element['Value'];
-              custQueryString =custQueryString+element['Name']+element['Operator']+`'${valueQuery}'`
+              custQueryString =custQueryString+element['Name']+'  '+element['Operator']+`'${valueQuery}'`
     
             }
   

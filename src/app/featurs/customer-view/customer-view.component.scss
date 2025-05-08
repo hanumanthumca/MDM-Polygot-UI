@@ -1,0 +1,37 @@
+::ng-deep .p-table th {
+    background-color: #2196f3;
+    color: #2196f3;
+
+  }
+
+  ::ng-deep .p-dailog .p-dailog-header {
+    background-color: #0070b4;
+    color: #fff;
+    padding: .8 rem;
+
+  }
+
+  ::ng-deep  .p-panel-header {
+    background-color: #0070b4 !important;
+  }
+
+  ::ng-deep  .p-panel-content{
+    height:600px !important;
+  }
+.containerForPanel {
+    width: 800px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+.firstForPanel {
+    width: 300px;
+    float: left;
+    height: 300px;
+     
+}
+.secondForPanel {
+    width: 300px;
+    float: left;
+    height: 300px;
+    
+}

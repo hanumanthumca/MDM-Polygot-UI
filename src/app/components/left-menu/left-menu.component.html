@@ -1,5 +1,13 @@
 <p>left-menu works!</p>
 
+<nav class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center">
+    <div class="text-lg font-bold">MyApp</div>
+    <ul class="flex space-x-4">
+      <li> <p-button label="Home" routerLink="/home" icon="pi pi-home"/></li>
+      <li><a href="query" class="hover:underline">About</a></li>
+      <li><a href="/taskManager"  routerLink="/taskManager" class="hover:underline">Contact</a></li>
+    </ul>
+  </nav>
 <!-- <p-sidebar [visible]="true" position="left">
     <h1 style="font-weight:normal">Right Sidebar</h1>
     <p-menu #menu [model]="items" ></p-menu>

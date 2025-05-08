@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 //import { Menu } from 'primeng/menu';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
@@ -8,7 +9,7 @@ import { AppComponent } from 'src/app/app.component';
 @Component({
   selector: 'app-left-menu',
   standalone: true,
-  imports: [MenuModule,SidebarModule],
+  imports: [MenuModule,SidebarModule,ButtonModule],
   templateUrl: './left-menu.component.html',
   styleUrl: './left-menu.component.scss'
 })
