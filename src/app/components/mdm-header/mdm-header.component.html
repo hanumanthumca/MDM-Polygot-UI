@@ -1,59 +1,79 @@
-<p>mdm-header works </p>
+<header class="bg-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <!-- <div class="flex-shrink-0 text-xl font-bold text-blue-600" style="color:black !important">
+        Polyglot <sub>Technologies</sub>
+      </div> -->
+      <div class="flex items-center space-x-3">
+        <img src="../../../assets/small.PNG" alt="Logo"
+             class="h-10 w-10 rounded-full object-cover" />
+        <span class="text-xl font-bold text-blue-600" style="color:black !important" >Polyglot <sub>Technologies</sub></span>
+      </div>
 
-<!-- grid.component.html -->
+      <!-- Desktop Nav -->
+      <span *ngIf="!isLoginVisble">
+      <nav class="hidden md:flex space-x-6">
+        <a routerLink="/home" class="text-gray-700 hover:text-blue-600">Home</a>
+        <a routerLink="/query" class="text-gray-700 hover:text-blue-600">Queries</a>
+        <a routerLink="/taskManager" class="text-gray-700 h
+        over:text-blue-600">Task Manager</a>
+        <!-- <p-button label="Queries" routerLink="/query" icon="pi pi-search-plus"/> -->
+      </nav>
+      </span>
+      <!-- Mobile Hamburger -->
+      <div class="md:hidden">
+        <button  class="text-gray-600 hover:text-blue-600 focus:outline-none">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Menu -->
+  <div  class="md:hidden px-4 pb-4 space-y-2">
+    <a routerLink="/home" class="block text-gray-700 hover:text-blue-600">Home</a>
+    <a routerLink="/about" class="block text-gray-700 hover:text-blue-600">About</a>
+    <a routerLink="/contact" class="block text-gray-700 hover:text-blue-600">Contact</a>
+  </div>
+</header>
+
+<div *ngIf="isLoginVisble">
+  <br/>
+  <div class="flex h-full">
+<!-- Left Side  bg-blue-600  -->
+<div class="w-1/2 text-white flex justify-center items-center p-10">
+  <h2 class="text-3xl font-semibold">Tailwind Two-Split Page</h2>
+  </div>
 
 
-<!-- 
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor
-    labore sunt tenetur! Cupiditate deserunt facere impedit, officiis porro
-    suscipit ullam! Ad error eveniet harum minus provident quas quia voluptate?
-  </p>
-  
-  <p-button
-    (click)="showDialog()"
-    label="Show Form Dialog"
-    icon="pi pi-external-link"
-  />
-  -->
-  <div class="container">
-    <div class="header">
-    <nav>
-    
-      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  
-      <p-button label="Home" routerLink="/home" icon="pi pi-home"/>
- &nbsp;&nbsp;&nbsp;<p-button label="Queries" routerLink="/query" icon="pi pi-search-plus"/>
- &nbsp;&nbsp;&nbsp;<p-button label="Task Manger" routerLink="/taskManager"  icon="pi pi-search-plus"/>
+<!-- Right Side -->
+<div class="w-1/2 bg-white flex flex-col justify-center items-center p-10">
+  <h1 class="text-4xl font-bold mb-4">Welcome </h1>
+  <p class="text-gray-600 mb-8">Login to your account to continue.</p>
+  <p *ngIf="failedLogin" class="text-red-600 text-sm mt-1">Invalid Username/Password.</p>
 
- <p-button style="float:right !important;" label="Login" icon="pi pi-external-link" severity="info"  (click)="showDialog()" />
-</nav>
-</div>
-
-<p-dialog
-  header="Login"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '25rem' }"
->
-  <!-- <span class="p-text-secondary block mb-5">Update your information.</span> -->
-  <div class="flex align-items-center gap-4 mb-4">
+  <!-- <div class="flex align-items-center gap-4 mb-4">
     <label for="username" class="font-semibold w-6rem">Username</label>
     <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="userName" />
   </div>
   <div class="flex align-items-center gap-4 mb-5">
     <label for="email" class="font-semibold w-6rem"> Password </label>
-    <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="password" />
+    <input password id="password" class="flex-auto" autocomplete="off" [(ngModel)]="password" />
   </div>
   <div class="flex justify-end gap-2">
     <p-button label="Cancel" severity="secondary" (click)="visible = false" />
     <p-button label="Submit" (click)="validateLogin()" />
-<!-- (click)="visible = false" -->
+
+  </div> -->
+  <!-- <form class="w-full max-w-sm"> -->
+   <input class="w-full p-3 mb-4 border rounded" type="email" placeholder="Email" [(ngModel)]="userName">
+   <input class="w-full p-3 mb-4 border rounded" type="password" placeholder="Password"  [(ngModel)]="password">
+  <!-- <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Login</button>  -->
+   <p-button   label="Login" (click)="validateLogin()" />
+  <!-- </form> -->
   </div>
-</p-dialog>
-    <!-- <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-    <div class="footer">
-      <h2>footer</h2>
-    </div> -->
-  </div>
+</div>

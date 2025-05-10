@@ -73,18 +73,30 @@ export class QuerisComponent {
       { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
     ];
     this.columns = [
-      { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
-      { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
-      { field: 'LAST_NAME', headerVal: 'C.LAST_NAME' },
-      { field: 'EMAIL', headerVal: 'C.EMAIL' },
-      { field: 'PHONE', headerVal: 'C.PHONE' },
-      { field: 'AGE', headerVal: 'C.AGE' },
-      { field: 'GENDER_CD', headerVal: 'C.GENDER_CD' },
-      { field: 'BIRTH_DATE', headerVal: 'C.BIRTH_DATE' },
-      { field: 'LOYALTY_SCORE', headerVal: 'C.LOYALTY_SCORE' },
+      { field: 'CUSTOMER ID', headerVal: 'C.CUSTOMER_ID' },
+      { field: 'First Name', headerVal: 'C.FIRST_NAME' },
+      { field: 'Last Name', headerVal: 'C.LAST_NAME' },
+      { field: 'Email', headerVal: 'C.EMAIL' },
+      { field: 'Phone', headerVal: 'C.PHONE' },
+      { field: 'Age', headerVal: 'C.AGE' },
+      { field: 'Gender', headerVal: 'C.GENDER_CD' },
+      { field: 'Birth Date', headerVal: 'C.BIRTH_DATE' },
+      { field: 'Loyality Score', headerVal: 'C.LOYALTY_SCORE' },
 
     ];
+    // this.columns = [
+    //   { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
+    //   { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
+    //   { field: 'LAST_NAME', headerVal: 'C.LAST_NAME' },
+    //   { field: 'EMAIL', headerVal: 'C.EMAIL' },
+    //   { field: 'PHONE', headerVal: 'C.PHONE' },
+    //   { field: 'AGE', headerVal: 'C.AGE' },
+    //   { field: 'GENDER_CD', headerVal: 'C.GENDER_CD' },
+    //   { field: 'BIRTH_DATE', headerVal: 'C.BIRTH_DATE' },
+    //   { field: 'LOYALTY_SCORE', headerVal: 'C.LOYALTY_SCORE' },
 
+    // ];
+    
     this.addressColumns = [
       { field: 'CITY', headerVal: 'CA.CITY' },
       { field: 'STATE', headerVal: 'CA.STATE' },

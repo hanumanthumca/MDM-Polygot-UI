@@ -6,8 +6,8 @@
 <div class="p-tabmenu-nav-content">
 <p-tabs value="0">
     <p-tablist>
-        <p-tab style="border-bottom: 2px solid blue" value="0">Update information &nbsp;&nbsp;&nbsp;</p-tab>
-        <p-tab value="1">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab style="border-bottom: 2px solid blue" value="0">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="1">Preview &nbsp;&nbsp;&nbsp;</p-tab>
         <p-tab value="2">History View &nbsp;&nbsp;&nbsp;</p-tab>
     </p-tablist>
     <p-tabpanels>
@@ -19,7 +19,7 @@
                    <strong >Customer Details :  </strong> 
                   </h2>
                   
-                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
                         <label for="customer" class="block font-semibold mb-2"> Customer ID</label>
                         <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black;" readonly value="{{customerResult['CUSTOMER_ID']}}"/>
@@ -32,13 +32,14 @@
                         <label for="lastname" class="block font-semibold mb-2">Last Name</label>
                         <input type="text" pInputText id="lastname" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custLastName" />
                     </div>
+                    
+                </div>
+              
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
                         <label for="email" class="block font-semibold mb-2">Email </label>
                         <input type="text" pInputText id="email" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custEmail" />
                     </div>
-                </div>
-              
-                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
                     <div class="flex-auto">
                         <label for="phone" class="block font-semibold mb-2"> Phone </label>
                         <input type="text" pInputText id="phone" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custPhone" />
@@ -47,6 +48,9 @@
                         <label for="age" class="block font-semibold mb-2">Age </label>
                         <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"    [(ngModel)]="custAge"  >
                     </div>
+                    
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                     <div class="flex-auto">
                         <label for="age" class="block font-semibold mb-2">Gender</label>
                         <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"   [(ngModel)]="custGender"   >
