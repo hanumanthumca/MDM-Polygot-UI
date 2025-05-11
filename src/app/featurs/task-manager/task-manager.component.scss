@@ -4,3 +4,60 @@
   :host ::ng-deep .p-datatable-frozen-tbody {
     font-weight: bold;
   }
+  ::ng-deep .p-table th {
+    background-color: #2196f3;
+    color: #2196f3;
+
+  }
+  
+  
+  ::ng-deep .p-table td {
+    padding: 10px;
+    color: #444;
+  }
+  
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background-color: #1266f1;
+    color: white;
+  }
+  
+  ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+    background-color: #e0f7fa;
+  }
+  
+  ::ng-deep .p-datatable .p-datatable-tbody > tr.p-highlight {
+    background-color: #aed581;
+    color: white;
+  }
+  
+
+  ::ng-deep .table-header input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    font-size: 14px;
+  }
+  
+  ::ng-deep .table-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  ::ng-deep .table-header input[type="text"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 250px;
+  }
+  
+  ::ng-deep .p-column-filter input[type="text"] {
+    padding: 6px 10px;
+    border-radius: 4px;
+    width: 100%;
+  }
+  

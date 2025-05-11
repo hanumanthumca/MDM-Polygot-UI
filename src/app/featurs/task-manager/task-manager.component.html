@@ -1,7 +1,6 @@
-<p>task-manager works!</p>
+<!-- <p>task-manager works!</p>
 <p>queris works!</p>
-<!-- 
-<h5>PrimgNg 6 - Table Columns Toggle </h5> -->
+
 <div>
 	<p-table [columns]="selectedColumns" [value]="carsData">
 		<ng-template pTemplate="caption">
@@ -27,7 +26,207 @@
 			</tr>
 		</ng-template>
 	</p-table>
+</div> -->
+
+<!-- <p>queris works!</p> -->
+
+<div>
+	<br/>
+	<br/>
+	
 </div>
+<div class="flex align-items-center gap-4 mb-4">
+	<p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
+		defaultLabel="Choose Customer Columns"></p-multiSelect>
+	<p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
+		optionValue="headerVal" defaultLabel="Choose Customer Address Columns"></p-multiSelect>
+		<div class="flex justify-end gap-2">
+			
+			<p-button label="Search"  (click)="generateData()" />
+			
+		  </div>
+		
+		
+</div>
+
+<p-dialog
+  header="Quuery Selection"
+  [modal]="true"
+  [(visible)]="queryTableDisplay"
+  [style]="{ width: '28.5rem' }"
+>
+  <!-- <span class="p-text-secondary block mb-5">Update your information.</span> -->
+  <!-- border: 1px solid black; -->
+  <table style="border: 1px solid black;" id="queryGenerator">
+	<thead style="border: 1px solid black;">
+	  <tr>
+		<!-- <th>ID</th> -->
+		<th style="padding: 8px;">Name</th>
+		<th style="padding: 3px;">Operator</th>
+		<th style="padding: 8px;">Value</th>
+
+
+		<!-- <th>Email</th> -->
+	  </tr>
+	</thead>
+	<tbody style="border: 1px solid black;">
+	  <tr *ngFor="let selectedColumn of allselectedColumns" style="border: 1px solid black;">
+		<td style="padding: 8px;border: 1px solid black;">{{ selectedColumn }}</td>
+		<td style="padding: 3px;" ><select >
+			<option value="like">like</option>
+			<option value="=" selected>=</option>
+			<!-- <option value="mercedes">Mercedes</option>
+			<option value="audi">Audi</option> -->
+		  </select></td>
+		  <td style="padding: 8px; border: 1px solid black;"><input type="text" ></td>
+		<!-- <td>{{ user.name }}</td>
+		<td>{{ user.email }}</td> -->
+	  </tr>
+	</tbody>
+  </table>
+
+
+  <p-button lstyle="float:right;"label="Query"  (click)="generateQueryData()" />
+</p-dialog>
+
+<div class="card">
+	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
+	<p-table  [value]="customers" #myCustTable [scrollable]="true" styleClass="mt-4" stripedRows 
+	[paginator]="true"
+	[globalFilterFields]="['CUSTOMER_ID','FIRST_NAME', 'LAST_NAME', 'EMAIL', 'PHONE','AGE']"
+[rows]="10"
+[first]="first"
+[totalRecords]="totalRecords"
+[rowsPerPageOptions]="[5, 10, 20]"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+(onPage)="pageChange($event)"
+	>
+	
+	<ng-template #caption>
+		<div class="flex">
+			<!-- <div class="text-end pb-4" style="float: right;">
+                <p-button icon="pi pi-external-link" label="Export" (click)="myCustTable.exportCSV();" />
+            </div> -->
+			<!-- <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(myCustTable)" /> -->
+			<p-iconfield iconPosition="left" class="ml-auto">
+				<p-inputicon>
+					<i class="pi pi-search"></i>
+				</p-inputicon>
+				<input pInputText type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search " />
+			</p-iconfield>
+		</div>
+	</ng-template>
+		<ng-template #header>
+			<tr>
+				<th style="min-width:200px" pFrozenColumn >Id</th>
+				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
+				<th style="min-width:100px">First Name</th>
+				<th style="min-width:100px">Last Name</th>
+				<!-- <th style="min-width:200px">Birth Date</th> -->
+				<th style="min-width:200px">Email</th>
+				<th style="min-width:200px">Age</th>
+				<!-- <th style="min-width:200px">Gender</th> -->
+			
+				<th style="min-width:200px">Phone</th>
+				<th style="min-width:200px">City</th>
+			 
+				<th style="min-width:200px">ZIP</th>
+				<th style="min-width:200px">State</th>
+				<th style="min-width:200px">Country</th>
+				<th ></th>
+				<!-- <th style="min-width:200px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">Balance</th> -->
+			</tr>
+		</ng-template>
+		<ng-template #body let-customer>
+			<tr>
+				<td pFrozenColumn>{{customer.CUSTOMER_ID}}</td>
+				<!-- <td style="min-width:200px">{{customer.id}}</td> -->
+				<td >{{customer.FIRST_NAME}}</td>
+				<td >{{customer.LAST_NAME}}</td>
+				<!-- <td>{{customer.BIRTH_DATE}}</td> -->
+				<td>{{customer.EMAIL}}</td>
+				<td>{{customer.AGE}}</td>
+				<!-- <td >{{customer.GENDER_CD}}</td> -->
+				
+				<td>{{customer.PHONE}}</td>
+				<td>{{customer.CITY}}</td>
+			  
+				<td>{{customer.ZIP_CODE}}</td>
+				<td>{{customer.STATE}}</td>
+				<td>{{customer.COUNTRY}}</td>
+			  
+				<!-- <td><p-button icon="pi pi-eye"  (click)="viewCustomerTest(customer);" /></td> -->
+				<td><p-button    label="Detailed View" (click)="viewCustomerTest(customer);" /></td>
+			   
+				<!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>
+			</tr> -->
+		</ng-template>
+	</p-table>
+
+	<!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
+	
+</div>
+<!-- <div *ngIf="queryTableDisplay">
+	<table style="border: 1;" id="queryGenerator">
+	  <thead>
+
+		  <th>Name</th>
+		  <th>Operator</th>
+		  <th>Value</th>
+
+
+	
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr *ngFor="let selectedColumn of selectedColumns">
+		  <td>{{ selectedColumn }}</td>
+		  <td><select >
+			  <option value="like">like</option>
+			  <option value="=" selected>=</option>
+			 
+			</select></td>
+			<td><input type="text" ></td>
+		 
+		</tr>
+	  </tbody>
+	</table>
+
+
+	<p-button label="Query"  (click)="generateQueryData()" />
+  </div> -->
+				 <!-- <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header" 
+                selectedItemsLabel="{0} columns selected"
+				 [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+				 <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header" 
+                selectedItemsLabel="{0} columns selected"
+				 [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect> -->
+<!-- <div>
+	<p-table [columns]="selectedColumns" [value]="carsData">
+		<ng-template pTemplate="caption">
+			<div style="text-align:left">
+				<p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header" 
+                selectedItemsLabel="{0} columns selected"
+				 [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+			</div>
+		</ng-template>
+
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+				<th *ngFor="let col of columns">
+					{{col.header}}
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-rowData let-columns="columns">
+			<tr>
+				<td *ngFor="let col of columns" class="ui-resizable-column">
+					{{rowData[col.field]}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div> -->
 <!-- <hr>
 <label><b>Selected Columns : </b></label>
 {{selectedColumns | json}}

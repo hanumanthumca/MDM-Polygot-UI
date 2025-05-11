@@ -1,5 +1,6 @@
-import { Component ,NgModule} from '@angular/core';
-import {MenuItem, MessageService} from 'primeng/api';
+import { Component, NgModule ,ViewChild} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MenuItem, MessageService } from 'primeng/api';
 //import { Menu } from 'primeng/menu';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
@@ -7,18 +8,36 @@ import { MenubarModule } from 'primeng/menubar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
-import { MultiSelectModule } from "primeng/multiselect"; 
-import { NgFor } from '@angular/common'; 
+import { MultiSelectModule } from "primeng/multiselect";
+import { ButtonModule } from 'primeng/button';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { MDMService } from 'src/app/Services/mdm-service';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
+import { Table } from 'primeng/table';
+//import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CustomerViewComponent } from '../customer-view/customer-view.component';
+
 
 @Component({
   selector: 'app-task-manager',
   standalone: true,
-  
-  imports: [MenuModule,MenubarModule,SidebarModule,TabMenuModule,TabsModule,MultiSelectModule,TableModule,NgFor],
+  imports: [MenuModule, MenubarModule, FormsModule, SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  providers:[MessageService,DialogService],
   templateUrl: './task-manager.component.html',
   styleUrl: './task-manager.component.scss'
 })
 export class TaskManagerComponent {
+    @ViewChild("myCustTable") myCustTable:Table | undefined;
+    rows = 10;
+    first = 0;
+    totalRecords=0;
+    constructor(private mdmService: MDMService,private dialogService:DialogService,
+        private messageService:MessageService
+      ){}
   products: any[];
 
   cols: any[];
@@ -26,12 +45,18 @@ export class TaskManagerComponent {
   //_selectedColumns: any[];
  // columns: any[] = [];
  // selectedColumns: any[] = [];
-  data= [];
-  columns = [];
-  carsData = [];;
-  selectedColumns = [];
+ columns = [];
+ addressColumns = [];
+ carsData = [];;
+ selectedColumns = [];
+ selectedColumnsForAddress = [];
+ allselectedColumns = [];
+ queryTableDisplay:boolean =false;
+ customers: any[]=[];
+ userName = '';
 
   ngOnInit() {
+    
     this.carsData = [
         { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
         { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
@@ -45,397 +70,25 @@ export class TaskManagerComponent {
         { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
       ];
       this.columns = [
-        { field: 'vin', header: 'Vin' },
-        { field: 'year', header: 'Year' },
-        { field: 'brand', header: 'Brand' },
-        { field: 'color', header: 'Color'  }
-      ];
-      if (!localStorage.getItem('selectedColumns')) {
-
-        this.setColumnsDefaultValue();
-      } else {
-        // get selected columns from local storage
-        this.selectedColumns = JSON.parse(localStorage.getItem('selectedColumns'));
-      }
-    this.data = [
-      { name: 'Alice', age: 30, email: 'alice@example.com' },
-      { name: 'Bob', age: 25, email: 'bob@example.com' }
-    ];
-    this.products= [{
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1001',
-      code: 'nvklal433',
-      name: 'Black Watch',
-      description: 'Product Description',
-      image: 'black-watch.jpg',
-      price: 72,
-      category: 'Accessories',
-      quantity: 61,
-      inventoryStatus: 'OUTOFSTOCK',
-      rating: 4
-  },
-  {
-      id: '1002',
-      code: 'zz21cz3c1',
-      name: 'Blue Band',
-      description: 'Product Description',
-      image: 'blue-band.jpg',
-      price: 79,
-      category: 'Fitness',
-      quantity: 2,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 3
-  },
-  {
-      id: '1003',
-      code: '244wgerg2',
-      name: 'Blue T-Shirt',
-      description: 'Product Description',
-      image: 'blue-t-shirt.jpg',
-      price: 29,
-      category: 'Clothing',
-      quantity: 25,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1004',
-      code: 'h456wer53',
-      name: 'Bracelet',
-      description: 'Product Description',
-      image: 'bracelet.jpg',
-      price: 15,
-      category: 'Accessories',
-      quantity: 73,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1005',
-      code: 'av2231fwg',
-      name: 'Brown Purse',
-      description: 'Product Description',
-      image: 'brown-purse.jpg',
-      price: 120,
-      category: 'Accessories',
-      quantity: 0,
-      inventoryStatus: 'OUTOFSTOCK',
-      rating: 4
-  },
-  {
-      id: '1006',
-      code: 'bib36pfvm',
-      name: 'Chakra Bracelet',
-      description: 'Product Description',
-      image: 'chakra-bracelet.jpg',
-      price: 32,
-      category: 'Accessories',
-      quantity: 5,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 3
-  },
-  {
-      id: '1007',
-      code: 'mbvjkgip5',
-      name: 'Galaxy Earrings',
-      description: 'Product Description',
-      image: 'galaxy-earrings.jpg',
-      price: 34,
-      category: 'Accessories',
-      quantity: 23,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1008',
-      code: 'vbb124btr',
-      name: 'Game Controller',
-      description: 'Product Description',
-      image: 'game-controller.jpg',
-      price: 99,
-      category: 'Electronics',
-      quantity: 2,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 4
-  },
-  {
-      id: '1009',
-      code: 'cm230f032',
-      name: 'Gaming Set',
-      description: 'Product Description',
-      image: 'gaming-set.jpg',
-      price: 299,
-      category: 'Electronics',
-      quantity: 63,
-      inventoryStatus: 'INSTOCK',
-      rating: 3
-  },
-  {
-      id: '1010',
-      code: 'plb34234v',
-      name: 'Gold Phone Case',
-      description: 'Product Description',
-      image: 'gold-phone-case.jpg',
-      price: 24,
-      category: 'Accessories',
-      quantity: 0,
-      inventoryStatus: 'OUTOFSTOCK',
-      rating: 4
-  },
-  {
-      id: '1011',
-      code: '4920nnc2d',
-      name: 'Green Earbuds',
-      description: 'Product Description',
-      image: 'green-earbuds.jpg',
-      price: 89,
-      category: 'Electronics',
-      quantity: 23,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1012',
-      code: '250vm23cc',
-      name: 'Green T-Shirt',
-      description: 'Product Description',
-      image: 'green-t-shirt.jpg',
-      price: 49,
-      category: 'Clothing',
-      quantity: 74,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1013',
-      code: 'fldsmn31b',
-      name: 'Grey T-Shirt',
-      description: 'Product Description',
-      image: 'grey-t-shirt.jpg',
-      price: 48,
-      category: 'Clothing',
-      quantity: 0,
-      inventoryStatus: 'OUTOFSTOCK',
-      rating: 3
-  },
-  {
-      id: '1014',
-      code: 'waas1x2as',
-      name: 'Headphones',
-      description: 'Product Description',
-      image: 'headphones.jpg',
-      price: 175,
-      category: 'Electronics',
-      quantity: 8,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 5
-  },
-  {
-      id: '1015',
-      code: 'vb34btbg5',
-      name: 'Light Green T-Shirt',
-      description: 'Product Description',
-      image: 'light-green-t-shirt.jpg',
-      price: 49,
-      category: 'Clothing',
-      quantity: 34,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1016',
-      code: 'k8l6j58jl',
-      name: 'Lime Band',
-      description: 'Product Description',
-      image: 'lime-band.jpg',
-      price: 79,
-      category: 'Fitness',
-      quantity: 12,
-      inventoryStatus: 'INSTOCK',
-      rating: 3
-  },
-  {
-      id: '1017',
-      code: 'v435nn85n',
-      name: 'Mini Speakers',
-      description: 'Product Description',
-      image: 'mini-speakers.jpg',
-      price: 85,
-      category: 'Clothing',
-      quantity: 42,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1018',
-      code: '09zx9c0zc',
-      name: 'Painted Phone Case',
-      description: 'Product Description',
-      image: 'painted-phone-case.jpg',
-      price: 56,
-      category: 'Accessories',
-      quantity: 41,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1019',
-      code: 'mnb5mb2m5',
-      name: 'Pink Band',
-      description: 'Product Description',
-      image: 'pink-band.jpg',
-      price: 79,
-      category: 'Fitness',
-      quantity: 63,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1020',
-      code: 'r23fwf2w3',
-      name: 'Pink Purse',
-      description: 'Product Description',
-      image: 'pink-purse.jpg',
-      price: 110,
-      category: 'Accessories',
-      quantity: 0,
-      inventoryStatus: 'OUTOFSTOCK',
-      rating: 4
-  },
-  {
-      id: '1021',
-      code: 'pxpzczo23',
-      name: 'Purple Band',
-      description: 'Product Description',
-      image: 'purple-band.jpg',
-      price: 79,
-      category: 'Fitness',
-      quantity: 6,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 3
-  },
-  {
-      id: '1022',
-      code: '2c42cb5cb',
-      name: 'Purple Gemstone Necklace',
-      description: 'Product Description',
-      image: 'purple-gemstone-necklace.jpg',
-      price: 45,
-      category: 'Accessories',
-      quantity: 62,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1023',
-      code: '5k43kkk23',
-      name: 'Purple T-Shirt',
-      description: 'Product Description',
-      image: 'purple-t-shirt.jpg',
-      price: 49,
-      category: 'Clothing',
-      quantity: 2,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 5
-  },
-  {
-      id: '1024',
-      code: 'lm2tny2k4',
-      name: 'Shoes',
-      description: 'Product Description',
-      image: 'shoes.jpg',
-      price: 64,
-      category: 'Clothing',
-      quantity: 0,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1025',
-      code: 'nbm5mv45n',
-      name: 'Sneakers',
-      description: 'Product Description',
-      image: 'sneakers.jpg',
-      price: 78,
-      category: 'Clothing',
-      quantity: 52,
-      inventoryStatus: 'INSTOCK',
-      rating: 4
-  },
-  {
-      id: '1026',
-      code: 'zx23zc42c',
-      name: 'Teal T-Shirt',
-      description: 'Product Description',
-      image: 'teal-t-shirt.jpg',
-      price: 49,
-      category: 'Clothing',
-      quantity: 3,
-      inventoryStatus: 'LOWSTOCK',
-      rating: 3
-  },
-  {
-      id: '1027',
-      code: 'acvx872gc',
-      name: 'Yellow Earbuds',
-      description: 'Product Description',
-      image: 'yellow-earbuds.jpg',
-      price: 89,
-      category: 'Electronics',
-      quantity: 35,
-      inventoryStatus: 'INSTOCK',
-      rating: 3
-  },
-  {
-      id: '1028',
-      code: 'tx125ck42',
-      name: 'Yoga Mat',
-      description: 'Product Description',
-      image: 'yoga-mat.jpg',
-      price: 20,
-      category: 'Fitness',
-      quantity: 15,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-  {
-      id: '1029',
-      code: 'gwuby345v',
-      name: 'Yoga Set',
-      description: 'Product Description',
-      image: 'yoga-set.jpg',
-      price: 20,
-      category: 'Fitness',
-      quantity: 25,
-      inventoryStatus: 'INSTOCK',
-      rating: 8
-  }
-  ];
+        { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
+        { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
+        { field: 'LAST_NAME', headerVal: 'C.LAST_NAME' },
+        { field: 'EMAIL', headerVal: 'C.EMAIL' },
+        { field: 'PHONE', headerVal: 'C.PHONE' },
+        { field: 'AGE', headerVal: 'C.AGE' },
+        { field: 'GENDER_CD', headerVal: 'C.GENDER_CD' },
+        { field: 'BIRTH_DATE', headerVal: 'C.BIRTH_DATE' },
+        { field: 'LOYALTY_SCORE', headerVal: 'C.LOYALTY_SCORE' },
   
-  this.cols = [
-    { field: 'name', header: 'Name' },
-    { field: 'category', header: 'Category' },
-    { field: 'quantity', header: 'Quantity' },
-  ];
-
-//   this.columns = [
-//     { field: 'name', header: 'Name' },
-//     { field: 'age', header: 'Age' },
-//     { field: 'email', header: 'Email' }
-//   ];
-  this.selectedColumns = this.columns;
- // this._selectedColumns = [];
+      ];
+  
+      this.addressColumns = [
+        { field: 'CITY', headerVal: 'CA.CITY' },
+        { field: 'STATE', headerVal: 'CA.STATE' },
+        { field: 'COUNTRY', headerVal: 'CA.COUNTRY' },
+        { field: 'ZIP_CODE', headerVal: 'CA.ZIP_CODE' },
+  
+      ];
   }
   // @Input() get selectedColumns(): any[] {
   //   return this._selectedColumns;
@@ -445,6 +98,10 @@ export class TaskManagerComponent {
   //   //restore original order
   //   this._selectedColumns = this.cols.filter((col) => val.includes(col));
   // }
+  pageChange(event) {
+    this.first = event.first;
+    this.rows = event.rows;
+ }
   getColumnsField() {
     return this.selectedColumns.map(c => c.field).join(',')
   }
@@ -460,4 +117,185 @@ export class TaskManagerComponent {
   get visibleColumns() {
     return this.selectedColumns;
   }
+
+  viewCustomer(id:any){
+    const viewComponentForCust =this.dialogService.open(CustomerViewComponent,{
+  
+      data:{
+        custId:id
+      },
+      width:"89vw",
+      header:"View Customer",
+      closable:true
+    });
+    viewComponentForCust.onClose.subscribe((result) =>{
+  
+    })
+   }
+   viewCustomerTest(customer:any){
+    let id=customer['CUSTOMER_ID']
+    const viewComponentForCust =this.dialogService.open(CustomerViewComponent,{
+  
+      data:{
+        custId:id,
+        customerObj:customer,
+      },
+      width:"89vw",
+      header:"View Customer",
+      closable:true
+    });
+    viewComponentForCust.onClose.subscribe((result) =>{
+  
+    })
+   }
+    generateData() {
+      this.queryTableDisplay=true;
+      console.log('slected cust fileds are');
+      console.log('slected cust fileds are', this.selectedColumns);
+      console.log('slected adrees fileds are', this.selectedColumnsForAddress);
+      this.allselectedColumns=[...this.selectedColumns, ...this.selectedColumnsForAddress];
+      //let custQueryString = ''; 
+      let custQueryString1 = this.selectedColumns.join(',');
+      let custAddressQueryString = this.selectedColumnsForAddress.join(',');
+     let custQueryString=custQueryString1+','+custAddressQueryString;
+      console.log('slected quey is', custQueryString);
+      console.log('slected quey is', custAddressQueryString);
+     
+  
+      let objectArrayForColumns =this.selectedColumns.map(item =>({name:item,condition:'',value:''}))
+      
+      // this.selectedColumns.forEach((element,index) =>{
+      //   if(index !=this.selectedColumns.length-1){
+      //     custQueryString =custQueryString+`'${element}'`+','
+      //   }else{
+      //     custQueryString =custQueryString+`'${element}'`
+      //   }
+      // });
+      let logicString ='Select '
+      if(this.selectedColumnsForAddress.length >0){
+        logicString = logicString+custQueryString+','+custAddressQueryString;
+      }else{
+        logicString = logicString+custQueryString+' '+'FROM BO_CUSTOMER C';
+      }
+      console.log('logicString quey is logicString', logicString);
+    }
+  
+    //async generateQueryData():Promise<void>{
+       generateQueryData(){
+      const table = document.getElementById("queryGenerator");
+      const headers = Array.from(table.querySelectorAll("thead th")).map(th => th.textContent.trim());
+      const rows = table.querySelectorAll("tbody tr");
+    
+      const data = Array.from(rows).map(row => {
+        const cells = Array.from(row.children);
+        const obj = {};
+    
+        cells.forEach((cell, i) => {
+          const input = cell.querySelector("input");
+          const select = cell.querySelector("select");
+    
+          if (input) {
+            if (input.type === "checkbox") {
+              obj[headers[i]] = input.checked;
+            } else {
+              obj[headers[i]] = input.value.trim();
+            }
+          } else if (select) {
+            obj[headers[i]] = select.value;
+          } else {
+            obj[headers[i]] = cell.textContent.trim();
+          }
+        });
+    
+        return obj;
+      });
+      console.log('query data from generated table is',data);
+  
+     let  custQueryString ='';
+     data.forEach((element,index) =>{
+      if(index !=this.allselectedColumns.length-1){
+        if(element['Name']=== 'C.AGE'){
+        custQueryString =custQueryString+element['Name']+'  '+element['Operator']+element['Value'] +' and '
+        }else{
+          let valueQuery= element['Value'];
+          custQueryString =custQueryString+element['Name']+'  '+element['Operator']+`'${valueQuery}'`+' and '
+  
+        }
+    
+         }
+         else{
+          if(element['Name']=== 'C.AGE'){
+            custQueryString =custQueryString+element['Name']+'  '+element['Operator']+element['Value'] 
+            }else{
+              let valueQuery= element['Value'];
+              custQueryString =custQueryString+element['Name']+'  '+element['Operator']+`'${valueQuery}'`
+    
+            }
+  
+      }
+    });
+      // data.forEach((element,index) =>{
+      //   if(index !=this.allselectedColumns.length-1){
+      //     if(element['Name']=== 'C.AGE'){
+      //     custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] +' and '
+      //     }else{
+      //       let valueQuery= element['Value'];
+      //       custQueryString =custQueryString+element['Name']+element['Operator']+`'${valueQuery}'`+' and '
+  
+      //     }
+      
+      //      }else{
+      //       custQueryString =custQueryString+element['Name']+element['Operator']+element['Value'] 
+    
+      //   }
+      // });
+      console.log('Whole query String is  from generated table is',custQueryString);  
+  
+      let finalQueryString='where '+custQueryString
+   this.getCustomerDataFromAPI(finalQueryString);
+     
+   this.queryTableDisplay=false;
+    //  return data;
+  
+    console.log('cust data',this.customers);
+      
+  
+      
+    }
+  
+    // this.mdmService.getUsers().subscribe((responseData:any) => {
+    //   //this.users = data;
+    //   if(responseData){
+    //     this.customers=responseData;
+    //   }
+    // resolve();
+    // });
+   async getCustomerDataFromAPI(queryForAPI:string) : Promise<void>{
+    //let builtString='where C.AGE=27';
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/customerDetails';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+            this.customers=response;
+            this.totalRecords= this.customers.length;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+          this.customers=[...this.customers];
+          console.log('cust data from resp',this.customers);
+          this.totalRecords= this.customers.length;
+        }
+      })
+    })
+      
+    }
 }

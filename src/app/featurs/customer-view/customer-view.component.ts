@@ -36,6 +36,8 @@ custAge='';
 custGender='';
 custPhone='';
 loyolScore='';
+showSuccess = true;
+fadeOut = false;
 // custFirstName='';
 // custFirstName='';
 // custFirstName='';
@@ -45,6 +47,10 @@ loyolScore='';
     private mdmService: MDMService
   ){}
   ngOnInit() {
+
+    setTimeout(() => {
+      this.fadeOut = true;
+    }, 5000);
     this.custId=this.dynamicDialogConfig.data['custId']; 
     this.customerResult=this.dynamicDialogConfig.data['customerObj'];
     console.log('this config data is',this.dynamicDialogConfig.data['custId']);
@@ -79,7 +85,7 @@ loyolScore='';
     custGender:this.custGender,
     loyolScore:this.loyolScore
   };
-
+  this.showSuccess=true;
   return new Promise((resolve,rejects) =>{
     this.mdmService.sendPostRequestToAPI(apiUrl,custObject).subscribe({
       next:(response:any) =>{
@@ -87,6 +93,7 @@ loyolScore='';
         if(response){
           // this.customers=response;
           // this.totalRecords= this.customers.length;
+         // this.showSuccess=true;
         }else{
 
         }
@@ -96,6 +103,7 @@ loyolScore='';
         rejects(error);
       },
       complete:() =>{
+       // this.showSuccess=true;
         // this.customers=[...this.customers];
         // console.log('cust data from resp',this.customers);
         // this.totalRecords= this.customers.length;
