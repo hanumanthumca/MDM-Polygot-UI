@@ -1,6 +1,6 @@
 # How to Use
 
-PrimeNG Issue Template is an Angular CLI project used to provide a sample test case to demonstrate a defect to help PrimeNG Team.
+ Angular CLI project 
 
 ## Development server
 
