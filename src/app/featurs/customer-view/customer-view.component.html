@@ -88,16 +88,18 @@
                          <label for="Country" class="block font-semibold mb-2">Country</label>
                          <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
                      </div>
-                     <div class="flex-auto">
-                         <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
-                         <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
-                     </div>
+
                  </div>
                  <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     <strong >Relation Type  :  </strong> 
                    </h2>
                    
                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+
+                    <div class="flex-auto">
+                        <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
+                        <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
+                    </div>
                      <div class="flex-auto">
                          <label for="relationship" class="block font-semibold mb-2"> Relation Ship Type</label>
                          <input type="text" pInputText id="relationship" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['RELATIONSHIP_TYPE_CD']}}"/> 
