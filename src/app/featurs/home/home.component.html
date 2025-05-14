@@ -64,11 +64,11 @@
                         <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                             <thead>
                               <tr class="bg-gray-100">
-                                <th class="border border-gray-300 px-4 py-2">Name</th>
-                                <th class="border border-gray-300 px-4 py-2">Email</th>
-                                <th class="border border-gray-300 px-4 py-2">Role</th>
-                                <th class="border border-gray-300 px-4 py-2">Email</th>
-                                <th class="border border-gray-300 px-4 py-2">Role</th>
+                                <th class="border border-gray-300 px-4 py-2">Table Name</th>
+                                <th class="border border-gray-300 px-4 py-2">SRC_ITEM_ID</th>
+                                <th class="border border-gray-300 px-4 py-2">SRC_ITEM_NAME</th>
+                                <th class="border border-gray-300 px-4 py-2">TARGET_ITEM_ID</th>
+                                <th class="border border-gray-300 px-4 py-2">TARGET_ITEM_ID</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -102,7 +102,8 @@
 
               <div class="flex">
                 <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                    <p-chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   class="h-[30rem]" ></p-chart>
+                    <p-chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   class="h-[30rem]" ></p-chart> 
+                
                     <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
                 </div>
                 <div class="w-1/2 bg-white-500 p-4 text-white">

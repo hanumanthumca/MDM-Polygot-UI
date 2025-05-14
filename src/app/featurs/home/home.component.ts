@@ -106,29 +106,30 @@ customerByCountryResponse:any;
                 }
 }
           };
-        this.customerCountByCountry = {
-            labels: [ '2023', '2024', '2025'],
-            datasets: [
-                {
-                    label: 'USA',
-                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-                    data: [11065, 7059, 6080]
-                },
-                {
-                    label: 'CA',
-                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
-                    data: [2080, 4890, 8940]
-                },
-                {
-                    label: 'GB',
-                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
-                    data: [4898, 7838, 9040]
-                }
-            ]
-        };
+          //this.customerCountByCountry = {};
+        // this.customerCountByCountry = {
+        //     labels: [ '2023', '2024', '2025'],
+        //     datasets: [
+        //         {
+        //             label: 'USA',
+        //             backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+        //             borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+        //             data: [11065, 7059, 6080]
+        //         },
+        //         {
+        //             label: 'CA',
+        //             backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+        //             borderColor: documentStyle.getPropertyValue('--p-green-500'),
+        //             data: [2080, 4890, 8940]
+        //         },
+        //         {
+        //             label: 'GB',
+        //             backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+        //             borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+        //             data: [4898, 7838, 9040]
+        //         }
+        //     ]
+        // };
         this.customerCountByCountryOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -1160,9 +1161,50 @@ customerByCountryResponse:any;
         let wholeData=respose;
         let graphLabels:any[]=[];
         let graphData:any[]=[];
+        let usaData:any[]=[];
+        let canadaData:any[]=[];
+        let ukData:any[]=[];
         wholeData.forEach(item =>{
             graphLabels.push(item['YEAR']);
+            if(item['COUNTRY']==='United States'){
+                usaData.push(item['NUMBER_OF_RECORDS'])
+            }else if (item['COUNTRY']==='Canada'){
+                canadaData.push(item['NUMBER_OF_RECORDS'])
+            }else{
+                ukData.push(item['NUMBER_OF_RECORDS'])
+            }
         });
+        const uniqueCountryNames=[... new Set(wholeData.map(item =>item['COUNTRY']))];
+        const uniqueYears=[... new Set(wholeData.map(item =>item['YEAR']))];
+        console.log('country names',uniqueCountryNames);
+        console.log('usaData names',usaData);
+
+        const documentStyle = getComputedStyle(document.documentElement);
+        this.customerCountByCountry = {};
+        this.customerCountByCountry = {
+            labels: uniqueYears,
+            datasets: [
+                {
+                    label: 'United States',
+                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    data: usaData
+                },
+                {
+                    label: 'Canada',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: canadaData
+                },
+                {
+                    label: 'United Kingdom',
+                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    data: ukData
+                }
+            ]
+        };
+
 
     }
   pageChange(event) {

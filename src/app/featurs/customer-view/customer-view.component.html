@@ -27,7 +27,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
                         <label for="customer" class="block font-semibold mb-2"> Customer ID</label>
-                        <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black;" readonly value="{{customerResult['CUSTOMER_ID']}}"/>
+                        <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_ID']}}"/>
                     </div>
                     <div class="flex-auto">
                         <label for="firstname" class="block font-semibold mb-2">First name</label>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="flex-auto">
                         <label for="bdate" class="block font-semibold mb-2">Birth Date </label>
-                        <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;" readonly value="{{customerResult['BIRTH_DATE']}}"/>
+                        <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;  background-color: #f0f0f0 !important;" readonly value="{{customerResult['BIRTH_DATE']}}"/>
                     </div>
                     <div class="flex-auto">
                         <label for="loyolity" class="block font-semibold mb-2">Loyality Score </label>
@@ -90,16 +90,22 @@
                      </div>
 
                  </div>
+                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    
+                    <div class="flex-auto">
+                        <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
+                        <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
+                    </div>
+                   
+
+                </div>
                  <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     <strong >Relation Type  :  </strong> 
                    </h2>
                    
                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
 
-                    <div class="flex-auto">
-                        <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
-                        <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
-                    </div>
+                    
                      <div class="flex-auto">
                          <label for="relationship" class="block font-semibold mb-2"> Relation Ship Type</label>
                          <input type="text" pInputText id="relationship" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['RELATIONSHIP_TYPE_CD']}}"/> 
