@@ -20,11 +20,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ChartModule } from 'primeng/chart';
 //import {NgModule} from '@angular/core';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FormsModule, CommonModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
+  imports: [RouterOutlet,FormsModule, CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

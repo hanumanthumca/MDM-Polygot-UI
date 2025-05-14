@@ -11,6 +11,8 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from "primeng/multiselect"; 
 import { InputTextModule } from 'primeng/inputtext';
 import { Table } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
+import { MDMService } from 'src/app/Services/mdm-service';
 interface Column {
    field: string;
    header: string;
@@ -18,11 +20,13 @@ interface Column {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MenuModule,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule],
+  imports: [MenuModule,MenubarModule,SidebarModule,ChartModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
+constructor(private mdmService: MDMService ) {}
   menuItems: MenuItem[];
   cols!: Column[];
   first = 0;
@@ -34,7 +38,19 @@ export class HomeComponent {
   newCars:any[];
   products: any[];
     items: MenuItem[];
-
+    basicData: any;
+    mergedRecordData:any;
+    recordGrowthData:any;
+options:any;
+recordGrowthOptions:any;
+customerCountByCity:any;
+customerCountByCountry:any;
+customerActiveInactive:any;
+customerCountByCityOptions:any;
+customerCountByCountryOptions:any;
+customerActiveInactiveOptions:any;
+customerByCountryResponse:any;
+    basicOptions: any;
     scrollableItems: MenuItem[];
 
     activeItem: MenuItem;
@@ -42,6 +58,274 @@ export class HomeComponent {
     activeItem2: MenuItem;
 
     ngOnInit() {
+        let finalQueryString='where '
+        this.getCustomerGraphDataByCountryFromAPI(finalQueryString);
+        const documentStyle = getComputedStyle(document.documentElement);
+        this.customerCountByCity = {
+            labels: ['2019','2020', '2021', '2022', '2023', '2024', '2025' ],
+            datasets: [
+                {
+                    label: 'Temple Hills',
+                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    data: [10000, 5900, 8000, 2081, 2956, 3255, 2040]
+                },
+                {
+                    label: 'Baltimore',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: [2800, 3048, 5040, 1919, 5686, 10027, 8990]
+                },
+                {
+                    label: 'Columbia',
+                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    data: [4870, 2538, 6740, 1919, 3486, 1227, 9000]
+                }
+            ]
+        };
+        this.customerCountByCityOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+          
+            plugins: {
+                title: {
+                display: true,
+                text: 'Customers Count Based on City',
+                font: {
+                    size: 24
+                },
+                padding: {
+                    top: 20,
+                    bottom: 30
+                }
+                },
+                datalabels :{
+                    anchor:'end',
+                    align:'top',
+                }
+}
+          };
+        this.customerCountByCountry = {
+            labels: [ '2023', '2024', '2025'],
+            datasets: [
+                {
+                    label: 'USA',
+                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    data: [11065, 7059, 6080]
+                },
+                {
+                    label: 'CA',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: [2080, 4890, 8940]
+                },
+                {
+                    label: 'GB',
+                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    data: [4898, 7838, 9040]
+                }
+            ]
+        };
+        this.customerCountByCountryOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+            plugins: {
+                title: {
+                display: true,
+                text: 'Customers Count By Country',
+                font: {
+                    size: 24
+                },
+                padding: {
+                    top: 20,
+                    bottom: 30
+                }
+                }
+}
+          };
+        this.customerActiveInactive = {
+            labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2019'],
+            datasets: [
+                {
+                    label: 'Active',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: 'In Active',
+                    backgroundColor: documentStyle.getPropertyValue('--p-red-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-red-500'),
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+
+        this.customerActiveInactiveOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+            plugins: {
+                title: {
+                display: true,
+                text: 'Active Inactive Customers',
+                font: {
+                    size: 24
+                },
+                padding: {
+                    top: 20,
+                    bottom: 30
+                }
+                }
+}
+          };
+
+        //2ndpage graphs ends
+        this.recordGrowthData = {
+            labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2019'],
+            datasets: [
+                {
+                    label: 'Customer',
+                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: 'Items',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                },
+                {
+                    label: 'Commodity',
+                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    data: [48, 38, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+        this.mergedRecordData = {
+            labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2019'],
+            datasets: [
+                {
+                    label: 'Customer',
+                    backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: 'Items',
+                    backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                },
+                {
+                    label: 'Commodity',
+                    backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    data: [48, 38, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+        this.recordGrowthOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+            plugins: {
+                title: {
+                display: true,
+                text: 'Record Growth Count',
+                font: {
+                    size: 24
+                },
+                padding: {
+                    top: 20,
+                    bottom: 30
+                }
+                }
+}
+          };
+        this.options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+ plugins: {
+    title: {
+      display: true,
+      text: 'Merged Record  Count',
+      font: {
+        size: 24
+      },
+      padding: {
+        top: 20,
+        bottom: 30
+      }
+    }
+}
+          };
+        this.basicData = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            
+            datasets: [
+              {
+                label: 'Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.6)',
+                  'rgba(54, 162, 235, 0.6)',
+                  'rgba(255, 206, 86, 0.6)',
+                  'rgba(75, 192, 192, 0.6)',
+                  'rgba(153, 102, 255, 0.6)',
+                  'rgba(255, 159, 64, 0.6)'
+                ]
+              }
+            ]
+          };
+        // this.basicData = {
+        //     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        //     datasets: [
+        //         {
+        //             label: 'Sales',
+        //             data: [540, 325, 702, 620],
+        //             backgroundColor: [
+        //                 'rgba(249, 115, 22, 0.2)',
+        //                 'rgba(6, 182, 212, 0.2)',
+        //                 'rgb(107, 114, 128, 0.2)',
+        //                 'rgba(139, 92, 246, 0.2)',
+        //             ],
+        //             borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
+        //             borderWidth: 1,
+        //         },
+        //     ],
+        // };
+        this.basicOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        
+                    },
+                },
+            },
+            scales: {
+                x: {
+                   
+                    grid: {
+                        display:false
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                   
+                    grid: {
+                        display:false
+                    },
+                },
+            },
+        };
       this.customers=[{
          id: 1000,
          name: 'James Butt',
@@ -843,6 +1127,44 @@ export class HomeComponent {
           }
       ];
   }
+
+  async getCustomerGraphDataByCountryFromAPI(queryForAPI:string) : Promise<void>{
+   
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/graphDataForCustomerByCountry';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+          this.customerByCountryResponse=response;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+            //this.customerByCountryResponse=response;
+            this.processGraphDataForCountry(this.customerByCountryResponse);
+        }
+      })
+    })
+      
+    }
+
+    processGraphDataForCountry(respose:any){
+        console.log('graph data',respose);
+        let wholeData=respose;
+        let graphLabels:any[]=[];
+        let graphData:any[]=[];
+        wholeData.forEach(item =>{
+            graphLabels.push(item['YEAR']);
+        });
+
+    }
   pageChange(event) {
    this.first = event.first;
    this.rows = event.rows;
