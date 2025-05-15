@@ -50,6 +50,7 @@ customerCountByCityOptions:any;
 customerCountByCountryOptions:any;
 customerActiveInactiveOptions:any;
 customerByCountryResponse:any;
+customerByYearResponse:any;
     basicOptions: any;
     scrollableItems: MenuItem[];
 
@@ -60,6 +61,8 @@ customerByCountryResponse:any;
     ngOnInit() {
         let finalQueryString='where '
         this.getCustomerGraphDataByCountryFromAPI(finalQueryString);
+this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
+        this.getGraphDataForActiveInactiveCustomers(finalQueryString);
         const documentStyle = getComputedStyle(document.documentElement);
         this.customerCountByCity = {
             labels: ['2019','2020', '2021', '2022', '2023', '2024', '2025' ],
@@ -1129,6 +1132,33 @@ customerByCountryResponse:any;
       ];
   }
 
+  async getCustomerGrraphDataForCustomersByYearFromAPI(queryForAPI:string) : Promise<void>{
+   
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/graphDataForCustomersByYear';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+         // this.customerByCountryResponse=response;
+         this.customerByYearResponse=response;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+            //this.customerByCountryResponse=response;
+            this.processGraphDataForCustomersByYear(this.customerByYearResponse);
+        }
+      })
+    })
+      
+    }
   async getCustomerGraphDataByCountryFromAPI(queryForAPI:string) : Promise<void>{
    
     let builtString=queryForAPI;
@@ -1155,6 +1185,171 @@ customerByCountryResponse:any;
     })
       
     }
+    async getGraphDataForActiveInactiveCustomers(queryForAPI:string) : Promise<void>{
+   
+        let builtString=queryForAPI;
+        let apiUrl = 'http://localhost:3000/api/graphDataForACtiveInactiveCustomers';
+        return new Promise((resolve,rejects) =>{
+          this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+            next:(response:any) =>{
+              
+              if(response){
+              this.customerActiveInactive=response;
+              
+              }else{
+      
+              }
+              resolve();
+            },
+            error:(error:object) =>{
+              rejects(error);
+            },
+            complete:() =>{
+                //this.customerActiveInactive=response;
+                this.processGraphDataForActiveInactiveCountry(this.customerActiveInactive);
+            }
+          })
+        })
+          
+        }
+
+        processGraphDataForCustomersByYear(respose:any){
+            console.log('graph data',respose);
+            let wholeData=respose;
+            let graphLabels:any[]=[];
+            let graphData:any[]=[];
+            let usaData:any[]=[];
+            let canadaData:any[]=[];
+            let ukData:any[]=[];
+            wholeData.forEach(item =>{
+                graphLabels.push(item['YEAR']);
+                usaData.push(item['NUMBER_OF_RECORDS'])
+                // if(item['COUNTRY']==='US'){
+                //     usaData.push(item['NUMBER_OF_RECORDS'])
+                // }else if (item['COUNTRY']==='CA'){
+                //     canadaData.push(item['NUMBER_OF_RECORDS'])
+                // }else{
+                //     ukData.push(item['NUMBER_OF_RECORDS'])
+                // }
+            });
+            const uniqueCountryNames=[... new Set(wholeData.map(item =>item['COUNTRY']))];
+            const uniqueYears=[... new Set(wholeData.map(item =>item['YEAR']))];
+            console.log('country names',uniqueCountryNames);
+            console.log('usaData names',usaData);
+    
+            const documentStyle = getComputedStyle(document.documentElement);
+            this.customerByYearResponse = {};
+            this.customerByYearResponse = {
+                labels: uniqueYears,
+                datasets: [
+                    {
+                        label: 'Count',
+                        backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                        borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                        data: usaData
+                    }
+                    // ,
+                    // {
+                    //     label: 'Canada',
+                    //     backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                    //     borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                    //     data: canadaData
+                    // },
+                    // {
+                    //     label: 'United Kingdom',
+                    //     backgroundColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    //     borderColor: documentStyle.getPropertyValue('--p-orange-500'),
+                    //     data: ukData
+                    // }
+                ]
+            };
+    
+    
+        }
+
+        processGraphDataForActiveInactiveCountry(respose:any){
+            console.log('graph data',respose);
+            let wholeData=respose;
+            let graphLabels:any[]=[];
+            let graphData:any[]=[];
+            let activeData:any[]=[];
+            let inActiveData:any[]=[];
+            let ukData:any[]=[];
+            let wholeArrayData=respose;
+            const yearValues = wholeArrayData.map(item => item['YEAR']);
+            const uniqueyearValues=[... new Set(yearValues.map(item =>item))];
+            const duplicates = this.getDuplicatePropertyValues(wholeData, 'YEAR');
+
+            //@ts-ignore
+            const missingYears = uniqueyearValues.filter(item => !duplicates.includes(item));
+            console.log('single records are',duplicates);
+            console.log('missingYears records are',missingYears);
+            missingYears.forEach(item =>{
+                // graphLabels.push(item['YEAR']);
+                let testObj={
+                    NUMBER_OF_RECORDS: 0,
+                    IS_ACTIVE: "N", 
+                    YEAR: item
+                }
+                wholeData.push  (testObj);
+                 
+             })
+             console.log('missingYears records are',missingYears);
+             wholeData.sort((a, b) => a['YEAR'] - b['YEAR']);
+            wholeData.forEach(item =>{
+               // graphLabels.push(item['YEAR']);
+                if(item['IS_ACTIVE']==='Y'){
+                    activeData.push(item['NUMBER_OF_RECORDS'])
+                }
+               // else(item['IS_ACTIVE']==='N') {
+                    else {
+                    if(item['IS_ACTIVE']==='N'){
+                        inActiveData.push(item['NUMBER_OF_RECORDS'])
+                    }else{
+                        inActiveData.push(0)
+                    }
+                   
+                }
+                
+            });
+            const uniqueCountryNames=[... new Set(wholeData.map(item =>item['COUNTRY']))];
+            const uniqueYears=[... new Set(wholeData.map(item =>item['YEAR']))];
+            console.log('country names',uniqueCountryNames);
+          //  console.log('usaData names',usaData);
+    
+            const documentStyle = getComputedStyle(document.documentElement);
+            this.customerActiveInactive = {};
+
+            this.customerActiveInactive = {
+                labels: uniqueYears,
+                datasets: [
+                    {
+                        label: 'Active',
+                        backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                        borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                        data: activeData
+                    },
+                    {
+                        label: 'In Active',
+                        backgroundColor: documentStyle.getPropertyValue('--p-red-500'),
+                        borderColor: documentStyle.getPropertyValue('--p-red-500'),
+                        data: inActiveData
+                    }
+                ]
+            };
+    
+    
+        }
+
+         getDuplicatePropertyValues = (arr, prop) => {
+            const count = {};
+            for (const obj of arr) {
+              const val = obj[prop];
+              count[val] = (count[val] || 0) + 1;
+            }
+          
+            return Object.keys(count).filter(key => count[key] > 1);
+          };
 
     processGraphDataForCountry(respose:any){
         console.log('graph data',respose);
@@ -1166,9 +1361,9 @@ customerByCountryResponse:any;
         let ukData:any[]=[];
         wholeData.forEach(item =>{
             graphLabels.push(item['YEAR']);
-            if(item['COUNTRY']==='United States'){
+            if(item['COUNTRY']==='US'){
                 usaData.push(item['NUMBER_OF_RECORDS'])
-            }else if (item['COUNTRY']==='Canada'){
+            }else if (item['COUNTRY']==='CA'){
                 canadaData.push(item['NUMBER_OF_RECORDS'])
             }else{
                 ukData.push(item['NUMBER_OF_RECORDS'])
