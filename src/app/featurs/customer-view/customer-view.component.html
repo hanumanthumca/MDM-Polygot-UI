@@ -86,8 +86,13 @@
                      </div>
                      <div class="flex-auto">
                          <label for="Country" class="block font-semibold mb-2">Country</label>
-                         <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
-                     </div>
+                         <!-- <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
+                     -->
+		<p-select [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
+		optionValue="value"   class="w-full md:w-56" 
+		
+		/>
+                        </div>
 
                  </div>
                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">

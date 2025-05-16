@@ -15,11 +15,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Table } from 'primeng/table';
 import { MDMService } from 'src/app/Services/mdm-service';
 import { FormsModule } from '@angular/forms';
+
+import { Select } from 'primeng/select';
 @Component({
   selector: 'app-customer-view',
   standalone: true,
 
-  imports: [FormsModule,PanelModule,MenuModule,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
+  imports: [FormsModule,PanelModule,MenuModule,Select,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
 
   templateUrl: './customer-view.component.html',
   providers:[DialogService],
@@ -34,10 +36,12 @@ custLastName='';
 custEmail='';
 custAge='';
 custGender='';
+custCountry='';
 custPhone='';
 loyolScore='';
 showSuccess = true;
 fadeOut = false;
+countries=[];
 // custFirstName='';
 // custFirstName='';
 // custFirstName='';
@@ -47,7 +51,12 @@ fadeOut = false;
     private mdmService: MDMService
   ){}
   ngOnInit() {
+    this.countries = [
+      { name: 'USA', value: 'USA' },
+      { name: 'Canada', value: 'Canada' },
+      { name: 'UK', value: 'UK' },
 
+  ];
     setTimeout(() => {
       this.fadeOut = true;
     }, 5000);
@@ -61,6 +70,7 @@ fadeOut = false;
 
     this.custAge=this.customerResult['AGE'];;
     this.custGender=this.customerResult['GENDER_CD'];
+    this.custCountry=this.customerResult['COUNTRY'];
     this.loyolScore=this.customerResult['LOYALTY_SCORE'];
 
     console.log('this config data is',this.dynamicDialogConfig.data['custId']);

@@ -91,9 +91,9 @@
            
             <div class="flex">
                 <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-
-                    <p-chart type="bar" [data]="customerCountByCity" [options]="customerCountByCityOptions"   class="h-[30rem]" ></p-chart>
-                    <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
+                    <p-chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   class="h-[30rem]" ></p-chart> 
+                
+                      <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
                 </div>
                 <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
                     <p-chart type="bar" [data]="customerActiveInactive" [options]="customerActiveInactiveOptions" class="h-[30rem]" />
@@ -102,18 +102,29 @@
 
               <div class="flex">
                 <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                    <p-chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   class="h-[30rem]" ></p-chart> 
-                
+                    <p-chart type="bar" [data]="customerCountBySystemName" [options]="customerCountBySystemOptions"   class="h-[30rem]" ></p-chart> 
+                     
                     <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
                 </div>
                 <div class="w-1/2 bg-white-500 p-4 text-white">
 
                     <br/>
                  
-                    <p-chart type="bar" [data]="customerByYearResponse" [options]="options" class="h-[30rem]" />
+                    <p-chart type="bar" [data]="customerByYearResponse" [options]="yearGraphOptions" class="h-[30rem]" />
                 </div>
               </div>
-            
+          
+              <div class="flex">
+                <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
+                     <p-chart type="bar" [data]="customerCountByCity" [options]="customerCountByCityOptions"   class="h-[30rem]" ></p-chart>
+                
+                   </div>
+                <div class="w-1/2 bg-white-500 p-4 text-white">
+
+                    <br/>
+                 
+                               </div>
+              </div>
             <!-- <div class="flex h-full">
                
                 <div class="w-1/2 text-white flex justify-center items-center p-10">

@@ -42,6 +42,7 @@ constructor(private mdmService: MDMService ) {}
     mergedRecordData:any;
     recordGrowthData:any;
 options:any;
+yearGraphOptions:any;
 recordGrowthOptions:any;
 customerCountByCity:any;
 customerCountByCountry:any;
@@ -51,6 +52,8 @@ customerCountByCountryOptions:any;
 customerActiveInactiveOptions:any;
 customerByCountryResponse:any;
 customerByYearResponse:any;
+customerCountBySystemName:any;
+customerCountBySystemOptions:any;
     basicOptions: any;
     scrollableItems: MenuItem[];
 
@@ -61,7 +64,8 @@ customerByYearResponse:any;
     ngOnInit() {
         let finalQueryString='where '
         this.getCustomerGraphDataByCountryFromAPI(finalQueryString);
-this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
+        this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
+        this.getCustomerGrraphDataForCustomersBySystemFromAPI(finalQueryString);
         this.getGraphDataForActiveInactiveCustomers(finalQueryString);
         const documentStyle = getComputedStyle(document.documentElement);
         this.customerCountByCity = {
@@ -87,6 +91,30 @@ this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
                 }
             ]
         };
+        
+        this.customerCountBySystemOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+          
+            plugins: {
+                title: {
+                display: true,
+                text: 'Customers Count By Source System ',
+                font: {
+                    size: 24
+                },
+                padding: {
+                    top: 20,
+                    bottom: 30
+                }
+                },
+                datalabels :{
+                    anchor:'end',
+                    align:'top',
+                }
+}
+          };
+
         this.customerCountByCityOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -251,6 +279,24 @@ this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
                     bottom: 30
                 }
                 }
+}
+          };
+          this.yearGraphOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+ plugins: {
+    title: {
+      display: true,
+      text: 'Customer Count By Year',
+      font: {
+        size: 24
+      },
+      padding: {
+        top: 20,
+        bottom: 30
+      }
+    }
 }
           };
         this.options = {
@@ -1132,6 +1178,37 @@ this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
       ];
   }
 
+
+  async getCustomerGrraphDataForCustomersBySystemFromAPI(queryForAPI:string) : Promise<void>{
+   
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/graphDataForCustomersBySystemName';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+         // this.customerByCountryResponse=response;
+         this.customerCountBySystemName=response;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+            //this.customerByCountryResponse=response;
+            this.processGraphDataForSystemName(this.customerCountBySystemName);
+
+            
+        }
+      })
+    })
+      
+    }
+
   async getCustomerGrraphDataForCustomersByYearFromAPI(queryForAPI:string) : Promise<void>{
    
     let builtString=queryForAPI;
@@ -1267,6 +1344,78 @@ this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
     
         }
 
+        processGraphDataForSystemName(respose:any){
+            console.log('graph data',respose);
+            let wholeData=respose;
+            let graphLabels:any[]=[];
+            let graphData:any[]=[];
+            let netSuiteData:any[]=[];
+            let erpData:any[]=[];
+            let ukData:any[]=[];
+            let wholeArrayData=respose;
+            const yearValues = wholeArrayData.map(item => item['YEAR']);
+            const uniqueyearValues=[... new Set(yearValues.map(item =>item))];
+            const duplicates = this.getDuplicatePropertyValues(wholeData, 'YEAR');
+
+            //@ts-ignore
+            const missingYears = uniqueyearValues.filter(item => !duplicates.includes(item));
+            console.log('single records are',duplicates);
+            console.log('missingYears records are',missingYears);
+            missingYears.forEach(item =>{
+                // graphLabels.push(item['YEAR']);
+                let testObj={
+                    NUMBER_OF_RECORDS: 0,
+                    SRC_SYSTEM_NAME: "ERP", 
+                    YEAR: item
+                }
+                wholeData.push  (testObj);
+                 
+             })
+             console.log('missingYears records are',missingYears);
+             wholeData.sort((a, b) => a['YEAR'] - b['YEAR']);
+            //  customerCountBySystemName
+
+            //  NETSUITE 
+
+            //  ERP
+            wholeData.forEach(item =>{
+              
+                if(item['SRC_SYSTEM_NAME']==='NETSUITE'){
+                    netSuiteData.push(item['NUMBER_OF_RECORDS'])
+                }else{
+                    erpData.push(item['NUMBER_OF_RECORDS'])
+                }
+              
+                    
+                
+             });
+            // const uniqueCountryNames=[... new Set(wholeData.map(item =>item['COUNTRY']))];
+             const uniqueYears=[... new Set(wholeData.map(item =>item['YEAR']))];
+            // console.log('country names',uniqueCountryNames);
+          
+             const documentStyle = getComputedStyle(document.documentElement);
+             this.customerCountBySystemName = {};
+
+            this.customerCountBySystemName = {
+                labels: uniqueYears,
+                datasets: [
+                    {
+                        label: 'Net Suite',
+                        backgroundColor: documentStyle.getPropertyValue('--p-green-500'),
+                        borderColor: documentStyle.getPropertyValue('--p-green-500'),
+                        data: netSuiteData
+                    },
+                    {
+                        label: 'ERP',
+                        backgroundColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                        borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                        data: erpData
+                    }
+                ]
+            };
+    
+    
+        }
         processGraphDataForActiveInactiveCountry(respose:any){
             console.log('graph data',respose);
             let wholeData=respose;
@@ -1406,11 +1555,5 @@ this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
    this.first = event.first;
    this.rows = event.rows;
 }
-// filterGlobal($event :any,searchValue:string){
 
-//     this.myCustTable!.filterGlobal(
-//         ($event.target as HTMLInputElement).value,searchValue
-//     );
-
-// }
 }
