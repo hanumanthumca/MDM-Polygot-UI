@@ -21,11 +21,11 @@ import { Table } from 'primeng/table';
 //import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomerViewComponent } from '../customer-view/customer-view.component';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-queris',
   standalone: true,
-  imports: [MenuModule, MenubarModule, FormsModule, Select,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  imports: [MenuModule, MenubarModule, FormsModule,ProgressSpinnerModule,Select,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   templateUrl: './queris.component.html',
   providers:[MessageService,DialogService],
   styleUrl: './queris.component.scss',
@@ -53,6 +53,7 @@ export class QuerisComponent {
   custDropDOwnDisplay:boolean =false;
   custAddressDropDOwnDisplay:boolean =false;
   custRelationShipTableDisplay:boolean =false;
+  loadSpinner =false;
   ngOnInit() {
     this.tables = [
       { name: 'CUSTOMER', value: 'CUSTOMER' },
@@ -258,6 +259,7 @@ export class QuerisComponent {
     console.log('Whole query String is  from generated table is',custQueryString);  
 
     let finalQueryString='where '+custQueryString
+    this.loadSpinner=true;
  this.getCustomerDataFromAPI(finalQueryString);
    
  this.queryTableDisplay=false;
@@ -278,6 +280,7 @@ export class QuerisComponent {
   // });
  async getCustomerDataFromAPI(queryForAPI:string) : Promise<void>{
   //let builtString='where C.AGE=27';
+
   let builtString=queryForAPI;
   let apiUrl = 'http://localhost:3000/api/customerDetails';
   return new Promise((resolve,rejects) =>{
@@ -299,6 +302,7 @@ export class QuerisComponent {
         this.customers=[...this.customers];
         console.log('cust data from resp',this.customers);
         this.totalRecords= this.customers.length;
+        this.loadSpinner=false;
       }
     })
   })

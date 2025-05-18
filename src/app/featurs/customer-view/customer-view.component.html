@@ -1,14 +1,10 @@
-<!-- <p>home worksw!</p> -->
-<!-- <p-menubar [model]="menuItems"></p-menubar> -->
-
-<!-- <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu> -->
-
 <div class="p-tabmenu-nav-content">
 <p-tabs value="0">
     <p-tablist>
         <p-tab style="border-bottom: 2px solid blue" value="0">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
-        <p-tab value="1">Preview &nbsp;&nbsp;&nbsp;</p-tab>
-        <p-tab value="2">History View &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="1"> History  &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="2">Cross Reference &nbsp;&nbsp;&nbsp;</p-tab> 
+        <p-tab value="3">Match Reference &nbsp;&nbsp;&nbsp;</p-tab> 
     </p-tablist>
     <p-tabpanels>
         <p-tabpanel value="0">
@@ -19,11 +15,6 @@
                    <strong >Customer Details :  </strong> 
                   </h2>
 
-
-                  <!-- <div  *ngIf="showSuccess" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">Success!</strong>
-                    <span class="block sm:inline">Update operation was completed successfully.</span>
-                  </div> -->
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
                         <label for="customer" class="block font-semibold mb-2"> Customer ID</label>
@@ -126,36 +117,92 @@
 
                     <p-button style="float:right !important; margin-left: 820px !important;" label="Cancel" icon="pi pi-external-link" severity="info"  />
                     <p-button style="float:right !important;" label="Update" icon="pi pi-external-link" severity="info"  (click)="updateRecord()" />
-                    <!-- <p-button
-                        label="Cancel"
-                        styleClass="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        [text]="true"
-                      
-                        class="w-full"
-                    /> -->
-                    <!-- <p-button
-                        label="Update"
-                    
-                        [text]="true"
-                        styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
-                        class="w-full"
-                    /> -->
+                  
                 </div>
                
             </div>
         </p-tabpanel>
         <p-tabpanel value="1">
-            <!-- <p class="m-0">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-                aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-                dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
-                modi.
-            </p> -->
-            
+            <div class="w-[35%] bg-white-200 p-4">
+            </div>
+            <div class="w-[35%] bg-white-200 p-4">
+            <div class="flex gap-4">
+                <!-- First Calendar -->
+                <div class="flex-1">
+                  <label class="block mb-1 text-sm font-medium text-gray-700">Start Date</label>
+                  <input
+                    type="date"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    [(ngModel)]="startDate"
+                    />
+                </div>
+              
+                <!-- Second Calendar -->
+                <div class="flex-1">
+                  <label class="block mb-1 text-sm font-medium text-gray-700">End Date</label>
+                  <input
+                    type="date"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    [(ngModel)]="endDate"  />
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+                <div class="w-[25%] bg-gray-200 p-4">
+               
+                 
+                 
+                  <div *ngFor="let opt of options" class="flex items-center gap-2 mb-2">
+                    <p-radioButton
+                    class="border border-gray-300 p-1"
+                      name="group1"
+                      [value]="opt.value"
+                      [(ngModel)]="selectedOption"
+                      [inputId]="opt.value"
+                      (onClick)="handleClick(opt.value)"
+                    ></p-radioButton>
+                    <label [for]="opt.value">{{ opt.label }}</label>
+                  </div>
+                  
+                  <!-- <p>{{ options | json }} Selected: {{ selectedOption }}</p> -->
+
+                  <!-- <p> Selected: {{ selectedOption }}</p> -->
+
+                  
+                </div>
+                <div class="w-[75%] bg-white-200 p-4">
+                    <div *ngIf="displayHistoryTable">
+                    <p> Selected time: <b> {{ selectedOption }} </b>
+                        Start Date :{{ startDate }} 
+                        End Date :{{ endDate }} 
+                    </p>
+                    <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                        <thead>
+                          <tr class="bg-gray-100">
+                            <th class="border border-gray-300 px-4 py-2">Customer</th>
+                            <th class="border border-gray-300 px-4 py-2">Before</th>
+                            <th class="border border-gray-300 px-4 py-2">After</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2">Alice</td>
+                            <td class="border border-gray-300 px-4 py-2">alice example.com</td>
+                            <td class="border border-gray-300 px-4 py-2">Admin</td>
+                          </tr>
+                          <!-- More rows... -->
+                        </tbody>
+                      </table>
+                    </div>
+                  <!-- <div class="flex items-center">
+                    <p-radiobutton name="pizza" value="Cheese" [(ngModel)]="ingredient" inputId="ingredient1" />
+                    <label for="ingredient1" class="ml-2">Cheese</label>
+                </div> -->
+                </div>
+              </div>
             <div class="containerForPanel">
                 <div class="firstForPanel" >
-                    <table style=" border-collapse: collapse;
+                    <!-- <table style=" border-collapse: collapse;
               width: 100%;">
              
               <tr style=" padding: 8px;
@@ -185,31 +232,14 @@
                           text-align: left;
                           border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	
             
-            <!--               
-                            <tr style=" padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	
-                            <tr style=" padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #ddd;">		<td><b>CITY: </b> {{customerResult['CITY']}}</td></tr>	
-                                      
-                            <tr style=" padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #ddd;">		<td><b>ZIP CODE: </b> {{customerResult['ZIP_CODE']}}</td> </tr>
-                            <tr style=" padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #ddd;">		<td><b>STATE: </b> {{customerResult['STATE']}}</td></tr>
-                            <tr style=" padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #ddd;">		<td> <b>COUNTRY: </b>{{customerResult['COUNTRY']}}</td> </tr>
-                         -->
-                                    </table>
+           
+                                    </table> -->
                 </div>
 
                 <div class="secondForPanel" >
 
-                    <table style=" border-collapse: collapse;
-              width: 100%;">
+                    <!-- <table style=" border-collapse: collapse;
+              width: 100%;"> -->
             
             <!-- <td pFrozenColumn>{{customer.CUSTOMER_ID}}</td> -->
                         <!-- <tr style=" padding: 8px;
@@ -235,7 +265,7 @@
                             <tr style=" padding: 8px;
                             text-align: left;
                             border-bottom: 1px solid #ddd;">		<td><b>PHONE: </b> {{customerResult['PHONE']}}</td></tr>	 -->
-                            <tr style=" padding: 8px;
+                            <!-- <tr style=" padding: 8px;
                             text-align: left;
                             border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp;<b>CITY: </b> {{customerResult['CITY']}}</td></tr>	
                              <tr style=" padding: 8px;
@@ -248,8 +278,8 @@
                             <tr style=" padding: 8px;
                             text-align: left;
                             border-bottom: 1px solid #ddd;">		<td> &nbsp;&nbsp; <b>ZIP CODE: </b> {{customerResult['ZIP_CODE']}}</td> </tr>
-                              
-                                    </table>
+                               -->
+                                    <!-- </table> -->
                 </div>
 
             </div>
@@ -260,6 +290,38 @@
             <p class="m-0">
                 History view <br/>
                 1st tab
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                anim id est laborum.
+            </p>
+            <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2">Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Email</th>
+                    <th class="border border-gray-300 px-4 py-2">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Alice</td>
+                    <td class="border border-gray-300 px-4 py-2">alice example.com</td>
+                    <td class="border border-gray-300 px-4 py-2">Admin</td>
+                  </tr>
+                  <!-- More rows... -->
+                </tbody>
+              </table>
+              
+        </p-tabpanel>
+
+
+        <p-tabpanel value="3">
+          
+            <p class="m-0">
+                Match screen view 1234567888888888888888888888<br/>
+                3rd  tab
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat

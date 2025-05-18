@@ -12,7 +12,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { HomeComponent } from './featurs/home/home.component';
 import { TaskManagerComponent } from './featurs/task-manager/task-manager.component';
 import { QuerisComponent } from './featurs/queris/queris.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { MultiSelectModule } from "primeng/multiselect"; 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from "@angular/common/http";
@@ -21,11 +21,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ChartModule } from 'primeng/chart';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 //import {NgModule} from '@angular/core';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FormsModule, CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
+  imports: [RouterOutlet,FormsModule,RadioButtonModule, ProgressSpinnerModule,ReactiveFormsModule,CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

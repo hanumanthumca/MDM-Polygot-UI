@@ -40,7 +40,7 @@
 </div>
 
 <p-dialog
-  header="Quuery Selection"
+  header="Query Selection"
   [modal]="true"
   [(visible)]="queryTableDisplay"
   [style]="{ width: '28.5rem' }"
@@ -92,6 +92,7 @@
 [rowsPerPageOptions]="[5, 10, 20]"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 (onPage)="pageChange($event)"
+class="shadow rounded-lg overflow-hidden border border-gray-200 text-sm"
 	>
 	<ng-template #caption>
 		<div class="flex">
@@ -115,9 +116,11 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 
 		</div>
 	</ng-template>
-		<ng-template #header>
-			<tr>
-				<th style="min-width:200px" pFrozenColumn >Id</th>
+		<!-- <ng-template #header> -->
+			<ng-template pTemplate="header">
+			
+			<tr class="bg-gray-100 text-gray-700">
+				<th style="min-width:200px" class="p-3 text-left"   pFrozenColumn >Id</th>
 				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
 				<!-- <th style="min-width:100px">First Name</th>
 				<th style="min-width:100px">Last Name</th>
@@ -129,18 +132,18 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 				<th style="min-width:200px">Gender</th>
 			-->
 				
-				<th style="min-width:200px">City</th>
+				<th style="min-width:200px" class="p-3 text-left">City</th>
 			 
-				<th style="min-width:200px">ZIP</th>
-				<th style="min-width:200px">State</th>
-				<th style="min-width:200px">Country</th> 
+				<th style="min-width:200px" class="p-3 text-left">ZIP</th>
+				<th style="min-width:200px" class="p-3 text-left">State</th>
+				<th style="min-width:200px" class="p-3 text-left">Country</th> 
 				<th ></th>
 				<!-- <th style="min-width:200px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">Balance</th> -->
 			</tr>
 		</ng-template>
 		<ng-template #body let-customer>
-			<tr>
-				<td pFrozenColumn>{{customer.CUSTOMER_ID}}</td>
+			<tr class="border-t hover:bg-gray-50 transition">
+				<td pFrozenColumn class="p-3">{{customer.CUSTOMER_ID}}</td>
 				<!-- <td style="min-width:200px">{{customer.id}}</td> -->
 				<!-- <td >{{customer.FIRST_NAME}}</td>
 				<td >{{customer.LAST_NAME}}</td>
@@ -152,13 +155,13 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 				<td >{{customer.GENDER_CD}}</td>-->
 				
 			
-				<td>{{customer.CITY}}</td>
+				<td class="p-3">{{customer.CITY}}</td>
 			  
-				<td>{{customer.ZIP_CODE}}</td>
-				<td>{{customer.STATE}}</td>
-				<td>{{customer.COUNTRY}}</td> 
+				<td class="p-3">{{customer.ZIP_CODE}}</td>
+				<td class="p-3">{{customer.STATE}}</td>
+				<td class="p-3">{{customer.COUNTRY}}</td> 
 			  
-				<td><p-button    label="Detailed View" (click)="viewCustomerTest(customer);" /></td>
+				<td class="p-3" ><p-button    label="Detailed View" (click)="viewCustomerTest(customer);" /></td>
 		
 			   
 				<!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>
@@ -257,8 +260,15 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 	</p-table>
 
 
+
+	
 	
 </div>
+
+<div  *ngIf="loadSpinner" class="flex justify-center items-center min-h-[100px]">
+	<!-- <div  class="flex justify-center items-center min-h-[100px]"></div> -->
+	<p-progressSpinner></p-progressSpinner>
+  </div>
 <!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
 <!-- <div *ngIf="queryTableDisplay">
 	<table style="border: 1;" id="queryGenerator">
