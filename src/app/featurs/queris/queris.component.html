@@ -80,7 +80,11 @@
 </p-dialog>
 
  <!-- cust on ly {{custDropDOwnDisplay}} -->
+ <div  *ngIf="loadSpinner" class="flex justify-center items-center min-h-[100px]">
 
+	<p>loading: {{ loadSpinner }}</p>
+	<p-progressSpinner styleClass="text-blue-600" [style]="{width: '25rem', height: '25rem'}"></p-progressSpinner>
+  </div>
 <div class="card" *ngIf="custAddressDropDOwnDisplay">
 	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
 	<p-table  [value]="customers" #myCustAddressTable [scrollable]="true" styleClass="mt-4" showGridlines   
@@ -265,10 +269,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 	
 </div>
 
-<div  *ngIf="loadSpinner" class="flex justify-center items-center min-h-[100px]">
-	<!-- <div  class="flex justify-center items-center min-h-[100px]"></div> -->
-	<p-progressSpinner></p-progressSpinner>
-  </div>
+
 <!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
 <!-- <div *ngIf="queryTableDisplay">
 	<table style="border: 1;" id="queryGenerator">

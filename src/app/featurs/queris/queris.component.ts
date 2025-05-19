@@ -280,7 +280,7 @@ export class QuerisComponent {
   // });
  async getCustomerDataFromAPI(queryForAPI:string) : Promise<void>{
   //let builtString='where C.AGE=27';
-
+this.loadSpinner=true;
   let builtString=queryForAPI;
   let apiUrl = 'http://localhost:3000/api/customerDetails';
   return new Promise((resolve,rejects) =>{
@@ -297,6 +297,7 @@ export class QuerisComponent {
       },
       error:(error:object) =>{
         rejects(error);
+        this.loadSpinner=false;
       },
       complete:() =>{
         this.customers=[...this.customers];
