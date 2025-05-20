@@ -52,6 +52,8 @@ selectedOption: string = '';
 displayHistoryTable=false;
 startDate='';
 endDate='';
+customerHistorySelectedResult={};
+customerHistory: any[]=[];
 radioOptions = [
   { label: 'Option A', value: 'A' },
   { label: 'Option B', value: 'B' },
@@ -75,6 +77,9 @@ radioCategories: any[] =[];
     private mdmService: MDMService
   ){}
   ngOnInit() {
+
+    let finalQueryString='where '
+    this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
     this.formGroup = new FormGroup({
       selectedCategory: new FormControl()
   });
@@ -116,9 +121,66 @@ radioCategories: any[] =[];
     let query='ddd';
     this.updateFromAPI(query);
   }
+  
+  async getCustomerHistoryDataByCustomerFromAPI(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/historyDataForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.customerHistory = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
+    })
+
+  }
+  
+  processHistoryDataForSystemName(respose: any) {
+    let resposeData=respose;
+    let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    console.log('history dates are',historyDats);
+    this.options=[];
+    let historyDates=[];
+    historyDats.forEach(function(date) {
+      console.log(date);
+      let dateObj={
+        label: date,
+        value: date, 
+        
+    }
+    historyDates.push(dateObj);
+    });
+    this.options=historyDates;
+
+    // options = [
+    //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
+    //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
+    //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
+    //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
+    
+    // ];
+  }
+
   handleClick(value: string) {
     console.log('Clicked radio value:', value);
     this.displayHistoryTable=true;
+    let historyDataObject=this.customerHistory;
+    let resultObj = historyDataObject.find(p => p['HIST_CREATE_DATE'] === value);
+  this.customerHistorySelectedResult=resultObj;
+  console.log('customerHistorySelectedResult :', this.customerHistorySelectedResult);
     // Add any custom logic here
   }
  async updateFromAPI(queryForAPI:string) : Promise<void>{

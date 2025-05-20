@@ -186,6 +186,51 @@
                         End Date :{{ endDate }} 
                     </p>
                     <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                      <thead>
+                        <tr class="bg-gray-100">
+                          <th class="border border-gray-300 px-4 py-2"> Customer</th>
+                          <th class="border border-gray-300 px-4 py-2">Before</th>
+                          <th class="border border-gray-300 px-4 py-2">After</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Middle Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">alice example.com</td>
+                          <td class="border border-gray-300 px-4 py-2">Admin</td>
+                        </tr> -->
+                        <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">First Name</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME']}}</td>
+                        </tr>
+                        
+                        
+                        <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Gender</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
+                        </tr>
+                        <!-- <tr class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Party Type</td>
+                          <td class="border border-gray-300 px-4 py-2">alice example.com</td>
+                          <td class="border border-gray-300 px-4 py-2">Admin</td>
+                        </tr> -->
+                        <!-- More rows... -->
+                      </tbody>
+                    </table>
+
+                    <!-- <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                         <thead>
                           <tr class="bg-gray-100">
                             <th class="border border-gray-300 px-4 py-2">Customer</th>
@@ -229,9 +274,9 @@
                             <td class="border border-gray-300 px-4 py-2">alice example.com</td>
                             <td class="border border-gray-300 px-4 py-2">Admin</td>
                           </tr>
-                          <!-- More rows... -->
+                         
                         </tbody>
-                      </table>
+                      </table> -->
                     </div>
                   <!-- <div class="flex items-center">
                     <p-radiobutton name="pizza" value="Cheese" [(ngModel)]="ingredient" inputId="ingredient1" />
