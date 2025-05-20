@@ -80,11 +80,14 @@
                          <!-- <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
                      -->
 		<p-select [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
-		optionValue="value"   class="w-full md:w-56" 
-		
-		/>
+		optionValue="value"   class="w-full md:w-56" />
+    <!-- <p-select [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
+		optionValue="value"      styleClass="w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+     class="w-full md:w-56"
+     panelStyleClass="custom-dropdown-panel"
+     /> -->
                         </div>
-
+                    
                  </div>
                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                     
@@ -137,6 +140,7 @@
                     />
                 </div>
               
+
                 <!-- Second Calendar -->
                 <div class="flex-1">
                   <label class="block mb-1 text-sm font-medium text-gray-700">End Date</label>
@@ -144,7 +148,12 @@
                     type="date"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     [(ngModel)]="endDate"  />
+                   
                 </div>
+                <div class="flex-1" style="margin-top: 20px !important;">
+                  <p-button  label="Generate" icon="pi pi-external-link"  />
+                                  
+              </div>
               </div>
             </div>
             <div class="flex">

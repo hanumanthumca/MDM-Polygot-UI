@@ -41,3 +41,19 @@
   color: #808080;           /* Gray text color */
   border: 1px solid #dcdcdc; /* Light gray border */
 }
+
+
+::ng-deep .custom-dropdown-panel {
+  @apply bg-white border border-gray-300 rounded-md shadow-lg;
+}
+
+::ng-deep .custom-dropdown-panel .p-dropdown-item {
+  @apply px-3 py-2 text-sm text-gray-800 hover:bg-blue-100 cursor-pointer;
+}
+
+::ng-deep .custom-dropdown-panel .p-dropdown-item.p-highlight {
+  @apply bg-blue-500 text-white;
+}
+::ng-deep .p-dropdown .p-dropdown-trigger {
+  @apply text-gray-500;
+}
