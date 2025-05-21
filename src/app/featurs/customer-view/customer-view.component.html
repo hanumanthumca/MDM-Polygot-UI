@@ -128,7 +128,7 @@
         <p-tabpanel value="1">
             <div class="w-[35%] bg-white-200 p-4">
             </div>
-            <div class="w-[35%] bg-white-200 p-4">
+            <div class="w-[45%] bg-white-200 p-4">
             <div class="flex gap-4">
                 <!-- First Calendar -->
                 <div class="flex-1">
@@ -151,7 +151,7 @@
                    
                 </div>
                 <div class="flex-1" style="margin-top: 20px !important;">
-                  <p-button  label="Generate" icon="pi pi-external-link"  />
+                  <p-button  label="Get History" icon="pi pi-external-link"  />
                                   
               </div>
               </div>
@@ -189,43 +189,73 @@
                       <thead>
                         <tr class="bg-gray-100">
                           <th class="border border-gray-300 px-4 py-2"> Customer</th>
-                          <th class="border border-gray-300 px-4 py-2">Before</th>
-                          <th class="border border-gray-300 px-4 py-2">After</th>
+                          <th class="border border-gray-300 px-4 py-2">Previous Value</th>
+                          <th class="border border-gray-300 px-4 py-2">Current Value</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <!-- <tr class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Middle Name</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">alice example.com</td>
-                          <td class="border border-gray-300 px-4 py-2">Admin</td>
-                        </tr> -->
-                        <tr class="hover:bg-gray-50">
+                    
+                        <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === true" class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2">First Name</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
                           <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME']}}</td>
                         </tr>
-                        <tr class="hover:bg-gray-50">
+                        <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === false"class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">First Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['last_name_match'] === true" class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2">Last Name</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
                           <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME']}}</td>
                         </tr>
-                        
-                        
-                        <tr class="hover:bg-gray-50">
+                         <!-- remove this starts logic -->
+                        <!-- <tr *ngIf="customerHistorySelectedResult['last_name_match'] === false" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                          <td class="border border-gray-300 px-4 py-2" >
+                            {{customerHistorySelectedResult['LAST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" >
+                            {{customerHistorySelectedResult['LAST_NAME']}}</td>
+                        </tr> -->
+                        <!-- remove this ends logic -->
+                        <!-- working logic -->
+                        <tr *ngIf="customerHistorySelectedResult['last_name_match'] === false" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">
+                            {{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">
+                            {{customerHistorySelectedResult['LAST_NAME']}}</td>
+                        </tr>
+                    
+                    
+                        <tr *ngIf="customerHistorySelectedResult['gender_match'] === true" class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2">Gender</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
                           <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD']}}</td>
                         </tr>
-                        <tr class="hover:bg-gray-50">
+                        <tr *ngIf="customerHistorySelectedResult['gender_match'] === false" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Gender</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                        </tr>
+
+                        <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === true" class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
                           <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
+                        </tr>
+
+                        <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === false" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
                         </tr>
                         <!-- <tr class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Party Type</td>
-                          <td class="border border-gray-300 px-4 py-2">alice example.com</td>
-                          <td class="border border-gray-300 px-4 py-2">Admin</td>
-                        </tr> -->
+                                              <td class="border border-gray-300 px-4 py-2">Party Type</td>
+                                              <td class="border border-gray-300 px-4 py-2">alice example.com</td>
+                                              <td class="border border-gray-300 px-4 py-2">Admin</td>
+                                            </tr> -->
                         <!-- More rows... -->
                       </tbody>
                     </table>

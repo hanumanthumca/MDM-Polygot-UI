@@ -177,9 +177,60 @@ radioCategories: any[] =[];
   handleClick(value: string) {
     console.log('Clicked radio value:', value);
     this.displayHistoryTable=true;
-    let historyDataObject=this.customerHistory;
+    let historyDataObject:any[]=[];
+     historyDataObject=this.customerHistory;
+    //@ts-ignore
+   // historyDataObject.sort((a, b) => new Date(a['HIST_CREATE_DATE']) - new Date(b['HIST_CREATE_DATE']));
+   //@ts-ignore  
+    historyDataObject.sort((a, b) => new Date(b['HIST_CREATE_DATE']) - new Date(a['HIST_CREATE_DATE']));
+
+ //   events.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    for (let i = 0; i < historyDataObject.length; i++) {
+
+      if (i + 1 < historyDataObject.length) {
+        historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i + 1]['FIRST_NAME'];
+        historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i + 1]['LAST_NAME'];
+        historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i + 1]['GENDER_CD'];
+        historyDataObject[i]['BIRTH_DATE_Old'] = historyDataObject[i + 1]['BIRTH_DATE'];
+      } else {
+        historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i]['FIRST_NAME'];
+        historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i]['LAST_NAME'];
+        historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i]['GENDER_CD'];
+        historyDataObject[i]['BIRTH_DATE_Old'] = historyDataObject[i]['BIRTH_DATE'];
+      }
+    }
+
+    console.log('latest data is', historyDataObject);
     let resultObj = historyDataObject.find(p => p['HIST_CREATE_DATE'] === value);
-  this.customerHistorySelectedResult=resultObj;
+    this.customerHistorySelectedResult = resultObj;
+    if (this.customerHistorySelectedResult['LAST_NAME_Old'] === this.customerHistorySelectedResult['LAST_NAME']) {
+      this.customerHistorySelectedResult['last_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LAST_NAME_Old'] !== this.customerHistorySelectedResult['LAST_NAME']) {
+      this.customerHistorySelectedResult['last_name_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['FIRST_NAME_Old'] === this.customerHistorySelectedResult['FIRST_NAME']) {
+      this.customerHistorySelectedResult['first_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['FIRST_NAME_Old'] !== this.customerHistorySelectedResult['FIRST_NAME']) {
+      this.customerHistorySelectedResult['first_name_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['GENDER_CD_Old'] === this.customerHistorySelectedResult['GENDER_CD']) {
+      this.customerHistorySelectedResult['gender_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['GENDER_CD_Old'] !== this.customerHistorySelectedResult['GENDER_CD']) {
+      this.customerHistorySelectedResult['gender_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['BIRTH_DATE_Old'] === this.customerHistorySelectedResult['BIRTH_DATE']) {
+      this.customerHistorySelectedResult['birthdate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['BIRTH_DATE_Old'] !== this.customerHistorySelectedResult['BIRTH_DATE']) {
+      this.customerHistorySelectedResult['birthdate_match'] = false;
+    }
+
   console.log('customerHistorySelectedResult :', this.customerHistorySelectedResult);
     // Add any custom logic here
   }
