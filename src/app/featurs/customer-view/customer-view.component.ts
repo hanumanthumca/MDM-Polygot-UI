@@ -53,7 +53,20 @@ displayHistoryTable=false;
 startDate='';
 endDate='';
 customerHistorySelectedResult={};
+erpSourceObjectForTableData={};
+netSuiteObjectForTableData={};
+crossRefernceObjForCustomers=[];
+crossRefernceXReferenceObjForCustomers=[];
+crossRefernceTrustObjForCustomers=[];
 customerHistory: any[]=[];
+  erpSourceTrustObjectsFirstName = {};
+  netSuiteSourceTrustObjectsFirstName = {};
+  erpSourceTrustObjectsLastName = {};
+  netSuiteSourceTrustObjectsLastName = {};
+  erpSourceTrustObjectsGender = {};
+  netSuiteSourceTrustObjectsGender = {};
+  erpSourceTrustObjectsBirthDate = {};
+  netSuiteSourceTrustObjectsBirthDate = {};
 radioOptions = [
   { label: 'Option A', value: 'A' },
   { label: 'Option B', value: 'B' },
@@ -80,6 +93,9 @@ radioCategories: any[] =[];
 
     let finalQueryString='where '
     this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
+    this.getCrossRefernceForCustomers(finalQueryString)
+    this.getCrossRefernceXReferenceForCustomers(finalQueryString)
+    this.getCrossRefernceTrustForCustomers(finalQueryString);
     this.formGroup = new FormGroup({
       selectedCategory: new FormControl()
   });
@@ -122,6 +138,179 @@ radioCategories: any[] =[];
     this.updateFromAPI(query);
   }
   
+  async getCrossRefernceTrustForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/crossRefernceTrustForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           this.crossRefernceTrustObjForCustomers = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processTrustDataForCustomers(this.crossRefernceTrustObjForCustomers);
+        }
+      })
+    })
+
+  }
+
+  async getCrossRefernceXReferenceForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/crossRefernceXReferenceForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           this.crossRefernceXReferenceObjForCustomers = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processXReferenceForCustomers(this.crossRefernceXReferenceObjForCustomers);
+        }
+      })
+    })
+
+  }
+
+  processTrustDataForCustomers(respose: any) {
+    let resposeDataForTrust = respose;
+    
+    let erpTrustArray = [];
+    let netSuiteTrustArray = [];
+    for (let i = 0; i < resposeDataForTrust.length; i++) {
+      if (resposeDataForTrust[i]['SOURCE_SYSTEM'] === 'ERP') {
+        erpTrustArray.push(resposeDataForTrust[i]);
+      }
+      if (resposeDataForTrust[i]['SOURCE_SYSTEM'] === 'NETSUITE') {
+        netSuiteTrustArray.push(resposeDataForTrust[i]);
+      }
+
+    }
+
+    this.erpSourceTrustObjectsFirstName = erpTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
+    this.netSuiteSourceTrustObjectsFirstName = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
+
+
+    this.erpSourceTrustObjectsLastName = erpTrustArray.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
+    this.netSuiteSourceTrustObjectsLastName = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
+
+    this.erpSourceTrustObjectsGender = erpTrustArray.find(item => item['COLUMN_NAME'] === 'GENDER_CD');
+    this.netSuiteSourceTrustObjectsGender = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'GENDER_CD');
+
+
+    this.erpSourceTrustObjectsBirthDate = erpTrustArray.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
+    this.netSuiteSourceTrustObjectsBirthDate = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
+
+    console.log('hellllllllllllll erpSourceTrustObjects',erpTrustArray);
+    console.log('hellllllllllllll netSuiteTrustArray',netSuiteTrustArray);
+    // const uniqueSourceNames=[... new Set(resposeData.map(item =>item['SRC_SYSTEM_NAME']))];
+    // let  erpSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'ERP');
+    // let  netSuiteSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'NETSUITE');
+
+    // this.erpSourceObjectForTableData=erpSourceObject;
+    // this.netSuiteObjectForTableData=netSuiteSourceObject;
+
+    // console.log('hello log', this.erpSourceObjectForTableData);
+    // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    // console.log('history dates are',historyDats);
+    // this.options=[];
+    // let historyDates=[];
+    // historyDats.forEach(function(date) {
+    //   console.log(date);
+    //   let dateObj={
+    //     label: date,
+    //     value: date, 
+        
+    // }
+    // historyDates.push(dateObj);
+    // });
+    // this.options=historyDates;
+
+    // // options = [
+    // //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
+    // //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
+    // //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
+    // //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
+    
+    // // ];
+  }
+  processXReferenceForCustomers(respose: any) {
+    let resposeData=respose;
+
+    const uniqueSourceNames=[... new Set(resposeData.map(item =>item['SRC_SYSTEM_NAME']))];
+    let  erpSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'ERP');
+    let  netSuiteSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'NETSUITE');
+
+    this.erpSourceObjectForTableData=erpSourceObject;
+    this.netSuiteObjectForTableData=netSuiteSourceObject;
+
+    console.log('hello log', this.erpSourceObjectForTableData);
+    // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    // console.log('history dates are',historyDats);
+    // this.options=[];
+    // let historyDates=[];
+    // historyDats.forEach(function(date) {
+    //   console.log(date);
+    //   let dateObj={
+    //     label: date,
+    //     value: date, 
+        
+    // }
+    // historyDates.push(dateObj);
+    // });
+    // this.options=historyDates;
+
+    // // options = [
+    // //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
+    // //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
+    // //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
+    // //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
+    
+    // // ];
+  }
+  async getCrossRefernceForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/crossRefernceForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.crossRefernceObjForCustomers = response[0];
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
+    })
+
+  }
   async getCustomerHistoryDataByCustomerFromAPI(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/historyDataForCustomers';

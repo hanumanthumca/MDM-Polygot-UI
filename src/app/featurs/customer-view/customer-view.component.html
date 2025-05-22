@@ -413,16 +413,50 @@
             <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                 <thead>
                   <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Email</th>
-                    <th class="border border-gray-300 px-4 py-2">Role</th>
+                    <th class="border border-gray-300 px-4 py-2">Customer</th>
+                    <th class="border border-gray-300 px-4 py-2">Master Record</th>
+                    <th class="border border-gray-300 px-4 py-2">ERP Active</th>
+                    <th class="border border-gray-300 px-4 py-2">ERP Trust</th>
+                    <th class="border border-gray-300 px-4 py-2">Net Suite Active</th>
+                    <th class="border border-gray-300 px-4 py-2">Net Suite Trust</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="hover:bg-gray-50">
-                    <td class="border border-gray-300 px-4 py-2">Alice</td>
-                    <td class="border border-gray-300 px-4 py-2">alice example.com</td>
-                    <td class="border border-gray-300 px-4 py-2">Admin</td>
+                    <td class="border border-gray-300 px-4 py-2">First Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsFirstName['TRUST_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']}}</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['LAST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['LAST_NAME'] || 'hello' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData?.['LAST_NAME'] || 'hello'}}</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">Admin</td>
+                    <td class="border border-gray-300 px-4 py-2">Admin</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsLastName?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsLastName?.['TRUST_SCORE'] || '' }}</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Gender</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['GENDER_CD']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['GENDER_CD']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['GENDER_CD']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsGender?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsGender?.['TRUST_SCORE'] || '' }}</td>
+            
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['BIRTH_DATE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['BIRTH_DATE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['BIRTH_DATE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsBirthDate?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsBirthDate?.['TRUST_SCORE'] || '' }}</td>
+            
                   </tr>
                   <!-- More rows... -->
                 </tbody>
