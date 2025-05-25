@@ -529,18 +529,18 @@
                       <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] > erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
                         class="text-green-600">
                       
-                        <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        <span style="background-color:pink;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                       </span>
                       
                       <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] < erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
                         class="text-green-600">
                       
-                        <span style="color:black;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        <span > {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                       </span>
                       <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] ===  erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
                         class="text-green-600">
                       
-                        <span style="color:black;">{{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        <span>{{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                       </span>
                     
                     </span>
@@ -548,7 +548,7 @@
                     class="text-green-600">
 
                     <span 
-                      class="text-green-600">
+                      >
                     
                       <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                     </span>
