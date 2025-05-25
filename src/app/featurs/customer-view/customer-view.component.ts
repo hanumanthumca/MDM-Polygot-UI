@@ -50,6 +50,7 @@ countries=[];
 ingredient='Cheese';
 selectedOption: string = '';
 displayHistoryTable=false;
+noHistoryData=false;
 startDate='';
 endDate='';
 customerHistorySelectedResult={};
@@ -67,18 +68,20 @@ customerHistory: any[]=[];
   netSuiteSourceTrustObjectsGender = {};
   erpSourceTrustObjectsBirthDate = {};
   netSuiteSourceTrustObjectsBirthDate = {};
-radioOptions = [
-  { label: 'Option A', value: 'A' },
-  { label: 'Option B', value: 'B' },
-  { label: 'Option C', value: 'C' }
-];
-options = [
-  { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
-  { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
-  { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
-  { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
-
-];
+  erpSourceTrustObjectsAge = {};
+  netSuiteSourceTrustObjectsAge = {};
+  erpSourceTrustObjectsPhone = {};
+  netSuiteSourceTrustObjectsPhone = {};
+  erpSourceTrustObjectsEMail = {};
+  netSuiteSourceTrustObjectsEMail = {};
+  erpSourceTrustObjectsloyolScore = {};
+  netSuiteSourceTrustObjectsloyolScore = {};
+  radioOptions = [
+    { label: 'Option A', value: 'A' },
+    { label: 'Option B', value: 'B' },
+    { label: 'Option C', value: 'C' }
+  ];
+options = [];
 
 radioCategories: any[] =[];
 // custFirstName='';
@@ -92,7 +95,7 @@ radioCategories: any[] =[];
   ngOnInit() {
 
     let finalQueryString='where '
-    this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
+    //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
     this.getCrossRefernceForCustomers(finalQueryString)
     this.getCrossRefernceXReferenceForCustomers(finalQueryString)
     this.getCrossRefernceTrustForCustomers(finalQueryString);
@@ -219,38 +222,20 @@ radioCategories: any[] =[];
     this.erpSourceTrustObjectsBirthDate = erpTrustArray.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
     this.netSuiteSourceTrustObjectsBirthDate = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
 
-    console.log('hellllllllllllll erpSourceTrustObjects',erpTrustArray);
-    console.log('hellllllllllllll netSuiteTrustArray',netSuiteTrustArray);
-    // const uniqueSourceNames=[... new Set(resposeData.map(item =>item['SRC_SYSTEM_NAME']))];
-    // let  erpSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'ERP');
-    // let  netSuiteSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'NETSUITE');
 
-    // this.erpSourceObjectForTableData=erpSourceObject;
-    // this.netSuiteObjectForTableData=netSuiteSourceObject;
+    this.erpSourceTrustObjectsPhone = erpTrustArray.find(item => item['COLUMN_NAME'] === 'PHONE');
+    this.netSuiteSourceTrustObjectsPhone = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'PHONE');
 
-    // console.log('hello log', this.erpSourceObjectForTableData);
-    // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
-    // console.log('history dates are',historyDats);
-    // this.options=[];
-    // let historyDates=[];
-    // historyDats.forEach(function(date) {
-    //   console.log(date);
-    //   let dateObj={
-    //     label: date,
-    //     value: date, 
-        
-    // }
-    // historyDates.push(dateObj);
-    // });
-    // this.options=historyDates;
+    this.erpSourceTrustObjectsEMail = erpTrustArray.find(item => item['COLUMN_NAME'] === 'EMAIL');
+    this.netSuiteSourceTrustObjectsEMail = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'EMAIL');
 
-    // // options = [
-    // //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
-    // //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
-    // //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
-    // //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
-    
-    // // ];
+    this.erpSourceTrustObjectsloyolScore = erpTrustArray.find(item => item['COLUMN_NAME'] === 'LOYALTY_SCOREAIL');
+    this.netSuiteSourceTrustObjectsloyolScore = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'LOYALTY_SCORE');
+
+    this.erpSourceTrustObjectsAge = erpTrustArray.find(item => item['COLUMN_NAME'] === 'AGE');
+    this.netSuiteSourceTrustObjectsAge = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'AGE');
+
+
   }
   processXReferenceForCustomers(respose: any) {
     let resposeData=respose;
@@ -353,16 +338,32 @@ radioCategories: any[] =[];
     historyDates.push(dateObj);
     });
     this.options=historyDates;
-
-    // options = [
-    //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
-    //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
-    //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
-    //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
-    
-    // ];
+    if (this.options.length > 0) {
+      this.noHistoryData=true;
+    } else {
+      this.noHistoryData=false;
+    }
+   
   }
 
+  getHistoryDetails() {
+    let  custHistoryQueryString ='';
+    let startTime='00:00:01';
+    let endTime='23:59:59';
+    let startDate=this.startDate;
+    let endDate=this.endDate;
+
+    // let startDate='2025-05-15';
+    // let endDate='2025-05-20';
+     let timestampStart = `${startDate} ${startTime}`
+      let timestampEnd = `${endDate} ${endTime}`
+   // custHistoryQueryString= ' WHERE HIST_CREATE_DATE BETWEEN TO_TIMESTAMP_NTZ ('+timestampStart+') AND TO_TIMESTAMP_NTZ ('+timestampEnd+ ') AND CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc;'
+    custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc `;
+     
+    
+    this.getCustomerHistoryDataByCustomerFromAPI(custHistoryQueryString);
+  
+  }
   handleClick(value: string) {
     console.log('Clicked radio value:', value);
     this.displayHistoryTable=true;
@@ -381,11 +382,19 @@ radioCategories: any[] =[];
         historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i + 1]['LAST_NAME'];
         historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i + 1]['GENDER_CD'];
         historyDataObject[i]['BIRTH_DATE_Old'] = historyDataObject[i + 1]['BIRTH_DATE'];
+        historyDataObject[i]['AGE_Old'] = historyDataObject[i + 1]['AGE'];
+        historyDataObject[i]['EMAIL_Old'] = historyDataObject[i + 1]['EMAIL'];
+        historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i + 1]['LOYALTY_SCORE'];
+        historyDataObject[i]['PHONE_Old'] = historyDataObject[i + 1]['PHONE'];
       } else {
         historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i]['FIRST_NAME'];
         historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i]['LAST_NAME'];
         historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i]['GENDER_CD'];
         historyDataObject[i]['BIRTH_DATE_Old'] = historyDataObject[i]['BIRTH_DATE'];
+        historyDataObject[i]['AGE_Old'] = historyDataObject[i]['AGE'];
+        historyDataObject[i]['EMAIL_Old'] = historyDataObject[i]['EMAIL'];
+        historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i]['LOYALTY_SCORE'];
+        historyDataObject[i]['PHONE_Old'] = historyDataObject[i]['PHONE'];
       }
     }
 
@@ -419,6 +428,35 @@ radioCategories: any[] =[];
     if (this.customerHistorySelectedResult['BIRTH_DATE_Old'] !== this.customerHistorySelectedResult['BIRTH_DATE']) {
       this.customerHistorySelectedResult['birthdate_match'] = false;
     }
+
+    if (this.customerHistorySelectedResult['PHONE_Old'] === this.customerHistorySelectedResult['PHONE']) {
+      this.customerHistorySelectedResult['phone_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['PHONE_Old'] !== this.customerHistorySelectedResult['PHONE']) {
+      this.customerHistorySelectedResult['phone_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['EMAIL_Old'] === this.customerHistorySelectedResult['EMAIL']) {
+      this.customerHistorySelectedResult['email_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['EMAIL_Old'] !== this.customerHistorySelectedResult['EMAIL']) {
+      this.customerHistorySelectedResult['email_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['AGE_Old'] === this.customerHistorySelectedResult['AGE']) {
+      this.customerHistorySelectedResult['age_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['AGE_Old'] !== this.customerHistorySelectedResult['AGE']) {
+      this.customerHistorySelectedResult['age_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['LOYALTY_SCORE_Old'] === this.customerHistorySelectedResult['LOYALTY_SCORE']) {
+      this.customerHistorySelectedResult['loyolity_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LOYALTY_SCORE_Old'] !== this.customerHistorySelectedResult['LOYALTY_SCORE']) {
+      this.customerHistorySelectedResult['loyolity_match'] = false;
+    }
+
 
   console.log('customerHistorySelectedResult :', this.customerHistorySelectedResult);
     // Add any custom logic here
