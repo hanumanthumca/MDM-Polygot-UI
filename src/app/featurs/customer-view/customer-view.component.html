@@ -494,9 +494,72 @@
                     <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['PHONE']}}</td>
                     <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['PHONE']}}</td>
                     
-                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsPhone ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] > netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="background-color:pink;">   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] < netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsPhone ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
                     <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['PHONE']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="erpSourceTrustObjectsPhone ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsPhone?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsPhone?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] > erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="background-color:pink;">   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] < erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] ===  erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+          <span *ngIf="erpSourceTrustObjectsPhone?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsPhone?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsPhone ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
             
                   </tr>
 
@@ -505,22 +568,131 @@
                     <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['EMAIL']}}</td>
                     <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['EMAIL']}}</td>
                     
-                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsEMail ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] > netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="background-color:pink;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] < netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span > {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>{{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsEMail ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
                     <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['EMAIL']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }} -->
+                      <span
+                        *ngIf="erpSourceTrustObjectsEMail ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsEMail?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsEMail?.['TRUST_SCORE'] !== '' "
+                        class="text-black-600">
+                      
+                        <!--    <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                                          </span> -->
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] > erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span style="background-color:pink;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] < erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] ===  erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span>{{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                      </span>
+                      
+                      
+                      <span
+                        *ngIf="erpSourceTrustObjectsEMail?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsEMail?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsEMail ?. ['TRUST_SCORE'] === '' "
+                        class="text-black-600">
+                        <span>
+                          <span style="color:red;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      </span>
+                    
+                    </td>
             
                   </tr>
 
                   <tr class="hover:bg-gray-50">
                     <td class="border border-gray-300 px-4 py-2">Loyolity Score</td>
                     <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['LOYALTY_SCORE']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['LOYALTY_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{erpSourceObjectForTableData['LOYALTY_SCORE']}}
                     
-                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</td>
+                    </td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }} -->
+                      <span
+                        *ngIf="netSuiteSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== '' "
+                        class="text-black-600">
+                      
+                      
+                        <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] > netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span style="background-color:pink;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                        <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] < netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                        <span
+                          *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span>{{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                      </span>
+                      
+                      
+                      <span
+                        *ngIf="netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] === '' "
+                        class="text-black-600">
+                      
+                        <span>
+                      
+                          <span style="color:red;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }} </span>
+                        </span>
+                      </span>
+                    
+                    </td>
                     <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['LOYALTY_SCORE']}}</td>
                     <td class="border border-gray-300 px-4 py-2">
-                      <!-- {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }} -->
-                    
+                     
                     <span *ngIf="erpSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== '' " 
                         class="text-green-600">
                       
@@ -547,8 +719,7 @@
                     <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsloyolScore?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] === '' " 
                     class="text-green-600">
 
-                    <span 
-                      >
+                    <span >
                     
                       <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                     </span>
