@@ -154,6 +154,8 @@ export class QuerisComponent {
       customerObj:customer,
     },
     width:"89vw",
+    height:"95vh",
+
     header:"Customer Information",
     modal:true,
     closable:true

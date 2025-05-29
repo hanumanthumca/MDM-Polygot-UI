@@ -1,4 +1,10 @@
 <div class="p-tabmenu-nav-content">
+  <div  *ngIf="loadSpinner" class="flex justify-center items-center min-h-[100px]">
+
+    <!-- <p>loading: {{ loadSpinner }}</p> -->
+    <p-progressSpinner styleClass="text-blue-600" [style]="{width: '10rem', height: '10rem'}"></p-progressSpinner>
+    </div>
+
 <p-tabs value="0">
     <p-tablist>
         <p-tab style="border-bottom: 2px solid blue" value="0">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
@@ -126,8 +132,8 @@
             </div>
         </p-tabpanel>
         <p-tabpanel value="1">
-            <div class="w-[35%] bg-white-200 p-4">
-            </div>
+            <!-- <div class="w-[35%] bg-white-200 p-4">
+            </div> -->
             <div class="w-[45%] bg-white-200 p-4">
             <div class="flex gap-4">
                 <!-- First Calendar -->
@@ -183,10 +189,10 @@
                 </div>
                 <div class="w-[75%] bg-white-200 p-4">
                     <div *ngIf="displayHistoryTable">
-                    <p> Selected time: <b> {{ selectedOption }} </b>
+                    <!-- <p> Selected time: <b> {{ selectedOption }} </b>
                         Start Date :{{ startDate }} 
                         End Date :{{ endDate }} 
-                    </p>
+                    </p> -->
                     <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                       <thead>
                         <tr class="bg-gray-100">
@@ -196,21 +202,35 @@
                         </tr>
                       </thead>
                       <tbody>
-                    
-                        <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">First Name</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                        <!-- style="padding-bottom:0.1rem !important";
+
+                        padding-bottom:0.1rem !important; -->
+
+                        <!-- <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === true" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important";>First Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important";>{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important";>{{customerHistorySelectedResult['FIRST_NAME']}}</td>
                         </tr>
                         <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === false"class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">First Name</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">First Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                        </tr> -->
+
+                        <tr  *ngIf=" customerHistorySelectedResult['first_name_match'] === true" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">First Name</td>
+                          <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
                         </tr>
+                        <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === false"class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">First Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                        </tr> 
                         <tr *ngIf="customerHistorySelectedResult['last_name_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Last Name</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LAST_NAME']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Name11</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LAST_NAME']}}</td>
                         </tr>
                          <!-- remove this starts logic -->
                         <!-- <tr *ngIf="customerHistorySelectedResult['last_name_match'] === false" class="hover:bg-gray-50">
@@ -223,78 +243,78 @@
                         <!-- remove this ends logic -->
                         <!-- working logic -->
                         <tr *ngIf="customerHistorySelectedResult['last_name_match'] === false" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Last Name</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Name</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
                             {{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
                             {{customerHistorySelectedResult['LAST_NAME']}}</td>
                         </tr>
                     
                     
                         <tr *ngIf="customerHistorySelectedResult['gender_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Gender</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Gender</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['GENDER_CD']}}</td>
                         </tr>
                         <tr *ngIf="customerHistorySelectedResult['gender_match'] === false" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Gender</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Gender</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['GENDER_CD']}}</td>
                         </tr>
 
                         <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Birth Date</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Birth Date</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
                         </tr>
 
                         <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === false" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Birth Date</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2"style="padding-bottom:0.1rem !important">Birth Date</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['BIRTH_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['BIRTH_DATE']}}</td>
                         </tr>
                         <tr *ngIf="customerHistorySelectedResult['age_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Age</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['AGE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['AGE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Age</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['AGE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['AGE']}}</td>
                         </tr>
 
                         <tr  *ngIf="customerHistorySelectedResult['age_match'] === false"class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Age</td>
-                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink;">{{customerHistorySelectedResult['AGE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink;">{{customerHistorySelectedResult['AGE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Age</td>
+                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['AGE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['AGE']}}</td>
                         </tr> 
                         <tr *ngIf="customerHistorySelectedResult['email_match'] === true" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Email</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['EMAIL_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['EMAIL']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Email</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['EMAIL_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['EMAIL']}}</td>
                         </tr>
 
                         <tr  *ngIf="customerHistorySelectedResult['email_match'] === false"class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Email</td>
-                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink;" >{{customerHistorySelectedResult['EMAIL_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;" >{{customerHistorySelectedResult['EMAIL']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Email</td>
+                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['EMAIL_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['EMAIL']}}</td>
                         </tr>
                         <tr  *ngIf="customerHistorySelectedResult['phone_match'] === true"  class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Phone</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['PHONE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['PHONE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Phone</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['PHONE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['PHONE']}}</td>
                         </tr>
                         <tr *ngIf="customerHistorySelectedResult['phone_match'] === false"   class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Phone</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['PHONE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink;">{{customerHistorySelectedResult['PHONE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Phone</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['PHONE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['PHONE']}}</td>
                         </tr>
 
                         <tr   *ngIf="customerHistorySelectedResult['loyolity_match'] === true"  class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Loyolity Score</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2">{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Loyolity Score</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
                         </tr>
                         <tr *ngIf="customerHistorySelectedResult['loyolity_match'] === false" class="hover:bg-gray-50">
-                          <td class="border border-gray-300 px-4 py-2">Loyolity Score</td>
-                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink;" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
-                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink;" >{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Loyolity Score</td>
+                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
                         </tr>
                         <!-- <tr class="hover:bg-gray-50">
                                               <td class="border border-gray-300 px-4 py-2">Party Type</td>
@@ -419,13 +439,153 @@
                 </thead>
                 <tbody>
                   <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['CUSTOMER_MDM_ID']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['CUSTOMER_MDM_ID']}}</td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsCustID ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] > netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] < netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsCustID ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{netSuiteObjectForTableData['CUSTOMER_MDM_ID']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="erpSourceTrustObjectsCustID ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsCustID?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsCustID?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] > erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] < erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] ===  erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsCustID?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsCustID?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsCustID ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
                     <td class="border border-gray-300 px-4 py-2">First Name</td>
                     <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['FIRST_NAME']}}</td>
                     <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['FIRST_NAME']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsFirstName['TRUST_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsFirstName['TRUST_SCORE']}} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] > netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] < netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
                     <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['FIRST_NAME']}}</td>
                     
-                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']}} -->
+                      <span *ngIf="erpSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] > erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] < erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] ===  erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsFirstName?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
                   </tr>
                   <tr class="hover:bg-gray-50">
                     <td class="border border-gray-300 px-4 py-2">Last Name</td>
@@ -485,7 +645,40 @@
                     </td>
                    
                     <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['AGE']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsAge?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsAge?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] > erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] < erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] ===  erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsAge?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsAge?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    
+                    </td>
             
                   </tr>
 
@@ -503,7 +696,7 @@
                     <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] > netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
                       class="text-black-600">
                     
-                      <span style="background-color:pink;">   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                      <span style="color:red;">   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
                     </span>
                     
                     <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] < netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
@@ -537,7 +730,7 @@
                     <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] > erpSourceTrustObjectsPhone['TRUST_SCORE']"
                       class="text-black-600">
                     
-                      <span style="background-color:pink;">   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
                     </span>
                     
                     <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] < erpSourceTrustObjectsPhone['TRUST_SCORE']"
@@ -577,7 +770,7 @@
                     <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] > netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
                       class="text-black-600">
                     
-                      <span style="background-color:pink;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                      <span style="color:red;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
                     </span>
                     
                     <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] < netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
@@ -614,7 +807,7 @@
                         <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] > erpSourceTrustObjectsEMail['TRUST_SCORE']"
                           class="text-black-600">
                       
-                          <span style="background-color:pink;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                          <span style="color:red;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
                         </span>
                       
                         <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] < erpSourceTrustObjectsEMail['TRUST_SCORE']"
@@ -661,7 +854,7 @@
                         <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] > netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
                           class="text-black-600">
                       
-                          <span style="background-color:pink;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                          <span style="color:red;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                         </span>
                       
                         <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] < netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
@@ -701,7 +894,7 @@
                       <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] > erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
                         class="text-green-600">
                       
-                        <span style="background-color:pink;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
                       </span>
                       
                       <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] < erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
@@ -736,28 +929,514 @@
 
         <p-tabpanel value="3">
           
-            <p class="m-0">
-                Match screen view 1234567888888888888888888888<br/>
-                3rd  tab
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                anim id est laborum.
-            </p>
+          
             <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                 <thead>
                   <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Email</th>
-                    <th class="border border-gray-300 px-4 py-2">Role</th>
+                    <th class="border border-gray-300 px-4 py-2">Customer ID = <strong>{{netSuiteObjectForTableData['ORIGINAL_MDM_ID']}} </strong> </th>
+                    <th class="border border-gray-300 px-4 py-2">Merge Preview</th>
+                    <th class="border border-gray-300 px-4 py-2">ERP Customer ID  = <strong>{{erpSourceObjectForTableData['ORIGINAL_MDM_ID']}}</strong></th>
+                    <th class="border border-gray-300 px-4 py-2"> ERP Trust  </th>
+                    <th class="border border-gray-300 px-4 py-2">Net Suite Customer ID =<b> {{netSuiteObjectForTableData['ORIGINAL_MDM_ID']}}</b></th>
+                    <th class="border border-gray-300 px-4 py-2">Net Suite Trust </th>
                   </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                   <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">First Name</td>
+                   
+                    <td class="border border-gray-300 px-4 py-2">{{matchRefernceObjForCustomers['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">Admin</td>
                     <td class="border border-gray-300 px-4 py-2">Alice</td>
                     <td class="border border-gray-300 px-4 py-2">alice example.com</td>
                     <td class="border border-gray-300 px-4 py-2">Admin</td>
+                  </tr>
+              
+                </tbody> -->
+
+                <!-- Match screen intgeration has to change later with some properties -->
+                <tbody>
+                  <!-- <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['CUSTOMER_MDM_ID']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['CUSTOMER_MDM_ID']}}</td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                    
+                      <span *ngIf="netSuiteSourceTrustObjectsCustID ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] > netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] < netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsCustID['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsCustID ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{netSuiteObjectForTableData['CUSTOMER_MDM_ID']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                       {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }} 
+                      <span *ngIf="erpSourceTrustObjectsCustID ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsCustID?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsCustID?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] > erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] < erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsCustID['TRUST_SCORE'] ===  erpSourceTrustObjectsCustID['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsCustID?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsCustID?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsCustID ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsCustID?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
+                  </tr> -->
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">First Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['FIRST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsFirstName['TRUST_SCORE']}} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] > netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] < netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsFirstName['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['FIRST_NAME']}}</td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsFirstName['TRUST_SCORE']}} -->
+                      <span *ngIf="erpSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] > erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] < erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsFirstName['TRUST_SCORE'] ===  erpSourceTrustObjectsFirstName['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsFirstName?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsFirstName?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsFirstName ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsFirstName?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['LAST_NAME']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['LAST_NAME'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsLastName?.['TRUST_SCORE'] || '' }}</td>
+                   
+                    <!-- <td class="border border-gray-300 px-4 py-2">Admin</td>
+                    <td class="border border-gray-300 px-4 py-2">Admin</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData?.['LAST_NAME'] || ''}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsLastName?.['TRUST_SCORE'] || '' }}</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Gender</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['GENDER_CD']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['GENDER_CD']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsGender?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['GENDER_CD']}}</td>
+                   
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsGender?.['TRUST_SCORE'] || '' }}</td>
+            
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['BIRTH_DATE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['BIRTH_DATE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceTrustObjectsBirthDate?.['TRUST_SCORE'] || '' }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['BIRTH_DATE']}}</td>
+                   
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteSourceTrustObjectsBirthDate?.['TRUST_SCORE'] || '' }}</td>
+            
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Age</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['AGE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['AGE']}}</td>
+      
+                    <td class="border border-gray-300 px-4 py-2">
+                      <span *ngIf="erpSourceTrustObjectsAge['TRUST_SCORE'] > netSuiteSourceTrustObjectsAge['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span style="color:red;"> {{erpSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                      
+                      <span *ngIf="erpSourceTrustObjectsAge['TRUST_SCORE'] < netSuiteSourceTrustObjectsAge['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span style="color:black;"> {{erpSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                      <span *ngIf="erpSourceTrustObjectsAge['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsAge['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span style="color:black;"> {{erpSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                    
+                    </td>
+                   
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['AGE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsAge?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsAge?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] > erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] < erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsAge['TRUST_SCORE'] ===  erpSourceTrustObjectsAge['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="erpSourceTrustObjectsAge?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsAge?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    
+                    </td>
+            
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Phone</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['PHONE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['PHONE']}}</td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsPhone ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] > netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] < netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsPhone['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsPhone ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{erpSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['PHONE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="erpSourceTrustObjectsPhone ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsPhone?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsPhone?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] > erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;">   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] < erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span >   {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="netSuiteSourceTrustObjectsPhone['TRUST_SCORE'] ===  erpSourceTrustObjectsPhone['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>  {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+          <span *ngIf="erpSourceTrustObjectsPhone?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsPhone?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsPhone ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;">  {{netSuiteSourceTrustObjectsPhone?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+                    </td>
+            
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Email</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['EMAIL']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData['EMAIL']}}</td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }} -->
+                      <span *ngIf="netSuiteSourceTrustObjectsEMail ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] !== '' " 
+                      class="text-black-600">
+                    
+                    
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] > netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span style="color:red;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] < netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span > {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsEMail['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsEMail['TRUST_SCORE']"
+                      class="text-black-600">
+                    
+                      <span>{{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                  
+                  </span>
+        
+        
+<span *ngIf="netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsEMail ?. ['TRUST_SCORE'] === '' " 
+                  class="text-black-600">
+                  <span >
+                    <span style="color:red;"> {{erpSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                  </span>
+                  </span>
+
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['EMAIL']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }} -->
+                      <span
+                        *ngIf="erpSourceTrustObjectsEMail ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsEMail?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsEMail?.['TRUST_SCORE'] !== '' "
+                        class="text-black-600">
+                      
+                        <!--    <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                                          </span> -->
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] > erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span style="color:red;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] < erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                        <span *ngIf="netSuiteSourceTrustObjectsEMail['TRUST_SCORE'] ===  erpSourceTrustObjectsEMail['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span>{{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                      </span>
+                      
+                      
+                      <span
+                        *ngIf="erpSourceTrustObjectsEMail?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsEMail?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsEMail ?. ['TRUST_SCORE'] === '' "
+                        class="text-black-600">
+                        <span>
+                          <span style="color:red;"> {{netSuiteSourceTrustObjectsEMail?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      </span>
+                    
+                    </td>
+            
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Loyolity Score</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['LOYALTY_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{erpSourceObjectForTableData['LOYALTY_SCORE']}}
+                    
+                    </td>
+                    
+                    <td class="border border-gray-300 px-4 py-2">
+                      <!-- {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }} -->
+                      <span
+                        *ngIf="netSuiteSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== '' "
+                        class="text-black-600">
+                      
+                      
+                        <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] > netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span style="color:red;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                        <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] < netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                        <span
+                          *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] ===  netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                          class="text-black-600">
+                      
+                          <span>{{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                        </span>
+                      
+                      </span>
+                      
+                      
+                      <span
+                        *ngIf="netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] === null ||  netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE']  === undefined  ||  netSuiteSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] === '' "
+                        class="text-black-600">
+                      
+                        <span>
+                      
+                          <span style="color:red;"> {{erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }} </span>
+                        </span>
+                      </span>
+                    
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">{{netSuiteObjectForTableData['LOYALTY_SCORE']}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                     
+                    <span *ngIf="erpSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] !== null && erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== undefined  && erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] !== '' " 
+                        class="text-green-600">
+                      
+                       <!--    <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                      </span> -->
+                      <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] > erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                      
+                      <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] < erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span > {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                      <span *ngIf="netSuiteSourceTrustObjectsloyolScore['TRUST_SCORE'] ===  erpSourceTrustObjectsloyolScore['TRUST_SCORE']"
+                        class="text-green-600">
+                      
+                        <span>{{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                      </span>
+                    
+                    </span>
+                    <span *ngIf="erpSourceTrustObjectsloyolScore?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsloyolScore?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsloyolScore ?. ['TRUST_SCORE'] === '' " 
+                    class="text-green-600">
+
+                    <span >
+                    
+                      <span style="color:red;"> {{netSuiteSourceTrustObjectsloyolScore?.['TRUST_SCORE'] || '' }}</span>
+                    </span>
+                    </span>
+                    </td>
+            
                   </tr>
                   <!-- More rows... -->
                 </tbody>

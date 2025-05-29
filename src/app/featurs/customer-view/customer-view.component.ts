@@ -20,11 +20,12 @@ import { RadioButton } from 'primeng/radiobutton';
 import { Select } from 'primeng/select';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-customer-view',
   standalone: true,
 
-  imports: [FormsModule,PanelModule,MenuModule,CommonModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
+  imports: [FormsModule,PanelModule,MenuModule,CommonModule,ProgressSpinnerModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
 
   templateUrl: './customer-view.component.html',
   providers:[DialogService],
@@ -59,9 +60,15 @@ netSuiteObjectForTableData={};
 crossRefernceObjForCustomers=[];
 crossRefernceXReferenceObjForCustomers=[];
 crossRefernceTrustObjForCustomers=[];
+matchRefernceObjForCustomers=[];
+matchRefernceXReferenceObjForCustomers=[];
+matchRefernceTrustObjForCustomers=[];
+
 customerHistory: any[]=[];
   erpSourceTrustObjectsFirstName = {};
   netSuiteSourceTrustObjectsFirstName = {};
+  erpSourceTrustObjectsCustID = {};
+  netSuiteSourceTrustObjectsCustID = {};
   erpSourceTrustObjectsLastName = {};
   netSuiteSourceTrustObjectsLastName = {};
   erpSourceTrustObjectsGender = {};
@@ -82,7 +89,7 @@ customerHistory: any[]=[];
     { label: 'Option C', value: 'C' }
   ];
 options = [];
-
+loadSpinner =false;
 radioCategories: any[] =[];
 // custFirstName='';
 // custFirstName='';
@@ -96,9 +103,13 @@ radioCategories: any[] =[];
 
     let finalQueryString='where '
     //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
-    this.getCrossRefernceForCustomers(finalQueryString)
-    this.getCrossRefernceXReferenceForCustomers(finalQueryString)
+    this.getCrossRefernceForCustomers(finalQueryString);
+    this.getJobRunStatus(finalQueryString);
+    this.getMatchRefernceForCustomers(finalQueryString);
+    this.getCrossRefernceXReferenceForCustomers(finalQueryString);
+    this.getMatchRefernceXReferenceForCustomers(finalQueryString);
     this.getCrossRefernceTrustForCustomers(finalQueryString);
+    this.getMatchRefernceTrustForCustomers(finalQueryString);
     this.formGroup = new FormGroup({
       selectedCategory: new FormControl()
   });
@@ -141,6 +152,31 @@ radioCategories: any[] =[];
     this.updateFromAPI(query);
   }
   
+  async getMatchRefernceTrustForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/matchRefernceTrustForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           this.crossRefernceTrustObjForCustomers = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processTrustDataForCustomers(this.crossRefernceTrustObjForCustomers);
+        }
+      })
+    })
+
+  }
   async getCrossRefernceTrustForCustomers(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/crossRefernceTrustForCustomers';
@@ -167,6 +203,31 @@ radioCategories: any[] =[];
 
   }
 
+  async getMatchRefernceXReferenceForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/matchRefernceXReferenceForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+          // this.crossRefernceXReferenceObjForCustomers = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+         // this.processXReferenceForCustomers(this.crossRefernceXReferenceObjForCustomers);
+        }
+      })
+    })
+
+  }
   async getCrossRefernceXReferenceForCustomers(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/crossRefernceXReferenceForCustomers';
@@ -211,6 +272,8 @@ radioCategories: any[] =[];
     this.erpSourceTrustObjectsFirstName = erpTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
     this.netSuiteSourceTrustObjectsFirstName = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
 
+    this.erpSourceTrustObjectsCustID = erpTrustArray.find(item => item['COLUMN_NAME'] === 'CUSTOMER_ID');
+    this.netSuiteSourceTrustObjectsCustID = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'CUSTOMER_ID');
 
     this.erpSourceTrustObjectsLastName = erpTrustArray.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
     this.netSuiteSourceTrustObjectsLastName = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
@@ -271,6 +334,84 @@ radioCategories: any[] =[];
     
     // // ];
   }
+  async getMatchRefernceForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/matchRefernceForCustomers';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.matchRefernceObjForCustomers = response[0];
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
+    })
+
+  }
+
+  async getJobRunStatus(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/runJobs';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           // this.crossRefernceObjForCustomers = response[0];
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+          let finalQueryString='where '
+          this.getJobRunStatusLog(finalQueryString);
+        }
+      })
+    })
+
+  }
+  async getJobRunStatusLog(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/jobsLog';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+  
+          if (response) {
+           // this.crossRefernceObjForCustomers = response[0];
+          } else {
+  
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
+    })
+  
+  }
   async getCrossRefernceForCustomers(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/crossRefernceForCustomers';
@@ -297,6 +438,7 @@ radioCategories: any[] =[];
 
   }
   async getCustomerHistoryDataByCustomerFromAPI(queryForAPI: string): Promise<void> {
+    this.loadSpinner=true;
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/historyDataForCustomers';
     return new Promise((resolve, rejects) => {
@@ -312,10 +454,12 @@ radioCategories: any[] =[];
         },
         error: (error: object) => {
           rejects(error);
+          this.loadSpinner=false;
         },
         complete: () => {
           //this.customerByCountryResponse=response;
           this.processHistoryDataForSystemName(this.customerHistory);
+          this.loadSpinner=false;
         }
       })
     })

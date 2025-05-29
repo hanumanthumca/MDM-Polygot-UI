@@ -1,0 +1,41 @@
+<div>
+	<br/>
+	<br/>
+	
+</div>
+<div class="flex align-items-center gap-4 mb-4">
+	
+    &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <p-select [options]="source" [(ngModel)]="selectedSource" optionLabel="name" 
+		optionValue="value"  placeholder="Select a Source" class="w-full md:w-56" 
+		
+		/>
+        <p-select [options]="tables" [(ngModel)]="selectedTable" optionLabel="name" 
+		optionValue="value"  placeholder="Select a Table" class="w-full md:w-56" 
+		
+		/>
+        <p-select [options]="jobTypes" [(ngModel)]="selectedJobType" optionLabel="name" 
+		optionValue="value"  placeholder="Select Type" class="w-full md:w-56" 
+		
+		/>
+    <!-- <p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
+		defaultLabel="Choose Customer Columns"></p-multiSelect> -->
+	<!-- <p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
+		optionValue="headerVal" defaultLabel="Choose Customer Address Columns"></p-multiSelect> -->
+		<div class="flex justify-end gap-2">
+			
+			<p-button label="Run Job"  (click)="generateData()" />
+			
+		  </div>
+		
+		
+</div>
+
+
+
+<div class="card">
+	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
+	
+
+	<!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
+	
+</div>
