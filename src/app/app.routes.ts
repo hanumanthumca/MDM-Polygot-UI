@@ -8,6 +8,6 @@ export const routes: Routes = [
     {path:'home',component:HomeComponent},
     {path:'taskManager',component:TaskManagerComponent},
     {path:'query',component:QuerisComponent},
-    {path:'runJobs',component:JobTriggerComponent},
+    {path:'scheduleJobs',component:JobTriggerComponent}
   //  {path:'',redirectTo:'home',pathMatch:'full'}
 ];

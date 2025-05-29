@@ -42,8 +42,8 @@ export class JobTriggerComponent {
  selectedTable = [];
  selectedJobType = [];
  selectedColumnsForAddress = [];
-  constructor(public dynamicDialogRef:DynamicDialogRef, 
-     public dynamicDialogConfig:DynamicDialogConfig,
+  constructor(
+ 
      private dialogService:DialogService,
      private mdmService: MDMService
    ){}
@@ -95,6 +95,10 @@ export class JobTriggerComponent {
   let finalQueryString='where '
   //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
 //  this.getCrossRefernceForCustomers(finalQueryString);
+// selectedTable
+// selectedJobType
+// selectedSource
+
  this.getJobRunStatus(finalQueryString);
  }
 

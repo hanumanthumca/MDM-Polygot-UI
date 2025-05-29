@@ -12,6 +12,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { HomeComponent } from './featurs/home/home.component';
 import { TaskManagerComponent } from './featurs/task-manager/task-manager.component';
 import { QuerisComponent } from './featurs/queris/queris.component';
+import { JobTriggerComponent } from './featurs/job-trigger/job-trigger.component';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { MultiSelectModule } from "primeng/multiselect"; 
 import { HttpClientModule } from '@angular/common/http';
@@ -27,7 +28,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FormsModule,RadioButtonModule, ProgressSpinnerModule,ReactiveFormsModule,CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
+  imports: [RouterOutlet,FormsModule,RadioButtonModule, ProgressSpinnerModule,ReactiveFormsModule,CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,JobTriggerComponent,QuerisComponent,TaskManagerComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
