@@ -17,6 +17,10 @@ import { MDMService } from 'src/app/Services/mdm-service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from "@angular/common/http";
 import { Table } from 'primeng/table';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+import { saveAs } from 'file-saver';
+import { TooltipModule } from 'primeng/tooltip';
 //import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomerViewComponent } from '../customer-view/customer-view.component';
@@ -25,7 +29,7 @@ import { CustomerViewComponent } from '../customer-view/customer-view.component'
 @Component({
   selector: 'app-task-manager',
   standalone: true,
-  imports: [MenuModule, MenubarModule, FormsModule, SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  imports: [MenuModule, MenubarModule, FormsModule, TooltipModule,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   providers:[MessageService,DialogService],
   templateUrl: './task-manager.component.html',
   styleUrl: './task-manager.component.scss'
@@ -111,6 +115,23 @@ export class TaskManagerComponent {
 
   }
 
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.customers); // or this.dt.filteredValue
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
+      this.saveAsExcelFile(excelBuffer, "Customer Details");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+      const EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      const EXCEL_EXTENSION = ".xlsx";
+      const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+   //   saveAs(data, fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION);
+      saveAs(data, fileName + "_export" + EXCEL_EXTENSION);
+    });
+  }
   save() {
     localStorage.setItem('selectedColumns', JSON.stringify(this.selectedColumns));
   }
@@ -124,7 +145,7 @@ export class TaskManagerComponent {
       data:{
         custId:id
       },
-      width:"89vw",
+      width:"70vw",
       header:"View Customer",
       closable:true
     });

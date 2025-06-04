@@ -93,7 +93,7 @@
 	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
 	<p-table  [value]="customers" #myCustTable [scrollable]="true" styleClass="mt-4" stripedRows 
 	[paginator]="true"
-	[globalFilterFields]="['CUSTOMER_ID','FIRST_NAME', 'LAST_NAME', 'EMAIL', 'PHONE','AGE']"
+	[globalFilterFields]="['CUSTOMER_ID','CUSTOMER_MDM_ID','FIRST_NAME', 'LAST_NAME', 'EMAIL', 'PHONE','AGE']"
 [rows]="10"
 [first]="first"
 [totalRecords]="totalRecords"
@@ -108,31 +108,35 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 <p-button icon="pi pi-external-link" label="Export" (click)="myCustTable.exportCSV();" />
             </div> -->
 			<!-- <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(myCustTable)" /> -->
+		
 			<p-iconfield iconPosition="left" class="ml-auto">
 				<p-inputicon>
 					<i class="pi pi-search"></i>
 				</p-inputicon>
-				<input pInputText type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search " />
+				<input pInputText style="height:39px !important;"type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder=" Global Search " />
 			</p-iconfield>
+			&nbsp;&nbsp;<button type="button" pButton label="Export CSV" icon="pi pi-file" (click)="exportExcel()"></button>
 		</div>
 	</ng-template>
 		<ng-template #header>
 			<tr>
-				<th style="min-width:200px" pFrozenColumn >Id</th>
+				<th style="min-width:100px" pFrozenColumn >Customer Id</th>
+
+				<th style="min-width:100px"  > MDM Id</th>
 				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
-				<th style="min-width:100px">First Name</th>
+				<th style="min-width:200px">First Name</th>
 				<th style="min-width:100px">Last Name</th>
 				<!-- <th style="min-width:200px">Birth Date</th> -->
-				<th style="min-width:200px">Email</th>
-				<th style="min-width:200px">Age</th>
+				<th style="min-width:100px" >Email</th>
+				<!-- <th style="min-width:90px">Age</th> -->
 				<!-- <th style="min-width:200px">Gender</th> -->
 			
-				<th style="min-width:200px">Phone</th>
-				<th style="min-width:200px">City</th>
+				<!-- <th style="min-width:200px">Phone</th> -->
+				<th style="min-width:100px">City</th>
 			 
-				<th style="min-width:200px">ZIP</th>
-				<th style="min-width:200px">State</th>
-				<th style="min-width:200px">Country</th>
+				<th style="min-width:100px">ZIP</th>
+				<th style="min-width:50px">State</th>
+				<th style="min-width:100px">Country</th>
 				<th ></th>
 				<!-- <th style="min-width:200px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">Balance</th> -->
 			</tr>
@@ -140,15 +144,21 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 		<ng-template #body let-customer>
 			<tr>
 				<td pFrozenColumn>{{customer.CUSTOMER_ID}}</td>
+				<td >
+					<a  (click)="viewCustomerTest(customer);" class="text-blue-600 hover:underline">{{customer.CUSTOMER_MDM_ID}}
+
+					</a>
+					</td>
+				
 				<!-- <td style="min-width:200px">{{customer.id}}</td> -->
 				<td >{{customer.FIRST_NAME}}</td>
 				<td >{{customer.LAST_NAME}}</td>
 				<!-- <td>{{customer.BIRTH_DATE}}</td> -->
-				<td>{{customer.EMAIL}}</td>
-				<td>{{customer.AGE}}</td>
+				<td class="text-overlap-wrap email-wrap" pTooltip="{{customer.EMAIL}}">{{customer.EMAIL}}</td>
+				<!-- <td>{{customer.AGE}}</td> -->
 				<!-- <td >{{customer.GENDER_CD}}</td> -->
 				
-				<td>{{customer.PHONE}}</td>
+				<!-- <td>{{customer.PHONE}}</td> -->
 				<td>{{customer.CITY}}</td>
 			  
 				<td>{{customer.ZIP_CODE}}</td>
@@ -164,7 +174,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 	</p-table>
 
 	<!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
-	
+	<!-- <button type="button" pButton label="Export CSV" icon="pi pi-file" (click)="exportExcel()"></button> -->
 </div>
 <!-- <div *ngIf="queryTableDisplay">
 	<table style="border: 1;" id="queryGenerator">

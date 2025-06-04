@@ -13,7 +13,7 @@ import { Observable,BehaviorSubject,Subject } from 'rxjs';
   
     sendPostRequestToAPI(url :string,params:any){
 
- return this.http.post(url,params); 
+        return this.http.post(url,params); 
     }
     getRequestForAPI(url:string,queryString:string): Observable<any> {
      // return this.http.get(this.apiUrl); 

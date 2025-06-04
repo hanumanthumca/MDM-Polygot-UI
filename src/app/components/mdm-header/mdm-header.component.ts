@@ -31,13 +31,19 @@ export class MdmHeaderComponent {
   showDialog() {
     this.visible = true;
   }
-  
+  validateLogOut(){
+    this.isLoginVisble=true;
+    localStorage.setItem('isLoggedIN',JSON.stringify(false));
+    this.router.navigate(['/']);
+  }
   validateLogin() {
    // this.visible = true;
-  
+  localStorage.setItem('isLoggedIN',JSON.stringify(false));
+  let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
     console.log('login hit');
     if(this.userName==='hanumanth'&& this.password==='hanumanth'){
       this.isLoginVisble=false;
+      localStorage.setItem('isLoggedIN',JSON.stringify(true));
       console.log('login success');
       this.failedLogin=false;
       this.router.navigate(['/home']);

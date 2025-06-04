@@ -22,10 +22,11 @@ import { Table } from 'primeng/table';
 import { Select } from 'primeng/select';
 // import { DialogService } from 'primeng/dynamicdialog';
 import { CustomerViewComponent } from '../customer-view/customer-view.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-job-trigger',
   standalone: true,
-  imports: [MenuModule, MenubarModule, FormsModule, Select,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  imports: [MenuModule, MenubarModule, FormsModule, Select,SidebarModule,ProgressSpinnerModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   templateUrl: './job-trigger.component.html',
   providers:[DialogService],
   styleUrl: './job-trigger.component.scss'
@@ -42,12 +43,27 @@ export class JobTriggerComponent {
  selectedTable = [];
  selectedJobType = [];
  selectedColumnsForAddress = [];
+ cars = [];
+ logData=[];
+ first = 0;
+  rows = 10;
   constructor(
  
      private dialogService:DialogService,
      private mdmService: MDMService
    ){}
+   loadSpinner =false;
+   showLogData=false;
  ngOnInit() {
+  this.cars = [
+    { "brand": "Volkswagen", "year": 2012, "color": "White", "vin": "dsad231ff" },
+    { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
+    { "brand": "Renault", "year": 2005, "color": "Gray", "vin": "h354htr" },
+   
+    { "brand": "Jaguar", "year": 2013, "color": "White", "vin": "greg34" },
+    { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
+    { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
+  ];
   this.columns = [
     { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
     { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
@@ -69,7 +85,7 @@ export class JobTriggerComponent {
 
   ];
   this.source = [
-    { name: 'NETSUITE ', value: 'NETSUITE ' },
+    { name: 'NETSUITE', value: 'NETSUITE' },
     { name: 'ERP', value: 'ERP' },
    ];
    this.tables = [
@@ -80,7 +96,7 @@ export class JobTriggerComponent {
    ];
    this.jobTypes = [
     
-    { name: 'ALL ', value: 'ALL ' },
+    { name: 'ALL ', value: 'ALL' },
     { name: 'DATA_INGESTION', value: 'DATA_INGESTION' },
     { name: 'BO-XREF_LOAD', value: 'BO-XREF_LOAD' },
     { name: 'MDM_VALIDATIONS', value: 'MDM_VALIDATIONS' },
@@ -91,6 +107,10 @@ export class JobTriggerComponent {
    ];
  }
 
+ pageChange(event) {
+  this.first = event.first;
+  this.rows = event.rows;
+}  
  generateData() {
   let finalQueryString='where '
   //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
@@ -104,11 +124,15 @@ export class JobTriggerComponent {
 
  async getJobRunStatus(queryForAPI: string): Promise<void> {
   let builtString = queryForAPI;
-  let apiUrl = 'http://localhost:3000/api/runJobs';
+  let stageString="MDM_STG";
+  let devString="MDM_DEV";
+  this.loadSpinner =true;
+  let apiUrl = 'http://localhost:3000/api/runJobs?jobType='+this.selectedJobType+'&source='+this.selectedSource+'&tabele='+this.selectedTable+'&staging='+stageString+'&dev='+devString;
   return new Promise((resolve, rejects) => {
-    this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+  
+    this.mdmService.getRequestForAPI(apiUrl,'').subscribe({
       next: (response: any) => {
-
+  
         if (response) {
          // this.crossRefernceObjForCustomers = response[0];
         } else {
@@ -124,6 +148,7 @@ export class JobTriggerComponent {
         //this.processHistoryDataForSystemName(this.customerHistory);
           let finalQueryString='where '
         this.getJobRunStatusLog(finalQueryString);
+        this.loadSpinner =false;
       }
     })
   })
@@ -132,12 +157,15 @@ export class JobTriggerComponent {
 
 async getJobRunStatusLog(queryForAPI: string): Promise<void> {
   let builtString = queryForAPI;
+ 
   let apiUrl = 'http://localhost:3000/api/jobsLog';
   return new Promise((resolve, rejects) => {
     this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
       next: (response: any) => {
 
         if (response) {
+          this.logData = response;
+          this.showLogData=true;
          // this.crossRefernceObjForCustomers = response[0];
         } else {
 
@@ -148,6 +176,7 @@ async getJobRunStatusLog(queryForAPI: string): Promise<void> {
         rejects(error);
       },
       complete: () => {
+        this.showLogData=true;
         //this.customerByCountryResponse=response;
         //this.processHistoryDataForSystemName(this.customerHistory);
       }

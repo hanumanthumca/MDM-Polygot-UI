@@ -61,3 +61,11 @@
     width: 100%;
   }
   
+  .text-overlap-wrap{
+  //  white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .email-wrap{
+    overflow: hidden;
+    text-overflow:ellipsis;
+  }

@@ -6,308 +6,45 @@
 <!-- <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu> -->
 
 <div class="p-tabmenu-nav-content">
-<p-tabs value="0">
-    <p-tablist>
-        <p-tab style="border-bottom: 2px solid blue" value="0">My Assigned Tasks &nbsp;&nbsp;&nbsp;</p-tab>
-        <p-tab value="1">My Closed Tasks &nbsp;&nbsp;&nbsp;</p-tab>
-        <p-tab value="2">All Tasks</p-tab>
-        <p-tab value="3">Available Tasks</p-tab>
-        <p-tab value="4">All Closed Tasks</p-tab>
-    </p-tablist>
-    <p-tabpanels>
-        <p-tabpanel value="0">
-            <!-- <div class="ui-table-wrapper">
-                <br/>
-                <span class="p-text-secondary block mb-5"><b>My Assigned Tasks</b></span>
-                <p-table [value]="cars">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Task Title</th>
-                            <th>Type</th>
-                            <th>Priority</th>
-                            <th>Due Date</th>
-                            <th>Owner</th>
-                            <th>ID</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-car>
-                        <tr>
-                            <td>{{car.vin}}</td>
-                            <td>{{car.year}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                </div> -->
-                <div class="flex">
-                    <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-    
-                        <p-chart type="bar" [data]="recordGrowthData" [options]="recordGrowthOptions"   class="h-[30rem]" ></p-chart>
-                        <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
-                    </div>
-                    <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
-                        <p-chart type="bar" [data]="mergedRecordData" [options]="options" class="h-[30rem]" />
-                    </div>
-                  </div>
-    
-                  <div class="flex">
-                    <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                        <p-chart type="bar" [data]="recordGrowthData" [options]="recordGrowthOptions"   class="h-[30rem]" ></p-chart>
-                        <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
-                    </div>
-                    <div class="w-1/2 bg-white-500 p-4 text-white">
-    
-                        <br/>
-                        <table class="table-auto border-collapse border border-gray-300 w-full text-left">
-                            <thead>
-                              <tr class="bg-gray-100">
-                                <th class="border border-gray-300 px-4 py-2">Table Name</th>
-                                <th class="border border-gray-300 px-4 py-2">SRC_ITEM_ID</th>
-                                <th class="border border-gray-300 px-4 py-2">SRC_ITEM_NAME</th>
-                                <th class="border border-gray-300 px-4 py-2">TARGET_ITEM_ID</th>
-                                <th class="border border-gray-300 px-4 py-2">TARGET_ITEM_ID</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="hover:bg-gray-50">
-                                <td class="border border-gray-300 px-4 py-2">Alice</td>
-                                <td class="border border-gray-300 px-4 py-2">alice example.com</td>
-                                <td class="border border-gray-300 px-4 py-2">Admin</td>
-                                <td class="border border-gray-300 px-4 py-2">alice example.com</td>
-                                <td class="border border-gray-300 px-4 py-2">Admin</td>
-                              </tr>
-                              <!-- More rows... -->
-                            </tbody>
-                          </table>
-                        <!-- <p-chart type="bar" [data]="mergedRecordData" [options]="options" class="h-[30rem]" /> -->
-                    </div>
-                  </div>
-        </p-tabpanel>
-        <p-tabpanel value="1">
-            <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions" /> -->
-           
-            <div class="flex">
-                <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                    <p-chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   class="h-[30rem]" ></p-chart> 
-                
-                      <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
-                </div>
-                <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
-                    <p-chart type="bar" [data]="customerActiveInactive" [options]="customerActiveInactiveOptions" class="h-[30rem]" />
-                </div>
-              </div>
 
-              <div class="flex">
-                <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                    <p-chart type="bar" [data]="customerCountBySystemName" [options]="customerCountBySystemOptions"   class="h-[30rem]" ></p-chart> 
-                     
-                    <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
-                </div>
-                <div class="w-1/2 bg-white-500 p-4 text-white">
 
-                    <br/>
-                 
-                    <p-chart type="bar" [data]="customerByYearResponse" [options]="yearGraphOptions" class="h-[30rem]" />
-                </div>
-              </div>
-          
-              <div class="flex">
-                <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
-                     <p-chart type="bar" [data]="customerCountByCity" [options]="customerCountByCityOptions"   class="h-[30rem]" ></p-chart>
-                
+
+<div class="flex">
+    <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
+       
+        <div style="width: 100%;height: 400px;">
+            <p-chart #chart type="bar" [data]="customerCountByCountry" [options]="customerCountByCountryOptions"   ></p-chart> 
+        </div>
+          <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
+    </div>
+    <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
+        <p-chart type="bar" [data]="customerActiveInactive" [options]="customerActiveInactiveOptions" class="h-[30rem]" />
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
+        <p-chart type="bar" [data]="customerCountBySystemName" [options]="customerCountBySystemOptions"   class="h-[30rem]" ></p-chart> 
+         
+        <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
+    </div>
+    <div class="w-1/2 bg-white-500 p-4 text-white">
+
+        <br/>
+     
+        <p-chart type="bar" [data]="customerByYearResponse" [options]="yearGraphOptions" class="h-[30rem]" />
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="w-1/2 bg-white-500 p-4 text-white">Left Div
+         <p-chart type="bar" [data]="customerCountByCity" [options]="customerCountByCityOptions"   class="h-[30rem]" ></p-chart>
+    
+       </div>
+    <div class="w-1/2 bg-white-500 p-4 text-white">
+
+        <br/>
+     
                    </div>
-                <div class="w-1/2 bg-white-500 p-4 text-white">
-
-                    <br/>
-                 
-                               </div>
-              </div>
-            <!-- <div class="flex h-full">
-               
-                <div class="w-1/2 text-white flex justify-center items-center p-10">
-                  <h2 class="text-3xl font-semibold">1 graph</h2>
-                  <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart>
-                  </div>
-                
-                
-              
-                <div class="w-1/2 bg-white flex flex-col justify-center items-center p-10">
-                  <h1 class="text-4xl font-bold mb-4">2 graph </h1>
-                
-                  <p-chart type="bar" [data]="newData" [options]="options" class="h-[30rem]" />
-                   
-               
-                  </div>
-                </div> -->
-                <!-- <p-chart type="bar" [data]="basicData" [options]="options" width="40vw" height="40vh" ></p-chart> -->
-           
-            <p class="m-0">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-                aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-                dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
-                modi.
-            </p>
-        </p-tabpanel>
-        <p-tabpanel value="2">
-
-
-
-            <div class="card">
-                <!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
-                <p-table [value]="customers" #myCustTable [scrollable]="true" styleClass="mt-4" stripedRows 
-                [paginator]="true"
-                [globalFilterFields]="['id','name', 'lastName', 'email', 'phone']"
-    [rows]="10"
-    [rowsPerPageOptions]="[5, 10, 20]"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    (onPage)="pageChange($event)"
-                >
-                <ng-template #caption>
-                    <div class="flex">
-                        <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(myCustTable)" />
-                        <p-iconfield iconPosition="left" class="ml-auto">
-                            <p-inputicon>
-                                <i class="pi pi-search"></i>
-                            </p-inputicon>
-                            <input pInputText type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                        </p-iconfield>
-                    </div>
-                </ng-template>
-                    <ng-template #header>
-                        <tr>
-                            <th style="min-width:200px" pFrozenColumn >Id</th>
-                            <!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
-                            <th style="min-width:100px">First Name</th>
-                            <th style="min-width:100px">Last Name</th>
-                            <th style="min-width:200px">Birth Date</th>
-                            <th style="min-width:200px">Age</th>
-                            <th style="min-width:200px">Gender</th>
-                            <th style="min-width:200px">Email</th>
-                            <th style="min-width:200px">Phone</th>
-                            <th style="min-width:200px">City</th>
-                         
-                            <th style="min-width:200px">ZIP</th>
-                            <th style="min-width:200px">State</th>
-                            <th style="min-width:200px">Country</th>
-                            <!-- <th style="min-width:200px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">Balance</th> -->
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-customer>
-                        <tr>
-                            <td pFrozenColumn>{{customer.id}}</td>
-                            <!-- <td style="min-width:200px">{{customer.id}}</td> -->
-                            <td >{{customer.name}}</td>
-                            <td >{{customer.lastName}}</td>
-                            <td>{{customer.birthdate}}</td>
-                            <td>{{customer.age}}</td>
-                            <td >{{customer.gender}}</td>
-                            <td>{{customer.email}}</td>
-                            <td>{{customer.phone}}</td>
-                            <td>{{customer.city}}</td>
-                          
-                            <td>{{customer.zip}}</td>
-                            <td>{{customer.state}}</td>
-                            <td>{{customer.country}}</td>
-                           
-                           
-                            <!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>
-                        </tr> -->
-                    </ng-template>
-                </p-table>
-            </div>
-            
-            <!-- <p class="m-0">
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
-                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
-                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                impedit quo minus.
-            </p> -->
-        </p-tabpanel>
-
-        <p-tabpanel value="3">
-            <div class="ui-table-wrapper">
-                <br/>
-                <span class="p-text-secondary block mb-5"><b>Available Tasks</b></span>
-                <p-table [value]="cars">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Task Title</th>
-                            <th>Type</th>
-                            <th>Priority</th>
-                            <th>Due Date</th>
-                            <th>Owner</th>
-                            <th>ID</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-car>
-                        <tr>
-                            <td>{{car.vin}}</td>
-                            <td>{{car.year}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                </div>
-           
-        </p-tabpanel>
-        <p-tabpanel value="4">
-            <div class="ui-table-wrapper">
-                <br/>
-                <span class="p-text-secondary block mb-5"><b>All Closed Tasks</b></span>
-                <!-- <p-table [value]="cars">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Task Title</th>
-                            <th>Type</th>
-                            <th>Priority</th>
-                            <th>Due Date</th>
-                            <th>Owner</th>
-                            <th>ID</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-car>
-                        <tr>
-                            <td>{{car.vin}}</td>
-                            <td>{{car.year}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                            <td>{{car.brand}}</td>
-                            <td>{{car.color}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table> -->
-                <p-table [columns]="selectedColumns" [value]="products" >
-                    <ng-template #caption>
-                        <p-multiselect display="chip" [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{ 'min-width': '200px' }" placeholder="Choose Columns" />
-                    </ng-template>
-                    <ng-template #header let-columns>
-                        <tr>
-                            <th>Code</th>
-                            <th *ngFor="let col of columns">
-                                {{ col.header }}
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-product let-columns="columns">
-                        <tr>
-                            <td>{{ product.code }}</td>
-                            <td *ngFor="let col of columns">
-                                {{ product[col.field] }}
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                </div>
-           
-        </p-tabpanel>
-    </p-tabpanels>
-</p-tabs>
+  </div>
 </div>

@@ -30,12 +30,73 @@
 		
 </div>
 
+<div  *ngIf="loadSpinner" class="flex justify-center items-center min-h-[100px]">
 
+	<!-- <p>loading: {{ loadSpinner }}</p> -->
+	<p-progressSpinner styleClass="text-blue-600" [style]="{width: '25rem', height: '25rem'}"></p-progressSpinner>
+  </div>
 
 <div class="card">
 	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
 	
 
 	<!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
-	
+	<!-- <div class="ui-table-wrapper">
+		<br/>
+		<span class="p-text-secondary block mb-5"><b>Available Tasks</b></span>
+		<p-table [value]="cars">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Task Title</th>
+					<th>Type</th>
+					<th>Priority</th>
+					<th>Due Date</th>
+					<th>Owner</th>
+					<th>ID</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-car>
+				<tr>
+					<td>{{car.vin}}</td>
+					<td>{{car.year}}</td>
+					<td>{{car.brand}}</td>
+					<td>{{car.color}}</td>
+					<td>{{car.brand}}</td>
+					<td>{{car.color}}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div> -->
+	<div class="ui-table-wrapper" *ngIf="showLogData">
+		<br/>
+		<!-- <span class="p-text-secondary block mb-5"><b>Job Log</b></span> -->
+		<p-table [value]="logData" 	[paginator]="true"
+		[rows]="50"
+		[first]="first"
+		[totalRecords]="totalRecords"
+		[rowsPerPageOptions]="[50, 100, 150]"
+		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+		(onPage)="pageChange($event)">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Job Executed Time </th>
+					<th>Status</th>
+					<th>Executed By</th>
+					<!-- <th>Due Date</th>
+					<th>Owner</th>
+					<th>ID</th> -->
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-car>
+				<tr>
+					<td>{{car.EXECUTED_DATETIME}}</td>
+					<td>{{car.STATUS}}</td>
+					<td>{{car.EXECUTED_BY}}</td>
+					<!-- <td>{{car.color}}</td>
+					<td>{{car.brand}}</td>
+					<td>{{car.color}}</td> -->
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
 </div>

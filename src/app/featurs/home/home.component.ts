@@ -31,6 +31,7 @@ constructor(private mdmService: MDMService ) {}
   cols!: Column[];
   first = 0;
 @ViewChild("myCustTable") myCustTable:Table | undefined;
+@ViewChild('chart') chart: any;
   rows = 10;
   selectedColumns!: Column[];
   cars: any[];
@@ -135,8 +136,12 @@ customerCountBySystemOptions:any;
                     anchor:'end',
                     align:'top',
                 }
-}
+            }
           };
+
+          setTimeout(() => {
+            this.chart.refresh();
+          }, 1000);
           //this.customerCountByCountry = {};
         // this.customerCountByCountry = {
         //     labels: [ '2023', '2024', '2025'],
@@ -1499,7 +1504,13 @@ customerCountBySystemOptions:any;
           
             return Object.keys(count).filter(key => count[key] > 1);
           };
-
+          ngAfterViewInit() {
+            setTimeout(() => {
+              if (this.chart?.chart) {
+                this.chart.chart.resize();
+              }
+            }, 0);
+          }
     processGraphDataForCountry(respose:any){
         console.log('graph data',respose);
         let wholeData=respose;

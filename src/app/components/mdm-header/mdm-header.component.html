@@ -9,16 +9,29 @@
         <img src="../../../assets/small.PNG" alt="Logo"
              class="h-10 w-10 rounded-full object-cover" />
         <span class="text-xl font-bold text-blue-600" style="color:black !important" >Polyglot <sub>Technologies</sub></span>
+     
+        <div  class="float-right text-white p-4" style="margin-left: 50px;">
+         <!-- <span *ngIf="!isLoginVisble"> <p-button   label="Logout" (click)="validateLogOut()" /> </span>  -->
+
+         <!-- <p-button   label="Logout" (click)="validateLogOut()" /> -->
+        </div>
+        
       </div>
 
       <!-- Desktop Nav -->
       <span *ngIf="!isLoginVisble">
       <nav class="hidden md:flex space-x-6">
         <a routerLink="/home" class="text-gray-700 hover:text-blue-600">Home</a>
-        <a routerLink="/query" class="text-gray-700 hover:text-blue-600">Queries</a>
-        <a routerLink="/scheduleJobs" class="text-gray-700 hover:text-blue-600">Run Jobs</a>
         <a routerLink="/taskManager" class="text-gray-700 h
-        over:text-blue-600">Task Manager</a>
+        over:text-blue-600">Search </a>
+       
+        <a routerLink="/scheduleJobs" class="text-gray-700 hover:text-blue-600">Run Jobs</a>
+        <a routerLink="/query" class="text-gray-700 hover:text-blue-600">Queries</a>
+        <p-button   label="Logout" (click)="validateLogOut()" />
+        <!-- <a routerLink="/dashboards" class="text-gray-700 h
+        over:text-blue-600">Dash Boards</a> -->
+        
+        
         <!-- <a routerLink="/runJobs" class="text-gray-700 h
         over:text-blue-600">Run Jobs</a> -->
         <!-- <p-button label="Queries" routerLink="/query" icon="pi pi-search-plus"/> -->

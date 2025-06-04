@@ -36,6 +36,7 @@ export class CustomerViewComponent  {
   formGroup!: FormGroup;
 
 custId='';
+custMdmId='';
 customerResult={};
 custFirstName='';
 custLastName='';
@@ -44,6 +45,7 @@ custAge='';
 custGender='';
 custCountry='';
 custPhone='';
+custAddress='';
 loyolScore='';
 showSuccess = true;
 fadeOut = false;
@@ -100,8 +102,28 @@ radioCategories: any[] =[];
     private mdmService: MDMService
   ){}
   ngOnInit() {
+    this.custId=this.dynamicDialogConfig.data['custId']; 
+    
+    this.customerResult=this.dynamicDialogConfig.data['customerObj'];
+    console.log('this config data is',this.dynamicDialogConfig.data['custId']);
+    this.custFirstName=this.customerResult['FIRST_NAME'];
+    this.custMdmId=this.customerResult['CUSTOMER_MDM_ID'];
+    this.custLastName=this.customerResult['LAST_NAME'];
+    this.custEmail=this.customerResult['EMAIL'];
+    this.custPhone=this.customerResult['PHONE'];
+    this.custAddress=this.customerResult['CUSTOMER_ADDRESS'];
+    
 
-    let finalQueryString='where '
+    this.custAge=this.customerResult['AGE'];;
+    this.custGender=this.customerResult['GENDER_CD'];
+    this.custCountry=this.customerResult['COUNTRY'];
+   // this.custCountry='UK';
+    
+    this.loyolScore=this.customerResult['LOYALTY_SCORE'];
+let mdmId=this.custMdmId;
+let custQueryString= "WHERE CUSTOMER_MDM_ID IN (" +mdmId+ ")";
+    let finalQueryString=custQueryString;
+    // let finalQueryString='where '
     //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
     this.getCrossRefernceForCustomers(finalQueryString);
     this.getJobRunStatus(finalQueryString);
@@ -130,20 +152,7 @@ radioCategories: any[] =[];
     setTimeout(() => {
       this.fadeOut = true;
     }, 5000);
-    this.custId=this.dynamicDialogConfig.data['custId']; 
-    this.customerResult=this.dynamicDialogConfig.data['customerObj'];
-    console.log('this config data is',this.dynamicDialogConfig.data['custId']);
-    this.custFirstName=this.customerResult['FIRST_NAME'];
-    this.custLastName=this.customerResult['LAST_NAME'];
-    this.custEmail=this.customerResult['EMAIL'];
-    this.custPhone=this.customerResult['PHONE'];
-
-    this.custAge=this.customerResult['AGE'];;
-    this.custGender=this.customerResult['GENDER_CD'];
-    this.custCountry=this.customerResult['COUNTRY'];
-   // this.custCountry='UK';
     
-    this.loyolScore=this.customerResult['LOYALTY_SCORE'];
 
     console.log('this config data is',this.dynamicDialogConfig.data['custId']);
   }
@@ -496,14 +505,15 @@ radioCategories: any[] =[];
     let endTime='23:59:59';
     let startDate=this.startDate;
     let endDate=this.endDate;
-
+    let mdmIdForQuery=this.custMdmId;
     // let startDate='2025-05-15';
     // let endDate='2025-05-20';
      let timestampStart = `${startDate} ${startTime}`
       let timestampEnd = `${endDate} ${endTime}`
    // custHistoryQueryString= ' WHERE HIST_CREATE_DATE BETWEEN TO_TIMESTAMP_NTZ ('+timestampStart+') AND TO_TIMESTAMP_NTZ ('+timestampEnd+ ') AND CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc;'
-    custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc `;
-     
+    custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  CUSTOMER_MDM_ID ='${mdmIdForQuery} 'ORDER BY HIST_CREATE_DATE desc `;
+   // custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc `;
+      
     
     this.getCustomerHistoryDataByCustomerFromAPI(custHistoryQueryString);
   
