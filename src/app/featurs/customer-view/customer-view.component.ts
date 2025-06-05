@@ -122,14 +122,18 @@ radioCategories: any[] =[];
     this.loyolScore=this.customerResult['LOYALTY_SCORE'];
 let mdmId=this.custMdmId;
 let custQueryString= "WHERE CUSTOMER_MDM_ID IN (" +mdmId+ ")";
+let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUSTOMER_MDM_ID IN (" +mdmId+ ")";
+//WHERE SRC_CUSTOMER_MDM_ID =145  OR TGT_CUSTOMER_MDM_ID =145
+
     let finalQueryString=custQueryString;
+    let finalQueryStringForMatchScreen=matchTrustXRefString;
     // let finalQueryString='where '
     //this.getCustomerHistoryDataByCustomerFromAPI(finalQueryString);
     this.getCrossRefernceForCustomers(finalQueryString);
-    this.getJobRunStatus(finalQueryString);
+   // this.getJobRunStatus(finalQueryString);
     this.getMatchRefernceForCustomers(finalQueryString);
     this.getCrossRefernceXReferenceForCustomers(finalQueryString);
-    this.getMatchRefernceXReferenceForCustomers(finalQueryString);
+    this.getMatchRefernceXReferenceForCustomers(finalQueryStringForMatchScreen);
     this.getCrossRefernceTrustForCustomers(finalQueryString);
     this.getMatchRefernceTrustForCustomers(finalQueryString);
     this.formGroup = new FormGroup({
@@ -214,6 +218,7 @@ let custQueryString= "WHERE CUSTOMER_MDM_ID IN (" +mdmId+ ")";
 
   async getMatchRefernceXReferenceForCustomers(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
+
     let apiUrl = 'http://localhost:3000/api/matchRefernceXReferenceForCustomers';
     return new Promise((resolve, rejects) => {
       this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({

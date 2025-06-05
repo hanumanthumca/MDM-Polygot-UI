@@ -19,6 +19,7 @@
       </div>
 
       <!-- Desktop Nav -->
+       {{isLoginVisble}}
       <span *ngIf="!isLoginVisble">
       <nav class="hidden md:flex space-x-6">
         <a routerLink="/home" class="text-gray-700 hover:text-blue-600">Home</a>

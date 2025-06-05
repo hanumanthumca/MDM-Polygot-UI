@@ -32,23 +32,44 @@ export class MdmHeaderComponent {
     this.visible = true;
   }
   validateLogOut(){
-    this.isLoginVisble=true;
+    //this.isLoginVisble=true;
     localStorage.setItem('isLoggedIN',JSON.stringify(false));
+    let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
+      if(loginValue){
+       this.isLoginVisble=false;
+      }else{
+        this.isLoginVisble=true;
+      }
+ 
     this.router.navigate(['/']);
   }
   validateLogin() {
    // this.visible = true;
   localStorage.setItem('isLoggedIN',JSON.stringify(false));
-  let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
+
     console.log('login hit');
     if(this.userName==='hanumanth'&& this.password==='hanumanth'){
-      this.isLoginVisble=false;
       localStorage.setItem('isLoggedIN',JSON.stringify(true));
+      let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
+     if(loginValue){
+      this.isLoginVisble=false;
+     }else{
+      this.isLoginVisble=true;
+    }
+     
+    
       console.log('login success');
       this.failedLogin=false;
       this.router.navigate(['/home']);
     }else{
-      this.isLoginVisble=true;
+      localStorage.setItem('isLoggedIN',JSON.stringify(false));
+      let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
+      if(loginValue){
+       this.isLoginVisble=false;
+      }else{
+        this.isLoginVisble=true;
+      }
+     
       this.failedLogin=true;
       console.log('login fail');
       
