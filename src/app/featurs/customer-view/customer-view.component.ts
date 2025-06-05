@@ -93,6 +93,8 @@ customerHistory: any[]=[];
 options = [];
 loadSpinner =false;
 radioCategories: any[] =[];
+netsuiteArrayForCrossReference=[];
+erpArrayForCrossReference=[];
 // custFirstName='';
 // custFirstName='';
 // custFirstName='';
@@ -281,8 +283,12 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
         netSuiteTrustArray.push(resposeDataForTrust[i]);
       }
 
+     
     }
-
+    console.log('ERP suite trust value size',erpTrustArray.length);
+    console.log('net suite trust value size',netSuiteTrustArray.length);
+    this.netsuiteArrayForCrossReference=netSuiteTrustArray;
+    this.erpArrayForCrossReference=erpTrustArray;
     this.erpSourceTrustObjectsFirstName = erpTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
     this.netSuiteSourceTrustObjectsFirstName = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
 

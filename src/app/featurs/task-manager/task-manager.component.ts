@@ -75,6 +75,7 @@ export class TaskManagerComponent {
       ];
       this.columns = [
         { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
+        { field: 'CUSTOMER_MDM_ID', headerVal: 'C.CUSTOMER_MDM_ID' },
         { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
         { field: 'LAST_NAME', headerVal: 'C.LAST_NAME' },
         { field: 'EMAIL', headerVal: 'C.EMAIL' },
