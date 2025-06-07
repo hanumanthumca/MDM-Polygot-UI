@@ -95,7 +95,7 @@ customerCountBySystemOptions:any;
         
         this.customerCountBySystemOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
           
             plugins: {
                 title: {
@@ -118,7 +118,7 @@ customerCountBySystemOptions:any;
 
         this.customerCountByCityOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
           
             plugins: {
                 title: {
@@ -168,7 +168,7 @@ customerCountBySystemOptions:any;
         // };
         this.customerCountByCountryOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             
             plugins: {
                 title: {
@@ -204,7 +204,7 @@ customerCountBySystemOptions:any;
 
         this.customerActiveInactiveOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             
             plugins: {
                 title: {
@@ -270,7 +270,7 @@ customerCountBySystemOptions:any;
         };
         this.recordGrowthOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             
             plugins: {
                 title: {
@@ -288,7 +288,7 @@ customerCountBySystemOptions:any;
           };
           this.yearGraphOptions = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             
  plugins: {
     title: {
@@ -306,7 +306,7 @@ customerCountBySystemOptions:any;
           };
         this.options = {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             
  plugins: {
     title: {

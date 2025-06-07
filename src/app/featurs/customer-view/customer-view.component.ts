@@ -49,6 +49,8 @@ custAddress='';
 loyolScore='';
 showSuccess = true;
 fadeOut = false;
+matchXrefSourceId='';
+matchXrefTargetId='';
 countries=[];
 ingredient='Cheese';
 selectedOption: string = '';
@@ -61,7 +63,9 @@ erpSourceObjectForTableData={};
 netSuiteObjectForTableData={};
 crossRefernceObjForCustomers=[];
 crossRefernceXReferenceObjForCustomers=[];
+matchXReferenceObjForCustomers=[];
 crossRefernceTrustObjForCustomers=[];
+matchTrustObjForCustomers=[];
 matchRefernceObjForCustomers=[];
 matchRefernceXReferenceObjForCustomers=[];
 matchRefernceTrustObjForCustomers=[];
@@ -85,6 +89,24 @@ customerHistory: any[]=[];
   netSuiteSourceTrustObjectsEMail = {};
   erpSourceTrustObjectsloyolScore = {};
   netSuiteSourceTrustObjectsloyolScore = {};
+  erpSourceTrustObjectsFirstNameForMatch = {};
+  netSuiteSourceTrustObjectsFirstNameForMatch = {};
+  erpSourceTrustObjectsCustIDForMatch = {};
+  netSuiteSourceTrustObjectsCustIDForMatch = {};
+  erpSourceTrustObjectsLastNameForMatch = {};
+  netSuiteSourceTrustObjectsLastNameForMatch = {};
+  erpSourceTrustObjectsGenderForMatch = {};
+  netSuiteSourceTrustObjectsGenderForMatch = {};
+  erpSourceTrustObjectsBirthDateForMatch = {};
+  netSuiteSourceTrustObjectsBirthDateForMatch = {};
+  erpSourceTrustObjectsAgeForMatch = {};
+  netSuiteSourceTrustObjectsAgeForMatch = {};
+  erpSourceTrustObjectsPhoneForMatch = {};
+  netSuiteSourceTrustObjectsPhoneForMatch = {};
+  erpSourceTrustObjectsEMailForMatch = {};
+  netSuiteSourceTrustObjectsEMailForMatch = {};
+  erpSourceTrustObjectsloyolScoreForMatch = {};
+  netSuiteSourceTrustObjectsloyolScoreForMatch = {};
   radioOptions = [
     { label: 'Option A', value: 'A' },
     { label: 'Option B', value: 'B' },
@@ -95,6 +117,8 @@ loadSpinner =false;
 radioCategories: any[] =[];
 netsuiteArrayForCrossReference=[];
 erpArrayForCrossReference=[];
+netsuiteArrayForCrossReferenceForMatch=[];
+erpArrayForCrossReferenceForMatch=[];
 // custFirstName='';
 // custFirstName='';
 // custFirstName='';
@@ -136,13 +160,13 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
     this.getMatchRefernceForCustomers(finalQueryString);
     this.getCrossRefernceXReferenceForCustomers(finalQueryString);
     this.getMatchRefernceXReferenceForCustomers(finalQueryStringForMatchScreen);
-    this.getCrossRefernceTrustForCustomers(finalQueryString);
-    this.getMatchRefernceTrustForCustomers(finalQueryString);
+//    this.getCrossRefernceTrustForCustomers(finalQueryString);
+    //this.getMatchRefernceTrustForCustomers(finalQueryString);
     this.formGroup = new FormGroup({
       selectedCategory: new FormControl()
   });
     this.countries = [
-      { name: 'USA', value: 'USA' },
+      { name: 'US', value: 'US' },
       { name: 'Canada', value: 'Canada' },
       { name: 'UK', value: 'UK' },
 
@@ -175,7 +199,8 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
         next: (response: any) => {
 
           if (response) {
-           this.crossRefernceTrustObjForCustomers = response;
+          // this.crossRefernceTrustObjForCustomers = response;
+          this.matchTrustObjForCustomers=response;
           } else {
 
           }
@@ -186,7 +211,8 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
         },
         complete: () => {
           //this.customerByCountryResponse=response;
-          this.processTrustDataForCustomers(this.crossRefernceTrustObjForCustomers);
+       //   this.processTrustDataForCustomers(this.crossRefernceTrustObjForCustomers);
+       this.processMatchTrustDataForCustomers(  this.matchTrustObjForCustomers);
         }
       })
     })
@@ -228,6 +254,7 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
 
           if (response) {
           // this.crossRefernceXReferenceObjForCustomers = response;
+          this.matchXReferenceObjForCustomers= response;
           } else {
 
           }
@@ -238,7 +265,9 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
         },
         complete: () => {
           //this.customerByCountryResponse=response;
-         // this.processXReferenceForCustomers(this.crossRefernceXReferenceObjForCustomers);
+        //  this.processMatchTrustDataForCustomers(this.matchXReferenceObjForCustomers);
+
+          this.processXReferenceForMatch(this.matchXReferenceObjForCustomers);
         }
       })
     })
@@ -264,9 +293,66 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
         complete: () => {
           //this.customerByCountryResponse=response;
           this.processXReferenceForCustomers(this.crossRefernceXReferenceObjForCustomers);
+          let originalMDMId = this.crossRefernceXReferenceObjForCustomers[0]['ORIGINAL_MDM_ID'];
+          let mdmId = this.custMdmId;
+          let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + mdmId + "," + originalMDMId + ")";
+          console.log('new PI CALL', custQueryString);
+          console.log('originalMDMId', originalMDMId);
+          let finalQueryString = custQueryString;
+          this.getCrossRefernceTrustForCustomers(finalQueryString);
         }
       })
     })
+
+  }
+
+  processMatchTrustDataForCustomers(respose: any) {
+    let resposeDataForTrust = respose;
+    let resposeDataForTrustMatch = respose;
+   let erpTrustArrayForMatch = [];
+   let netSuiteTrustArrayForMatch = [];
+   for (let i = 0; i < resposeDataForTrustMatch.length; i++) {
+     if (resposeDataForTrustMatch[i]['SOURCE_SYSTEM'] === 'ERP') {
+       erpTrustArrayForMatch.push(resposeDataForTrustMatch[i]);
+     }
+     if (resposeDataForTrustMatch[i]['SOURCE_SYSTEM'] === 'NETSUITE') {
+       netSuiteTrustArrayForMatch.push(resposeDataForTrustMatch[i]);
+     }
+
+    
+   }
+   console.log('ERP suite trust value size',erpTrustArrayForMatch.length);
+   console.log('net suite trust value size',netSuiteTrustArrayForMatch.length);
+   this.netsuiteArrayForCrossReferenceForMatch=netSuiteTrustArrayForMatch;
+   this.erpArrayForCrossReferenceForMatch=erpTrustArrayForMatch;
+   this.erpSourceTrustObjectsFirstNameForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
+   this.netSuiteSourceTrustObjectsFirstNameForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
+
+   this.erpSourceTrustObjectsCustIDForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'CUSTOMER_ID');
+   this.netSuiteSourceTrustObjectsCustIDForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'CUSTOMER_ID');
+
+   this.erpSourceTrustObjectsLastNameForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
+   this.netSuiteSourceTrustObjectsLastNameForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'LAST_NAME');
+
+   this.erpSourceTrustObjectsGenderForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'GENDER_CD');
+   this.netSuiteSourceTrustObjectsGenderForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'GENDER_CD');
+
+
+   this.erpSourceTrustObjectsBirthDateForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
+   this.netSuiteSourceTrustObjectsBirthDateForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'BIRTH_DATE');
+
+
+   this.erpSourceTrustObjectsPhoneForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'PHONE');
+   this.netSuiteSourceTrustObjectsPhoneForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'PHONE');
+
+   this.erpSourceTrustObjectsEMailForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'EMAIL');
+   this.netSuiteSourceTrustObjectsEMailForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'EMAIL');
+
+   this.erpSourceTrustObjectsloyolScoreForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'LOYALTY_SCORE');
+   this.netSuiteSourceTrustObjectsloyolScoreForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'LOYALTY_SCORE');
+
+   this.erpSourceTrustObjectsAgeForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'AGE');
+   this.netSuiteSourceTrustObjectsAgeForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'AGE');
 
   }
 
@@ -319,6 +405,64 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
     this.netSuiteSourceTrustObjectsAge = netSuiteTrustArray.find(item => item['COLUMN_NAME'] === 'AGE');
 
 
+  }
+
+  processXReferenceForMatch(respose: any) {
+    let resposeData=respose[0];
+    
+    if(resposeData){
+      this.matchXrefSourceId=resposeData['SRC_CUSTOMER_MDM_ID'];
+      this.matchXrefTargetId=resposeData['TGT_CUSTOMER_MDM_ID'];
+      
+      let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + this.matchXrefSourceId + "," + this.matchXrefTargetId + ")";
+      // console.log('new PI CALL', custQueryString);
+      // console.log('originalMDMId', originalMDMId);
+      let finalQueryString = custQueryString;
+      this.getMatchRefernceTrustForCustomers(finalQueryString);
+    }else{
+
+      let mdmId = this.custMdmId;
+      let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + mdmId + "," +mdmId + ")";
+      // console.log('new PI CALL', custQueryString);
+      // console.log('originalMDMId', originalMDMId);
+      let finalQueryString = custQueryString;
+      this.getMatchRefernceTrustForCustomers(finalQueryString);
+    }
+   
+
+    
+  
+
+    // const uniqueSourceNames=[... new Set(resposeData.map(item =>item['SRC_SYSTEM_NAME']))];
+    // let  erpSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'ERP');
+    // let  netSuiteSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'NETSUITE');
+
+    // this.erpSourceObjectForTableData=erpSourceObject;
+    // this.netSuiteObjectForTableData=netSuiteSourceObject;
+
+    // console.log('hello log', this.erpSourceObjectForTableData);
+    // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    // console.log('history dates are',historyDats);
+    // this.options=[];
+    // let historyDates=[];
+    // historyDats.forEach(function(date) {
+    //   console.log(date);
+    //   let dateObj={
+    //     label: date,
+    //     value: date, 
+        
+    // }
+    // historyDates.push(dateObj);
+    // });
+    // this.options=historyDates;
+
+    // // options = [
+    // //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
+    // //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
+    // //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
+    // //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
+    
+    // // ];
   }
   processXReferenceForCustomers(respose: any) {
     let resposeData=respose;
