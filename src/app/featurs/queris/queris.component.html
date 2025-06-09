@@ -125,6 +125,7 @@ class="shadow rounded-lg overflow-hidden border border-gray-200 text-sm"
 			
 			<tr class="bg-gray-100 text-gray-700">
 				<th style="min-width:200px" class="p-3 text-left"   pFrozenColumn >Id</th>
+					<th style="min-width:100px"  > MDM Id</th>
 				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
 				<!-- <th style="min-width:100px">First Name</th>
 				<th style="min-width:100px">Last Name</th>
@@ -215,6 +216,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 		<ng-template #header>
 			<tr>
 				<th style="min-width:200px" pFrozenColumn >Id</th>
+				<th style="min-width:100px"  > MDM Id</th>
 				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
 				<th style="min-width:100px">First Name</th>
 				<th style="min-width:100px">Last Name</th>
@@ -238,6 +240,11 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 		<ng-template #body let-customer>
 			<tr>
 				<td pFrozenColumn>{{customer.CUSTOMER_ID}}</td>
+				<td >
+					<a  (click)="viewCustomerTest(customer);" class="text-blue-600 hover:underline">{{customer.CUSTOMER_MDM_ID}}
+
+					</a>
+					</td>
 				<!-- <td style="min-width:200px">{{customer.id}}</td> -->
 				<td >{{customer.FIRST_NAME}}</td>
 				<td >{{customer.LAST_NAME}}</td>

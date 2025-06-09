@@ -75,6 +75,7 @@ export class QuerisComponent {
     ];
     this.columns = [
       { field: 'CUSTOMER ID', headerVal: 'C.CUSTOMER_ID' },
+      { field: 'CUSTOMER_MDM_ID', headerVal: 'C.CUSTOMER_MDM_ID' },
       { field: 'First Name', headerVal: 'C.FIRST_NAME' },
       { field: 'Last Name', headerVal: 'C.LAST_NAME' },
       { field: 'Email', headerVal: 'C.EMAIL' },

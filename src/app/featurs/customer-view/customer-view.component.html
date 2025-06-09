@@ -23,7 +23,7 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
-                        <label for="customer" class="block font-semibold mb-2"> Customer ID</label>
+                        <label for="customer" class="block font-semibold mb-2"> Customer MDM ID</label>
                         <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_ID']}}"/>
                     </div>
                     <div class="flex-auto">
@@ -446,7 +446,7 @@
                 </thead>
                 <tbody>
                   <tr class="hover:bg-gray-50">
-                    <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+                    <td class="border border-gray-300 px-4 py-2">Customer MDM ID</td>
                     <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['CUSTOMER_MDM_ID']}}</td>
                     <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['CUSTOMER_MDM_ID']}}</td>
                     
@@ -680,7 +680,7 @@
                   </span>
         
         
-<span *ngIf="erpSourceTrustObjectsAge?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsAge?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] === '' " 
+      <span *ngIf="erpSourceTrustObjectsAge?.['TRUST_SCORE'] === null ||  erpSourceTrustObjectsAge?.['TRUST_SCORE']  === undefined  ||  erpSourceTrustObjectsAge ?. ['TRUST_SCORE'] === '' " 
                   class="text-black-600">
                   <span >
                     <span style="color:red;">  {{netSuiteSourceTrustObjectsAge?.['TRUST_SCORE'] || '0' }}</span>
@@ -948,7 +948,7 @@
                               </thead>
                               <tbody>
                                 <tr class="hover:bg-gray-50">
-                                  <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+                                  <td class="border border-gray-300 px-4 py-2">Customer MDM ID</td>
                                   <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['CUSTOMER_MDM_ID']}}</td>
                                   
                                   
@@ -1248,7 +1248,7 @@
                                </thead>
                                <tbody>
                                  <tr class="hover:bg-gray-50">
-                                   <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+                                   <td class="border border-gray-300 px-4 py-2">Customer MDM ID</td>
                                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers['CUSTOMER_MDM_ID']}}</td>
                                    <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['CUSTOMER_MDM_ID']}}</td>
                                    
@@ -1536,7 +1536,7 @@
             <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                 <thead>
                   <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">Customer ID = <strong>{{matchXrefTargetId}} </strong> </th>
+                    <th class="border border-gray-300 px-4 py-2">Customer MDM ID = <strong>{{matchXrefTargetId}} </strong> </th>
                     <th class="border border-gray-300 px-4 py-2">Merge Preview</th>
                     <th class="border border-gray-300 px-4 py-2">ERP Customer ID  = <strong>{{matchXrefSourceId}}</strong></th>
                     <th class="border border-gray-300 px-4 py-2"> ERP Trust  </th>
@@ -2205,8 +2205,104 @@
                 </tbody>
               </table>
             </span>   
+
+            <!-- no net suite values -->
             <span  *ngIf="netsuiteArrayForCrossReferenceForMatch.length===0" >
       
+              <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2">Customer ID = <strong>{{matchXrefTargetId}} </strong> </th>
+                    <th class="border border-gray-300 px-4 py-2">Merge Preview</th>
+                  
+                  <th *ngFor="let uniqueMDM of uniqueMDMs"  class="border border-gray-300 px-4 py-2">
+                    
+                  <span style="width:100px;">  Customer ID  =  </span>    <strong> {{ uniqueMDM }}  |  Trust
+                  </strong></th>
+                  
+                  
+                </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">First Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>
+                  <!-- <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['FIRST_NAME']}}</td> -->
+                  <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': firstNameTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['FIRST_NAME']}}  </span>|    <strong> {{ firstNameTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LAST_NAME']}}</td>
+                    <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': lastNameTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['LAST_NAME']}}  </span>|  
+                      <strong> {{ lastNameTrstArrayItem }}  
+                  </strong></td>
+                   
+                    
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Gender</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['GENDER_CD']}}</td>
+                    <td *ngFor="let genderTrstArrayItem of genderTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': genderTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['GENDER_CD']}}  </span>|  
+                      <strong> {{ genderTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Birth Date</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['BIRTH_DATE']}}</td>
+                    <td *ngFor="let birthTrstArrayItem of birthTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': birthTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['BIRTH_DATE']}}  </span>|  
+                      <strong> {{ birthTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Age</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['AGE']}}</td>
+                    <td *ngFor="let ageTrstArrayItem of ageTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': ageTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['AGE']}}  </span>|  
+                      <strong> {{ ageTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Phone</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['PHONE']}}</td>
+                    <td *ngFor="let phoneTrstArrayItem of phoneTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': phoneTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['PHONE']}}  </span>|  
+                      <strong> {{ phoneTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">EMAIL</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['EMAIL']}}</td>
+                    <td *ngFor="let emailTrstArrayItem of emailTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': emailTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['EMAIL']}}  </span>|  
+                      <strong> {{ emailTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Loyalty Score</td>
+                    <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LOYALTY_SCORE']}}</td>
+                    <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArray"  class="border border-gray-300 px-4 py-2" 
+                    [ngClass]="{'max-value': loyolityTrstArrayItem === maxValue}">
+                    <span style="width:100px;">  {{erpSourceObjectForTableData?.['LOYALTY_SCORE'] || ''}}  </span>|  
+                      <strong> {{ loyolityTrstArrayItem }}  
+                  </strong></td>
+                  </tr>
+
+                </tbody>
+              </table>
        
               <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                   <thead>
@@ -2217,6 +2313,7 @@
                       <th class="border border-gray-300 px-4 py-2"> ERP Trust  </th>
                       
                     </tr>
+                   
                   </thead>
                   
   
@@ -2228,7 +2325,7 @@
                       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>
                       <td class="border border-gray-300 px-4 py-2">{{erpSourceObjectForTableData?.['FIRST_NAME']}}</td>
                       <td class="border border-gray-300 px-4 py-2">
-                        <!-- {{erpSourceTrustObjectsFirstNameForMatch['TRUST_SCORE']}} -->
+                        
                         <span *ngIf="netSuiteSourceTrustObjectsFirstNameForMatch ?. ['TRUST_SCORE'] !== null && netSuiteSourceTrustObjectsFirstNameForMatch?.['TRUST_SCORE'] !== undefined  && netSuiteSourceTrustObjectsFirstNameForMatch?.['TRUST_SCORE'] !== '' " 
                         class="text-black-600">
                       

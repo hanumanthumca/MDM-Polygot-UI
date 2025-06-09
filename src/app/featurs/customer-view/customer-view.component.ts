@@ -69,7 +69,8 @@ matchTrustObjForCustomers=[];
 matchRefernceObjForCustomers=[];
 matchRefernceXReferenceObjForCustomers=[];
 matchRefernceTrustObjForCustomers=[];
-
+uniqueMDMsForNetSuiteForMatch=[];
+uniqueMDMs=[];
 customerHistory: any[]=[];
   erpSourceTrustObjectsFirstName = {};
   netSuiteSourceTrustObjectsFirstName = {};
@@ -119,6 +120,14 @@ netsuiteArrayForCrossReference=[];
 erpArrayForCrossReference=[];
 netsuiteArrayForCrossReferenceForMatch=[];
 erpArrayForCrossReferenceForMatch=[];
+firstNameTrstArray=[];
+lastNameTrstArray=[];
+genderTrstArray=[];
+birthTrstArray=[];
+ageTrstArray=[];
+phoneTrstArray=[];
+emailTrstArray=[];
+loyolityTrstArray=[];
 // custFirstName='';
 // custFirstName='';
 // custFirstName='';
@@ -305,7 +314,12 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
     })
 
   }
-
+  get maxValueForFirstNameTrstArray(): number {
+    return Math.max(...this.firstNameTrstArray);
+  }
+  get maxValueForLastNameTrstArray(): number {
+    return Math.max(...this.firstNameTrstArray);
+  }
   processMatchTrustDataForCustomers(respose: any) {
     let resposeDataForTrust = respose;
     let resposeDataForTrustMatch = respose;
@@ -323,8 +337,70 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
    }
    console.log('ERP suite trust value size',erpTrustArrayForMatch.length);
    console.log('net suite trust value size',netSuiteTrustArrayForMatch.length);
+   console.log('net suite trust value size',netSuiteTrustArrayForMatch.length);
    this.netsuiteArrayForCrossReferenceForMatch=netSuiteTrustArrayForMatch;
    this.erpArrayForCrossReferenceForMatch=erpTrustArrayForMatch;
+   
+
+
+
+   this.uniqueMDMs=[... new Set(this.erpArrayForCrossReferenceForMatch.map(item =>item['CUSTOMER_MDM_ID']))];
+   this.uniqueMDMsForNetSuiteForMatch=[... new Set(this.netsuiteArrayForCrossReferenceForMatch.map(item =>item['CUSTOMER_MDM_ID']))];
+   
+   let erpArrayProcessedData=[];
+let uniqueMdmsArray=this.uniqueMDMs;
+//uniqueMdmsArray.sort((a,b) => a-b);
+let erpForMatchRef=this.erpArrayForCrossReferenceForMatch;
+   if(this.uniqueMDMs.length> 1){
+    for (let i = 0; i < uniqueMdmsArray.length; i++) {
+      console.log('elemnt is',uniqueMdmsArray[i]);
+  
+      let objId=uniqueMdmsArray[i];
+      let objSourceData=erpForMatchRef.filter(item => item ['CUSTOMER_MDM_ID'] ===uniqueMdmsArray[i] );
+    
+      let formattedObject={};
+      formattedObject['mdmIds']=objId;
+      formattedObject['mdmData']=objSourceData;
+      erpArrayProcessedData.push(formattedObject);
+       
+  }
+   }
+   console.log('formatted array',erpArrayProcessedData);
+   const names = erpArrayProcessedData.map(person => person['mdmData']);
+
+  //  this.firstNameTrstArray= names
+  //  .filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME")
+  //  .map(erpData => erpData['TRUST_SCORE']);
+
+   this.firstNameTrstArray = names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  this.lastNameTrstArray = names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LAST_NAME"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  this.genderTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  this.birthTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "BIRTH_DATE"))
+  .map(erpData => erpData['TRUST_SCORE']);
+
+  this.ageTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "AGE"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  this.phoneTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "PHONE"))
+  .map(erpData => erpData['TRUST_SCORE']);
+
+  this.emailTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "EMAIL"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  this.loyolityTrstArray= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LOYALTY_SCORE"))
+  .map(erpData => erpData['TRUST_SCORE']);
+  //  this.firstNameTrstArray= erpArrayProcessedData
+  //  .filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME")
+  //  .map(erpData => erpData['TRUST_SCORE']);
    this.erpSourceTrustObjectsFirstNameForMatch = erpTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
    this.netSuiteSourceTrustObjectsFirstNameForMatch = netSuiteTrustArrayForMatch.find(item => item['COLUMN_NAME'] === 'FIRST_NAME');
 
