@@ -375,6 +375,7 @@ let erpForMatchRef=this.erpArrayForCrossReferenceForMatch;
    this.firstNameTrstArray = names
   .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
   .map(erpData => erpData['TRUST_SCORE']);
+  //this.firstNameTrstArray[0]['TRUST_SCORE']=98;
   this.lastNameTrstArray = names
   .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LAST_NAME"))
   .map(erpData => erpData['TRUST_SCORE']);
@@ -490,17 +491,27 @@ let erpForMatchRef=this.erpArrayForCrossReferenceForMatch;
       this.matchXrefSourceId=resposeData['SRC_CUSTOMER_MDM_ID'];
       this.matchXrefTargetId=resposeData['TGT_CUSTOMER_MDM_ID'];
       
+      // if(resposeData['TGT_CUSTOMER_MDM_ID']){
+      //   this.matchXrefTargetId=resposeData['TGT_CUSTOMER_MDM_ID'];
+      // }else{
+      //   this.matchXrefTargetId= this.custMdmId;
+      // }
+      // if(resposeData['SRC_CUSTOMER_MDM_ID']){
+      //   this.matchXrefSourceId=resposeData['SRC_CUSTOMER_MDM_ID'];
+      // }else{
+      //   this.matchXrefSourceId= this.custMdmId;
+      // }
       let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + this.matchXrefSourceId + "," + this.matchXrefTargetId + ")";
       // console.log('new PI CALL', custQueryString);
       // console.log('originalMDMId', originalMDMId);
       let finalQueryString = custQueryString;
       this.getMatchRefernceTrustForCustomers(finalQueryString);
     }else{
-
+      this.matchXrefTargetId= this.custMdmId;
+      this.matchXrefSourceId= this.custMdmId;
       let mdmId = this.custMdmId;
       let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + mdmId + "," +mdmId + ")";
-      // console.log('new PI CALL', custQueryString);
-      // console.log('originalMDMId', originalMDMId);
+     
       let finalQueryString = custQueryString;
       this.getMatchRefernceTrustForCustomers(finalQueryString);
     }
