@@ -146,7 +146,7 @@ export class TaskManagerComponent {
       data:{
         custId:id
       },
-      width:"70vw",
+      width:"95vw",
       header:"View Customer",
       closable:true
     });
@@ -162,7 +162,7 @@ export class TaskManagerComponent {
         custId:id,
         customerObj:customer,
       },
-      width:"89vw",
+      width:"95vw",
       header:"View Customer",
       closable:true
     });

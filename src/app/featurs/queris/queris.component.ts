@@ -138,7 +138,7 @@ export class QuerisComponent {
     data:{
       custId:id
     },
-    width:"89vw",
+    width:"95vw",
     header:"View Customer",
     closable:true
   });
