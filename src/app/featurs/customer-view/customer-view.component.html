@@ -486,7 +486,9 @@
                             <div style="display: flex; justify-content: space-between;">
                               
                               <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span>
-                              <span>{{ firstNameTrstArrayItem }}   </span>
+                              <!-- <span>{{ firstNameTrstArrayItem }}   </span>
+                              <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span> -->
+                              <span>{{ firstNameTrstArrayItem.trust }}   </span>
                             </div>
           
                           </td>
@@ -496,7 +498,8 @@
                             <div style="display: flex; justify-content: space-between;">
                               
                               <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span>
-                              <span>{{ firstNameTrstArrayItem }}   </span>
+                              <!-- <span>{{ firstNameTrstArrayItem }}   </span> -->
+                              <span>{{ firstNameTrstArrayItem.trust }}   </span>
                             </div>
           
                           </td>
@@ -509,7 +512,8 @@
                             
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['LAST_NAME'] || netSuiteObjectForTableData?.['LAST_NAME']}}</span>
-                              <span>{{ lastNameTrstArrayItem }}   </span>
+                              <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
+                              <span>{{ lastNameTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                           <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
@@ -517,7 +521,7 @@
                         
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['LAST_NAME'] || erpSourceObjectForTableData?.['LAST_NAME']}}</span>
-                          <span>{{ lastNameTrstArrayItem }}   </span>
+                          <span>{{ lastNameTrstArrayItem.trust }}   </span>
                                                  </div>
                       </td>
                            
@@ -539,7 +543,8 @@
 
                             <div  style="display: flex; justify-content: space-between;">
                               <span >{{erpSourceObjectForTableData?.['GENDER_CD'] || netSuiteObjectForTableData?.['GENDER_CD']  }}</span>
-                              <span >{{ genderTrstArrayItem }}   </span>
+                              <!-- <span >{{ genderTrstArrayItem }}   </span> -->
+                              <span>{{ genderTrstArrayItem.trust }}   </span>
                             </div>
 
                             <!-- <div *ngIf="genderTrstArrayItem !== 80.00" style="background-color: black;display: flex; justify-content: space-between;">
@@ -552,7 +557,7 @@
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['GENDER_CD'] || erpSourceObjectForTableData?.['GENDER_CD']}}</span>
-                              <span>{{ genderTrstArrayItem }}   </span>
+                              <span>{{ genderTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                             </tr>
@@ -564,7 +569,8 @@
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['BIRTH_DATE'] || netSuiteObjectForTableData?.['BIRTH_DATE'] }}</span>
-                              <span>{{ birthTrstArrayItem }}   </span>
+                              <!-- <span>{{ birthTrstArrayItem }}   </span> -->
+                              <span>{{ birthTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                           <td *ngFor="let birthTrstArrayItem of birthTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
@@ -572,7 +578,7 @@
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['BIRTH_DATE'] || erpSourceObjectForTableData?.['BIRTH_DATE']}}</span>
-                              <span>{{ birthTrstArrayItem }}   </span>
+                              <span>{{ birthTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                             </tr>
@@ -584,7 +590,8 @@
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['AGE'] || netSuiteObjectForTableData?.['AGE'] }}</span>
-                              <span>{{ ageTrstArrayItem }}   </span>
+                              <!-- <span>{{ ageTrstArrayItem }}   </span> -->
+                              <span>{{ ageTrstArrayItem.trust }}   </span>
                             </div>
           
                           </td>
@@ -593,7 +600,7 @@
                          
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['AGE'] || erpSourceObjectForTableData?.['AGE'] }}</span>
-                          <span>{{ ageTrstArrayItem }}   </span>
+                          <span>{{ ageTrstArrayItem.trust }}   </span>
                         </div>
       
                       </td>
@@ -608,7 +615,8 @@
                             </strong> -->
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['PHONE'] || netSuiteObjectForTableData?.['PHONE']  }}</span>
-                              <span>{{ phoneTrstArrayItem }}   </span>
+                           
+                              <span>{{ phoneTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
 
@@ -617,7 +625,7 @@
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['PHONE'] || erpSourceObjectForTableData?.['PHONE']}}</span>
-                              <span>{{ phoneTrstArrayItem }}   </span>
+                              <span>{{ phoneTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                             </tr>
@@ -629,7 +637,8 @@
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['EMAIL'] || netSuiteObjectForTableData?.['EMAIL'] }}</span> &nbsp;
-                              <span>{{ emailTrstArrayItem }}   </span>
+                              <!-- <span>{{ emailTrstArrayItem }}   </span> -->
+                              <span>{{ emailTrstArrayItem.trust }}   </span>
                             </div>
                           
                           </td>
@@ -639,7 +648,7 @@
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['EMAIL'] || erpSourceObjectForTableData?.['EMAIL']}}</span> &nbsp;
-                              <span>{{ emailTrstArrayItem }}   </span>
+                              <span>{{ emailTrstArrayItem.trust }}   </span>
                             </div>
                           
                           </td>
@@ -654,7 +663,8 @@
                             </strong> -->
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['LOYALTY_SCORE'] ||netSuiteObjectForTableData?.['LOYALTY_SCORE'] }}</span>
-                              <span>{{ loyolityTrstArrayItem }}   </span>
+                           
+                              <span>{{ loyolityTrstArrayItem.trust }}   </span>
                             </div>
                           </td>
                           <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
@@ -662,7 +672,7 @@
                         
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['LOYALTY_SCORE'] || erpSourceObjectForTableData?.['LOYALTY_SCORE'] }}</span>
-                          <span>{{ loyolityTrstArrayItem }}   </span>
+                          <span>{{ loyolityTrstArrayItem.trust }}   </span>
                         </div>
                       </td>
                             </tr>
@@ -735,23 +745,25 @@
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>
     <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
       
-    [ngStyle]="{ 'background-color': firstNameTrstArrayItem === maxTrustForFNameForCross ? 'pink' : 'transparent' }"
+    [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust  === maxTrustForFNameForCross && firstNameTrstArrayItem.mdmid === maxTrustMDMForFname ? 'pink' : 'transparent' }"
       >
       
     <div style="display: flex; justify-content: space-between;">
       
       <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span>
-      <span>{{ firstNameTrstArrayItem }}   </span>
+      <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
+      <span>{{ firstNameTrstArrayItem.trust }}   </span>
     </div>
 
   </td>
   <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': firstNameTrstArrayItem === maxTrustForFNameForCross ? 'pink' : 'transparent' }">
+  [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust  === maxTrustForFNameForCross && firstNameTrstArrayItem.mdmid === maxTrustMDMForFname ? 'pink' : 'transparent' }">
 
     <div style="display: flex; justify-content: space-between;">
       
       <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span>
-      <span>{{ firstNameTrstArrayItem }}   </span>
+      <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
+      <span>{{ firstNameTrstArrayItem.trust }}   </span>
     </div>
 
   </td>
@@ -765,7 +777,9 @@
     
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['LAST_NAME'] || netSuiteObjectForTableData?.['LAST_NAME']}}</span>
-      <span>{{ lastNameTrstArrayItem }}   </span>
+      <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
+      <span>{{ lastNameTrstArrayItem.trust }}   </span>
     </div>
   </td>
   <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
@@ -773,7 +787,9 @@
 
 <div style="display: flex; justify-content: space-between;">
   <span>{{netSuiteObjectForTableData?.['LAST_NAME'] || erpSourceObjectForTableData?.['LAST_NAME']}}</span>
-  <span>{{ lastNameTrstArrayItem }}   </span>
+  <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
+  <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
+  <span>{{ lastNameTrstArrayItem.trust }}   </span>
                          </div>
 </td>
    
@@ -782,24 +798,28 @@
       <td class="border border-gray-300 px-4 py-2">Gender</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['GENDER_CD']}}</td>
       <td *ngFor="let genderTrstArrayItem of genderTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': genderTrstArrayItem === maxTrustForGenderForCross ? 'pink' : 'transparent' }"
+      [ngStyle]="{ 'background-color':  genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender  ? 'pink' : 'transparent' }"
      
       >
      
 
     <div  style="display: flex; justify-content: space-between;">
       <span >{{erpSourceObjectForTableData?.['GENDER_CD'] || netSuiteObjectForTableData?.['GENDER_CD']  }}</span>
-      <span >{{ genderTrstArrayItem }}   </span>
+      <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
+      <span>{{ genderTrstArrayItem.trust }}   </span>
+      <!-- <span >{{ genderTrstArrayItem }}   </span> -->
     </div>
 
    
   </td>
   <td *ngFor="let genderTrstArrayItem of genderTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': genderTrstArrayItem === maxTrustForGenderForCross ? 'pink' : 'transparent' }">
+  [ngStyle]="{ 'background-color':genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender ? 'pink' : 'transparent' }">
       
     <div style="display: flex; justify-content: space-between;">
       <span>{{netSuiteObjectForTableData?.['GENDER_CD'] || erpSourceObjectForTableData?.['GENDER_CD']}}</span>
-      <span>{{ genderTrstArrayItem }}   </span>
+      <!-- <span>{{ genderTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
+      <span>{{ genderTrstArrayItem.trust }}   </span>
     </div>
   </td>
     </tr>
@@ -807,19 +827,23 @@
       <td class="border border-gray-300 px-4 py-2">Birth Date</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['BIRTH_DATE']}}</td>
       <td *ngFor="let birthTrstArrayItem of birthTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': birthTrstArrayItem === maxTrustForBdateForCross ? 'pink' : 'transparent' }">
-      
+      [ngStyle]="{ 'background-color': birthTrstArrayItem.trust  === maxTrustForBdateForCross && birthTrstArrayItem.mdmid === maxTrustMDMForBirth ? 'pink' : 'transparent' }">
+       
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['BIRTH_DATE'] || netSuiteObjectForTableData?.['BIRTH_DATE'] }}</span>
-      <span>{{ birthTrstArrayItem }}   </span>
+      <!-- <span>{{ birthTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{birthTrstArrayItem.mdmid}}</span>
+      <span>{{ birthTrstArrayItem.trust }}   </span>
     </div>
   </td>
   <td *ngFor="let birthTrstArrayItem of birthTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': birthTrstArrayItem === maxTrustForBdateForCross ? 'pink' : 'transparent' }" >
+  [ngStyle]="{ 'background-color':  birthTrstArrayItem.trust  === maxTrustForBdateForCross && birthTrstArrayItem.mdmid === maxTrustMDMForBirth ? 'pink' : 'transparent' }" >
       
     <div style="display: flex; justify-content: space-between;">
       <span>{{netSuiteObjectForTableData?.['BIRTH_DATE'] || erpSourceObjectForTableData?.['BIRTH_DATE']}}</span>
-      <span>{{ birthTrstArrayItem }}   </span>
+      <!-- <span>{{ birthTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{birthTrstArrayItem.mdmid}}</span>
+      <span>{{ birthTrstArrayItem.trust }}   </span>
     </div>
   </td>
     </tr>
@@ -827,20 +851,24 @@
       <td class="border border-gray-300 px-4 py-2">Age</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['AGE']}}</td>
       <td *ngFor="let ageTrstArrayItem of ageTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': ageTrstArrayItem === maxTrustForAgeForCross ? 'pink' : 'transparent' }" >
+      [ngStyle]="{ 'background-color':  ageTrstArrayItem.trust  === maxTrustForAgeForCross && ageTrstArrayItem.mdmid === maxTrustMDMForAge  ? 'pink' : 'transparent' }" >
      
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['AGE'] || netSuiteObjectForTableData?.['AGE'] }}</span>
-      <span>{{ ageTrstArrayItem }}   </span>
+      <span style="display:none;">{{ageTrstArrayItem.mdmid}}</span>
+      <span>{{ ageTrstArrayItem.trust }}   </span>
+      <!-- <span>{{ ageTrstArrayItem }}   </span> -->
     </div>
 
   </td>
   <td *ngFor="let ageTrstArrayItem of ageTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': ageTrstArrayItem === maxTrustForAgeForCross ? 'pink' : 'transparent' }" >
+  [ngStyle]="{ 'background-color': ageTrstArrayItem.trust  === maxTrustForAgeForCross && ageTrstArrayItem.mdmid === maxTrustMDMForAge? 'pink' : 'transparent' }" >
  
 <div style="display: flex; justify-content: space-between;">
   <span>{{netSuiteObjectForTableData?.['AGE'] || erpSourceObjectForTableData?.['AGE'] }}</span>
-  <span>{{ ageTrstArrayItem }}   </span>
+  <span style="display:none;">{{ageTrstArrayItem.mdmid}}</span>
+  <span>{{ ageTrstArrayItem.trust }}   </span>
+  <!-- <span>{{ ageTrstArrayItem }}   </span> -->
 </div>
 
 </td>
@@ -849,22 +877,26 @@
       <td class="border border-gray-300 px-4 py-2">Phone</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['PHONE']}}</td>
       <td *ngFor="let phoneTrstArrayItem of phoneTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': phoneTrstArrayItem === maxTrustForPhoneForCross ? 'pink' : 'transparent' }" >
+      [ngStyle]="{ 'background-color':phoneTrstArrayItem.trust  === maxTrustForPhoneForCross && phoneTrstArrayItem.mdmid === maxTrustMDMForPhone ? 'pink' : 'transparent' }" >
       <!-- <span style="width:100px;">  {{erpSourceObjectForTableData?.['PHONE']}}  </span> --
         <strong> {{ phoneTrstArrayItem }}  
     </strong> -->
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['PHONE'] || netSuiteObjectForTableData?.['PHONE']  }}</span>
-      <span>{{ phoneTrstArrayItem }}   </span>
+      <!-- <span>{{ phoneTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{phoneTrstArrayItem.mdmid}}</span>
+      <span>{{ phoneTrstArrayItem.trust }}   </span>
     </div>
   </td>
 
   <td *ngFor="let phoneTrstArrayItem of phoneTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': phoneTrstArrayItem === maxTrustForPhoneForCross ? 'pink' : 'transparent' }">
+  [ngStyle]="{ 'background-color': phoneTrstArrayItem.trust  === maxTrustForPhoneForCross && phoneTrstArrayItem.mdmid === maxTrustMDMForPhone  ? 'pink' : 'transparent' }">
       
     <div style="display: flex; justify-content: space-between;">
       <span>{{netSuiteObjectForTableData?.['PHONE'] || erpSourceObjectForTableData?.['PHONE']}}</span>
-      <span>{{ phoneTrstArrayItem }}   </span>
+      <!-- <span>{{ phoneTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{phoneTrstArrayItem.mdmid}}</span>
+      <span>{{ phoneTrstArrayItem.trust }}   </span>
     </div>
   </td>
     </tr>
@@ -872,21 +904,25 @@
       <td class="border border-gray-300 px-4 py-2">EMAIL</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['EMAIL']}}</td>
       <td *ngFor="let emailTrstArrayItem of emailTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': emailTrstArrayItem === maxTrustForEmailForCross ? 'pink' : 'transparent' }">
+      [ngStyle]="{ 'background-color': emailTrstArrayItem.trust  === maxTrustForEmailForCross && emailTrstArrayItem.mdmid === maxTrustMDMForEMail  ? 'pink' : 'transparent' }">
      
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['EMAIL'] || netSuiteObjectForTableData?.['EMAIL'] }}</span> &nbsp;
-      <span>{{ emailTrstArrayItem }}   </span>
+      <!-- <span>{{ emailTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{emailTrstArrayItem.mdmid}}</span>
+      <span>{{ emailTrstArrayItem.trust }}   </span>
     </div>
   
   </td>
-
+   
   <td *ngFor="let emailTrstArrayItem of emailTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': emailTrstArrayItem === maxTrustForEmailForCross ? 'pink' : 'transparent' }" >
+  [ngStyle]="{ 'background-color':  emailTrstArrayItem.trust  === maxTrustForEmailForCross && emailTrstArrayItem.mdmid === maxTrustMDMForEMail  ? 'pink' : 'transparent' }" >
      
     <div style="display: flex; justify-content: space-between;">
       <span>{{netSuiteObjectForTableData?.['EMAIL'] || erpSourceObjectForTableData?.['EMAIL']}}</span> &nbsp;
-      <span>{{ emailTrstArrayItem }}   </span>
+      <!-- <span>{{ emailTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{emailTrstArrayItem.mdmid}}</span>
+      <span>{{ emailTrstArrayItem.trust }}   </span>
     </div>
   
   </td>
@@ -896,21 +932,25 @@
       <td class="border border-gray-300 px-4 py-2">Loyalty Score</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LOYALTY_SCORE']}}</td>
       <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
-      [ngStyle]="{ 'background-color': loyolityTrstArrayItem === maxTrustForLoyolityForCross ? 'pink' : 'transparent' }">
+      [ngStyle]="{ 'background-color':  loyolityTrstArrayItem.trust  === maxTrustForLoyolityForCross && loyolityTrstArrayItem.mdmid === maxTrustMDMForLoyal  ? 'pink' : 'transparent' }">
       <!-- <span style="width:100px;">  {{erpSourceObjectForTableData?.['LOYALTY_SCORE'] || ''}}  </span> --
         <strong> {{ loyolityTrstArrayItem }}  
     </strong> -->
     <div style="display: flex; justify-content: space-between;">
       <span>{{erpSourceObjectForTableData?.['LOYALTY_SCORE'] ||netSuiteObjectForTableData?.['LOYALTY_SCORE'] }}</span>
-      <span>{{ loyolityTrstArrayItem }}   </span>
+      <!-- <span>{{ loyolityTrstArrayItem }}   </span> -->
+      <span style="display:none;">{{loyolityTrstArrayItem.mdmid}}</span>
+      <span>{{ loyolityTrstArrayItem.trust }}   </span>
     </div>
   </td>
   <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArrayForNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
-  [ngStyle]="{ 'background-color': loyolityTrstArrayItem === maxTrustForLoyolityForCross ? 'pink' : 'transparent' }" >
+  [ngStyle]="{ 'background-color':  loyolityTrstArrayItem.trust  === maxTrustForLoyolityForCross && loyolityTrstArrayItem.mdmid === maxTrustMDMForLoyal  ? 'pink' : 'transparent' }" >
 
 <div style="display: flex; justify-content: space-between;">
   <span>{{netSuiteObjectForTableData?.['LOYALTY_SCORE'] || erpSourceObjectForTableData?.['LOYALTY_SCORE'] }}</span>
-  <span>{{ loyolityTrstArrayItem }}   </span>
+  <!-- <span>{{ loyolityTrstArrayItem }}   </span> -->
+  <span style="display:none;">{{loyolityTrstArrayItem.mdmid}}</span>
+  <span>{{ loyolityTrstArrayItem.trust }}   </span>
 </div>
 </td>
     </tr>
