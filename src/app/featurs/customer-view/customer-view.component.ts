@@ -44,6 +44,7 @@ custEmail='';
 custAge='';
 custGender='';
 custCountry='';
+custRel='';
 custPhone='';
 custAddress='';
 loyolScore='';
@@ -52,6 +53,8 @@ fadeOut = false;
 matchXrefSourceId='';
 matchXrefTargetId='';
 countries=[];
+genders=[];
+custType=[];
 ingredient='Cheese';
 selectedOption: string = '';
 displayHistoryTable=false;
@@ -124,6 +127,8 @@ customerHistory: any[]=[];
   maxTrustForLoyolity=0;
 
   maxTrustForFNameForCross=0;
+  maxTrustForCustIDForCross=0;
+  maxTrustMDMForID=0;
   maxTrustForLNameForCross=0;
   maxTrustForAgeForCross=0; 
   maxTrustForGenderForCross=0;
@@ -170,7 +175,8 @@ ageTrstArrayForCross=[];
 phoneTrstArrayForCross=[];
 emailTrstArrayForCross=[];
 loyolityTrstArrayForCross=[];
-
+custIdTrstArrayNetSuitMatchForCross=[];
+custIdTrstArrayForCross=[];
 firstNameTrstArrayForNetSuitMatchForCross=[];
 lastNameTrstArrayForNetSuitMatchForCross=[];
 genderTrstArrayForNetSuitMatchForCross=[];
@@ -201,6 +207,8 @@ loyolityTrstArrayForNetSuitMatchForCross=[];
     this.custAge=this.customerResult['AGE'];;
     this.custGender=this.customerResult['GENDER_CD'];
     this.custCountry=this.customerResult['COUNTRY'];
+
+  this.custRel=this.customerResult['RELATIONSHIP_TYPE_CD'];
    // this.custCountry='UK';
     
     this.loyolScore=this.customerResult['LOYALTY_SCORE'];
@@ -229,6 +237,15 @@ let matchTrustXRefString="WHERE SRC_CUSTOMER_MDM_ID IN (" +mdmId+ ") OR TGT_CUST
       { name: 'UK', value: 'UK' },
 
   ];
+  this.genders = [
+    { name: 'M', value: 'M' },
+    { name: 'F', value: 'F' }
+   
+];
+this.custType=[
+  { name: 'CUST', value: 'CUST' },
+  { name: 'CUST1', value: 'CUST1' }
+]
   this.radioCategories = [
     { name: 'Accounting', key: 'A' },
     { name: 'Marketing', key: 'M' },
@@ -447,6 +464,18 @@ console.log('formatted array erpArrayProcessedDataForCross ',erpArrayProcessedDa
 if(erpArrayProcessedDataForCross.length>0){
   const names = erpArrayProcessedDataForCross.map(person => person['mdmData']);
 
+   
+  this.custIdTrstArrayForCross= names
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "CUSTOMER_ID"))
+  .map(erpData => 
+  {
+    return {
+      mdmid:  erpData['CUSTOMER_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+     
+    };
+  });
+  
   this.firstNameTrstArrayForCross = names
   .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
   .map(erpData => erpData['TRUST_SCORE']);
@@ -463,6 +492,20 @@ if(erpArrayProcessedDataForCross.length>0){
    //Array.from({ lenghtForERP }, () => 0);
   }
   this.lastNameTrstArrayForCross = this.lastNameTrstArrayForCross.map(Number);
+
+
+  // this.custIdTrstArrayForCross= names
+  // .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "CUSTOMER_ID"))
+  // .map(erpData => erpData['TRUST_SCORE']);
+  
+
+  // if( this.custIdTrstArrayForCross.length === 0 ||  this.custIdTrstArrayForCross.length<1){
+  //   //   createZeroArray
+  //    this.custIdTrstArrayForCross =this.createZeroArray(lenghtForERP);
+     
+  //   }
+  //   this.custIdTrstArrayForCross = this.custIdTrstArrayForCross.map(Number);
+  
   this.genderTrstArrayForCross= names
 .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
 .map(erpData => erpData['TRUST_SCORE']);
@@ -539,6 +582,7 @@ console.log('formatted array netSuiteProcessedDataForCross ',netSuiteProcessedDa
 
 if(netSuiteProcessedDataForCross.length>0){
   const nameValuesForNet = netSuiteProcessedDataForCross.map(person => person['mdmData']);
+ 
   this.firstNameTrstArrayForNetSuitMatchForCross = nameValuesForNet
     .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
     .map(erpData => erpData['TRUST_SCORE']);
@@ -553,6 +597,23 @@ if(netSuiteProcessedDataForCross.length>0){
     this.lastNameTrstArrayForNetSuitMatchForCross = this.createZeroArray(length);
   }
   this.lastNameTrstArrayForNetSuitMatchForCross = this.lastNameTrstArrayForNetSuitMatchForCross.map(Number);
+
+  this.custIdTrstArrayNetSuitMatchForCross = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "CUSTOMER_ID"))
+  .map(erpData =>   {
+    return {
+      mdmid:  erpData['CUSTOMER_MDM_ID'],
+        trust: parseInt(erpData['TRUST_SCORE'], 10)
+     
+     
+    };});
+
+  // if (this.custIdTrstArrayNetSuitMatchForCross.length === 0 || this.custIdTrstArrayNetSuitMatchForCross.length < 1) {
+   
+  //   this.custIdTrstArrayNetSuitMatchForCross = this.createZeroArray(length);
+  // }
+  // this.custIdTrstArrayNetSuitMatchForCross = this.custIdTrstArrayNetSuitMatchForCross.map(Number);
+
 
   this.genderTrstArrayForNetSuitMatchForCross = nameValuesForNet
     .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
@@ -610,13 +671,25 @@ if(netSuiteProcessedDataForCross.length>0){
 
 
 
-
+//let combinedCustId=[...this.firstNameTrstArrayForNetSuitMatchForCross, ...this.firstNameTrstArrayForCross];
 
   let combinedFirstName = [...this.firstNameTrstArrayForNetSuitMatchForCross, ...this.firstNameTrstArrayForCross];
     this.maxTrustForFNameForCross = Math.max(...combinedFirstName);
     console.log('maxTrusFname', this.maxTrustForFNameForCross);
+
     if (this.maxTrustForFNameForCross === 0 ||combinedFirstName.length < 2 ) {
       this.maxTrustForFNameForCross = 1000;
+    }
+
+    //maxTrustForCustIDForCross=0;
+    let combinedCustId = [...this.custIdTrstArrayNetSuitMatchForCross, ...this.custIdTrstArrayForCross];
+    this.maxTrustForCustIDForCross = Math.max(...combinedCustId.map(combinedCustId => combinedCustId.trust));
+   let maxTrustSCoreObjectsForID=combinedCustId.filter(combinedCustId => combinedCustId.trust ===   this.maxTrustForCustIDForCross);
+   this.maxTrustMDMForID= Math.max(...maxTrustSCoreObjectsForID.map(maxTrustSCoreObjectsForID => maxTrustSCoreObjectsForID.mdmid));
+   console.log('maxTrustForCustIDForCross', this.maxTrustForCustIDForCross);
+   console.log('maxTrustMDM ID ForID ', this.maxTrustMDMForID);
+    if (this.maxTrustForCustIDForCross === 0 ||combinedCustId.length < 2 ) {
+      this.maxTrustForCustIDForCross = 1000;
     }
     let combinedLName = [...this.lastNameTrstArrayForNetSuitMatchForCross, ...this.lastNameTrstArrayForCross];
     this.maxTrustForLNameForCross= Math.max(...combinedLName);

@@ -11,10 +11,19 @@
 <div class="flex align-items-center gap-4 mb-4" style="margin-left:30px !important;">
 	
 	<div class="card flex justify-center">
-		<p-select [options]="tables" [(ngModel)]="selectedTable" optionLabel="name" 
+		<!-- <p-select [options]="tables" [(ngModel)]="selectedTable" optionLabel="name" 
 		optionValue="value"  placeholder="Select a Table" class="w-full md:w-56" 
 		(onChange)="handleTableChange($event)"
-		/>
+		/> -->
+
+		<p-multiselect [options]="groupedCities" [group]="true" [(ngModel)]="selectedColumnsForAllTables" placeholder="Select Columns" scrollHeight="250px" display="chip" styleClass="w-full md:w-80">
+			<ng-template let-group #group>
+				<div class="flex items-center">
+					<img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px" />
+					<span>{{ group.label }}</span>
+				</div>
+			</ng-template>
+		</p-multiselect>
 	</div>
 <span *ngIf="custDropDOwnDisplay">
 	<p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"

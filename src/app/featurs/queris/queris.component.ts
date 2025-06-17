@@ -47,6 +47,7 @@ export class QuerisComponent {
   selectedColumns = [];
   selectedColumnsForAddress = [];
   submitColumnsForQuery = [];
+ 
   queryTableDisplay:boolean =false;
   customers: any[]=[];
   userName = '';
@@ -54,7 +55,69 @@ export class QuerisComponent {
   custAddressDropDOwnDisplay:boolean =false;
   custRelationShipTableDisplay:boolean =false;
   loadSpinner =false;
+  groupedCities=[];
+
+  selectedCities=[];
+  selectedColumnsForAllTables=[];
   ngOnInit() {
+    this.columns = [
+      { field: 'CUSTOMER ID', headerVal: 'C.CUSTOMER_ID' },
+      { field: 'CUSTOMER_MDM_ID', headerVal: 'C.CUSTOMER_MDM_ID' },
+      { field: 'First Name', headerVal: 'C.FIRST_NAME' },
+      { field: 'Last Name', headerVal: 'C.LAST_NAME' },
+      { field: 'Email', headerVal: 'C.EMAIL' },
+      { field: 'Phone', headerVal: 'C.PHONE' },
+      { field: 'Age', headerVal: 'C.AGE' },
+      { field: 'Gender', headerVal: 'C.GENDER_CD' },
+      { field: 'Birth Date', headerVal: 'C.BIRTH_DATE' },
+      { field: 'Loyality Score', headerVal: 'C.LOYALTY_SCORE' },
+
+    ];
+    this.addressColumns = [
+      { field: 'CITY', headerVal: 'CA.CITY' },
+      { field: 'STATE', headerVal: 'CA.STATE' },
+      { field: 'COUNTRY', headerVal: 'CA.COUNTRY' },
+      { field: 'ZIP_CODE', headerVal: 'CA.ZIP_CODE' },
+
+    ];
+
+    this.groupedCities = [
+      {
+          label: 'CUSTOMER',
+          value: 'CUSTOMER',
+          items: [
+            { label: 'CUSTOMER ID', value: 'C.CUSTOMER_ID' },
+            { label: 'CUSTOMER_MDM_ID', value: 'C.CUSTOMER_MDM_ID' },
+            { label: 'First Name', value: 'C.FIRST_NAME' },
+            { label: 'Last Name', value: 'C.LAST_NAME' },
+            { label: 'Email', value: 'C.EMAIL' },
+            { label: 'Phone', value: 'C.PHONE' },
+            { label: 'Age', value: 'C.AGE' },
+            { label: 'Gender', value: 'C.GENDER_CD' },
+            { label: 'Birth Date', value: 'C.BIRTH_DATE' },
+            { label: 'Loyality Score', value: 'C.LOYALTY_SCORE' }
+          ]
+      },
+      {
+          label: 'CUSTOMER_ADDRESS',
+          value: 'CUSTOMER_ADDRESS',
+          items: [
+            { label: 'CITY', value: 'CA.CITY' },
+            { label: 'STATE', value: 'CA.STATE' },
+            { label: 'COUNTRY', value: 'CA.COUNTRY' },
+            { label: 'ZIP_CODE', value: 'CA.ZIP_CODE' }
+          ]
+      },
+      {
+          label: 'CUSTOMER_RELATIONSHIP',
+          value: 'CUSTOMER_RELATIONSHIP',
+          items: [
+            { label: 'CUSTOMER_BUS_REL_MDM_ID', value: 'CBR.CUSTOMER_BUS_REL_MDM_ID' },
+            { label: 'CUSTOMER_BUS_REL_ID', value: 'CBR.CUSTOMER_BUS_REL_ID' },
+            { label: 'RELATIONSHIP_TYPE_CD', value: 'CBR.RELATIONSHIP_TYPE_CD' }
+          ]
+      }
+  ];
     this.tables = [
       { name: 'CUSTOMER', value: 'CUSTOMER' },
       { name: 'CUSTOMER_ADDRESS', value: 'CUSTOMER_ADDRESS' },
@@ -73,19 +136,7 @@ export class QuerisComponent {
       { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
       { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
     ];
-    this.columns = [
-      { field: 'CUSTOMER ID', headerVal: 'C.CUSTOMER_ID' },
-      { field: 'CUSTOMER_MDM_ID', headerVal: 'C.CUSTOMER_MDM_ID' },
-      { field: 'First Name', headerVal: 'C.FIRST_NAME' },
-      { field: 'Last Name', headerVal: 'C.LAST_NAME' },
-      { field: 'Email', headerVal: 'C.EMAIL' },
-      { field: 'Phone', headerVal: 'C.PHONE' },
-      { field: 'Age', headerVal: 'C.AGE' },
-      { field: 'Gender', headerVal: 'C.GENDER_CD' },
-      { field: 'Birth Date', headerVal: 'C.BIRTH_DATE' },
-      { field: 'Loyality Score', headerVal: 'C.LOYALTY_SCORE' },
-
-    ];
+    
     // this.columns = [
     //   { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
     //   { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
@@ -99,14 +150,7 @@ export class QuerisComponent {
 
     // ];
     
-    this.addressColumns = [
-      { field: 'CITY', headerVal: 'CA.CITY' },
-      { field: 'STATE', headerVal: 'CA.STATE' },
-      { field: 'COUNTRY', headerVal: 'CA.COUNTRY' },
-      { field: 'ZIP_CODE', headerVal: 'CA.ZIP_CODE' },
-
-    ];
-
+    
     //this.selectedColumns = this.columns.filter((c,index) => index < 2);
 
 
