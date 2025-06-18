@@ -21,11 +21,13 @@ import { Select } from 'primeng/select';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputSwitchModule } from 'primeng/inputswitch';
 @Component({
   selector: 'app-customer-view',
   standalone: true,
 
-  imports: [FormsModule,PanelModule,MenuModule,CommonModule,ProgressSpinnerModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
+  imports: [FormsModule,PanelModule,MenuModule,CheckboxModule,InputSwitchModule,CommonModule,ProgressSpinnerModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
 
   templateUrl: './customer-view.component.html',
   providers:[DialogService],
@@ -34,7 +36,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 })
 export class CustomerViewComponent  {
   formGroup!: FormGroup;
-
+  isSourceColumnsChecked: boolean = false;
 custId='';
 custMdmId='';
 customerResult={};
@@ -125,6 +127,15 @@ customerHistory: any[]=[];
   maxTrustForPhone=0;
   maxTrustForEmail=0;
   maxTrustForLoyolity=0;
+
+  maxMDMIDForFName=0;
+  maxMDMIDForLName=0;
+  maxMDMIDForAge=0; 
+  maxMDMIDForGender=0;
+  maxMDMIDForBdate=0;
+  maxMDMIDForPhone=0;
+  maxMDMIDForEmail=0;
+  maxMDMIDForLoyolity=0;
 
   maxTrustForFNameForCross=0;
   maxTrustForCustIDForCross=0;
@@ -273,7 +284,15 @@ this.custType=[
     this.updateFromAPI(query);
   }
   
- 
+  handleToggleChange(event: any) {
+    console.log('Toggled to:', event.checked);
+    if(event.checked === true){
+      this.isSourceColumnsChecked=true;
+    }else{
+      this.isSourceColumnsChecked=false;
+    }
+   
+  }
   async getCrossRefernceTrustForCustomers(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/crossRefernceTrustForCustomers';
@@ -1124,7 +1143,7 @@ let erpForMatchRef=this.erpArrayForCrossReferenceForMatch;
 {
   return {
     mdmid: erpData['CUSTOMER_MDM_ID'],
-    trust: erpData['TRUST_SCORE']
+    trust: parseInt(erpData['TRUST_SCORE'], 10)
 
   };
 }
@@ -1143,7 +1162,7 @@ this.lastNameTrstArray = names
    {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1161,7 +1180,7 @@ this.genderTrstArray= names
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1178,7 +1197,7 @@ this.birthTrstArray= names
    {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1196,7 +1215,7 @@ this.ageTrstArray= names
  {
   return {
     mdmid: erpData['CUSTOMER_MDM_ID'],
-    trust: erpData['TRUST_SCORE']
+    trust: parseInt(erpData['TRUST_SCORE'], 10)
 
   };
 }
@@ -1214,7 +1233,7 @@ this.phoneTrstArray= names
  {
   return {
     mdmid: erpData['CUSTOMER_MDM_ID'],
-    trust: erpData['TRUST_SCORE']
+    trust: parseInt(erpData['TRUST_SCORE'], 10)
 
   };
 }
@@ -1228,12 +1247,12 @@ this.emailTrstArray= names
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
 );
-this.emailTrstArray = this.emailTrstArray.map(Number);
+//this.emailTrstArray = this.emailTrstArray.map(Number);
 this.loyolityTrstArray= names
 .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LOYALTY_SCORE"))
 .map(erpData => 
@@ -1241,7 +1260,7 @@ this.loyolityTrstArray= names
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1274,7 +1293,7 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1290,7 +1309,7 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1300,14 +1319,14 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
   //  this.lastNameTrstArrayForNetSuitMatch = Array.from({ length }, () => 0);
     this.lastNameTrstArrayForNetSuitMatch = this.createZeroArray(length);
  }
- this.lastNameTrstArrayForNetSuitMatch = this.lastNameTrstArrayForNetSuitMatch.map(Number);
+ //this.lastNameTrstArrayForNetSuitMatch = this.lastNameTrstArrayForNetSuitMatch.map(Number);
  this.genderTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
  .map(erpData => 
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1317,14 +1336,14 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
  //  this.genderTrstArrayForNetSuitMatch =Array.from({ length }, () => 0);
  this.genderTrstArrayForNetSuitMatch = this.createZeroArray(length);
  }
- this.genderTrstArrayForNetSuitMatch = this.genderTrstArrayForNetSuitMatch.map(Number);
+ //this.genderTrstArrayForNetSuitMatch = this.genderTrstArrayForNetSuitMatch.map(Number);
  this.birthTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "BIRTH_DATE"))
  .map(erpData =>
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1333,14 +1352,14 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
   // this.birthTrstArrayForNetSuitMatch =Array.from({ length }, () => 0);
   this.birthTrstArrayForNetSuitMatch =this.createZeroArray(length);
  }
- this.birthTrstArrayForNetSuitMatch = this.birthTrstArrayForNetSuitMatch.map(Number);
+ //this.birthTrstArrayForNetSuitMatch = this.birthTrstArrayForNetSuitMatch.map(Number);
  this.ageTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "AGE"))
  .map(erpData => 
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
@@ -1349,91 +1368,134 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
    // this.birthTrstArrayForNetSuitMatch =Array.from({ length }, () => 0);
   this.ageTrstArrayForNetSuitMatch =this.createZeroArray(length);
   }
-  this.ageTrstArrayForNetSuitMatch = this.ageTrstArrayForNetSuitMatch.map(Number);
+  //this.ageTrstArrayForNetSuitMatch = this.ageTrstArrayForNetSuitMatch.map(Number);
  this.phoneTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "PHONE"))
  .map(erpData => 
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
 );
- this.phoneTrstArrayForNetSuitMatch = this.phoneTrstArrayForNetSuitMatch.map(Number);
+ //this.phoneTrstArrayForNetSuitMatch = this.phoneTrstArrayForNetSuitMatch.map(Number);
  this.emailTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "EMAIL"))
  .map(erpData => 
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
 );
- this.emailTrstArrayForNetSuitMatch = this.emailTrstArrayForNetSuitMatch.map(Number);
+ //this.emailTrstArrayForNetSuitMatch = this.emailTrstArrayForNetSuitMatch.map(Number);
  this.loyolityTrstArrayForNetSuitMatch= nameValuesForNet
  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LOYALTY_SCORE"))
  .map(erpData =>
   {
     return {
       mdmid: erpData['CUSTOMER_MDM_ID'],
-      trust: erpData['TRUST_SCORE']
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
   
     };
   }
   );
- this.loyolityTrstArrayForNetSuitMatch = this.loyolityTrstArrayForNetSuitMatch.map(Number);
+ //this.loyolityTrstArrayForNetSuitMatch = this.loyolityTrstArrayForNetSuitMatch.map(Number);
 }
 
+    // let combinedFirstName = [...this.firstNameTrstArrayForNetSuitMatch, ...this.firstNameTrstArray];
+    // this.maxTrustForFName = Math.max(...combinedFirstName);
     let combinedFirstName = [...this.firstNameTrstArrayForNetSuitMatch, ...this.firstNameTrstArray];
-    this.maxTrustForFName = Math.max(...combinedFirstName);
+    this.maxTrustForFName = Math.max(...combinedFirstName.map(combinedFirstName => combinedFirstName.trust));
+    let maxTrustSCoreObjectsForFName=combinedFirstName.filter(combinedFirstName => combinedFirstName.trust ===   this.maxTrustForFName);
+    this.maxMDMIDForFName= Math.max(...maxTrustSCoreObjectsForFName.map(maxTrustSCoreObjectsForFName => maxTrustSCoreObjectsForFName.mdmid));
+    
+	
     console.log('maxTrusFname', this.maxTrustForFName);
     if (this.maxTrustForFName === 0 ||combinedFirstName.length < 2 ) {
       this.maxTrustForFName = 1000;
     }
     let combinedLName = [...this.lastNameTrstArrayForNetSuitMatch, ...this.lastNameTrstArray];
-    this.maxTrustForLName= Math.max(...combinedLName);
+    this.maxTrustForLName= Math.max(...combinedLName.map(combinedLName => combinedLName.trust)); Math.max(...combinedLName);
+	 let maxTrustSCoreObjectsForLName=combinedLName.filter(combinedLName => combinedLName.trust ===   this.maxTrustForLName);
+	
+	 this.maxMDMIDForLName= Math.max(...maxTrustSCoreObjectsForLName.map(maxTrustSCoreObjectsForLName => maxTrustSCoreObjectsForLName.mdmid));
+
+
     if (this.maxTrustForLName === 0 ||combinedLName.length < 2) {
       this.maxTrustForLName = 1000;
     }
 
     console.log('maxTrustForLName', this.maxTrustForLName);
 
+    // let combinedAge = [...this.ageTrstArray, ...this.ageTrstArrayForNetSuitMatch];
+    // this.maxTrustForAge = Math.max(...combinedAge);
     let combinedAge = [...this.ageTrstArray, ...this.ageTrstArrayForNetSuitMatch];
-    this.maxTrustForAge = Math.max(...combinedAge);
+ 
+    this.maxTrustForAge= Math.max(...combinedAge.map(combinedAge => combinedAge.trust)); 
+    //Math.max(...combinedAge);
+      let maxTrustSCoreObjectsForAge=combinedAge.filter(combinedAge => combinedAge.trust ===   this.maxTrustForAge);
+     
+      this.maxMDMIDForAge= Math.max(...maxTrustSCoreObjectsForAge.map(maxTrustSCoreObjectsForAge => maxTrustSCoreObjectsForAge.mdmid));
+   
     console.log('maxTrustForAge', this.maxTrustForAge);
     if (this.maxTrustForAge === 0 ||combinedAge.length < 2) {
       this.maxTrustForAge = 1000;
     }
+    // let combinedgender = [...this.genderTrstArray, ...this.genderTrstArrayForNetSuitMatch];
+    // this.maxTrustForGender = Math.max(...combinedgender);
     let combinedgender = [...this.genderTrstArray, ...this.genderTrstArrayForNetSuitMatch];
-    this.maxTrustForGender = Math.max(...combinedgender);
+    this.maxTrustForGender =  Math.max(...combinedgender.map(combinedgender => combinedgender.trust));
+	let maxTrustSCoreObjectsForGender=combinedgender.filter(combinedgender => combinedgender.trust ===   this.maxTrustForGender);
+	 this.maxMDMIDForGender= Math.max(...maxTrustSCoreObjectsForGender.map(maxTrustSCoreObjectsForGender => maxTrustSCoreObjectsForGender.mdmid));
+	
     console.log('maxTrustForGender', this.maxTrustForGender);
     if (this.maxTrustForGender === 0 ||combinedgender.length < 2) {
       this.maxTrustForGender = 1000;
     }
+    // let combinedBirth = [...this.birthTrstArrayForNetSuitMatch, ...this.birthTrstArray];
+    // this.maxTrustForBdate = Math.max(...combinedBirth);
     let combinedBirth = [...this.birthTrstArrayForNetSuitMatch, ...this.birthTrstArray];
-    this.maxTrustForBdate = Math.max(...combinedBirth);
+    this.maxTrustForBdate =  Math.max(...combinedBirth.map(combinedBirth => combinedBirth.trust)); 
+	let maxTrustSCoreObjectsForBday=combinedBirth.filter(combinedBirth => combinedBirth.trust ===   this.maxTrustForBdate);
+	 this.maxMDMIDForBdate= Math.max(...maxTrustSCoreObjectsForBday.map(maxTrustSCoreObjectsForBday => maxTrustSCoreObjectsForBday.mdmid));
+	
     console.log('maxTrustForBdate', this.maxTrustForBdate);
     if (this.maxTrustForBdate === 0 ||combinedBirth.length < 2) {
       this.maxTrustForBdate = 1000;
     }
+    // let combinedPhone = [...this.phoneTrstArray, ...this.phoneTrstArrayForNetSuitMatch];
+    // this.maxTrustForPhone = Math.max(...combinedPhone);
     let combinedPhone = [...this.phoneTrstArray, ...this.phoneTrstArrayForNetSuitMatch];
-    this.maxTrustForPhone = Math.max(...combinedPhone);
+    this.maxTrustForPhone = Math.max(...combinedPhone.map(combinedPhone => combinedPhone.trust));
+	let maxTrustSCoreObjectsForPhn=combinedPhone.filter(combinedPhone => combinedPhone.trust ===   this.maxTrustForPhone);
+ this.maxMDMIDForPhone= Math.max(...maxTrustSCoreObjectsForPhn.map(maxTrustSCoreObjectsForPhn => maxTrustSCoreObjectsForPhn.mdmid));
+	
     console.log('maxTrustForPhone', this.maxTrustForPhone);
     if (this.maxTrustForPhone === 0 ||combinedPhone.length < 2) {
       this.maxTrustForPhone = 1000;
     }
+    // let combinedEmail = [...this.emailTrstArray, ...this.emailTrstArrayForNetSuitMatch];
+    // this.maxTrustForEmail = Math.max(...combinedEmail);
     let combinedEmail = [...this.emailTrstArray, ...this.emailTrstArrayForNetSuitMatch];
-    this.maxTrustForEmail = Math.max(...combinedEmail);
+    this.maxTrustForEmail = Math.max(...combinedEmail.map(combinedEmail => combinedEmail.trust)); 
+	let maxTrustSCoreObjectsForEmail=combinedEmail.filter(combinedEmail => combinedEmail.trust ===   this.maxTrustForEmail);
+	this.maxMDMIDForEmail= Math.max(...maxTrustSCoreObjectsForEmail.map(maxTrustSCoreObjectsForEmail => maxTrustSCoreObjectsForEmail.mdmid));
+	
     console.log('maxTrustForEmail', this.maxTrustForEmail);
     if (this.maxTrustForEmail === 0 || combinedEmail.length < 2 ) {
       this.maxTrustForEmail = 1000;
     }
+    // let combinedLoyol = [...this.loyolityTrstArrayForNetSuitMatch, ...this.loyolityTrstArray];
+    // this.maxTrustForLoyolity = Math.max(...combinedLoyol);
     let combinedLoyol = [...this.loyolityTrstArrayForNetSuitMatch, ...this.loyolityTrstArray];
-    this.maxTrustForLoyolity = Math.max(...combinedLoyol);
+    this.maxTrustForLoyolity = Math.max(...combinedLoyol.map(combinedLoyol => combinedLoyol.trust)); 
+	  let maxTrustSCoreObjectsForLoyol=combinedLoyol.filter(combinedLoyol => combinedLoyol.trust ===   this.maxTrustForLoyolity);
+		this.maxMDMIDForLoyolity= Math.max(...maxTrustSCoreObjectsForLoyol.map(maxTrustSCoreObjectsForLoyol => maxTrustSCoreObjectsForLoyol.mdmid));
     console.log('maxTrustForLoyolity', this.maxTrustForLoyolity);
     if (this.maxTrustForLoyolity === 0 || combinedLoyol.length < 2) {
       this.maxTrustForLoyolity = 1000;

@@ -210,13 +210,14 @@
                 </div>
                 <div class="w-[75%] bg-white-200 p-4">
                     <div *ngIf="displayHistoryTable">
-                    <!-- <p> Selected time: <b> {{ selectedOption }} </b>
-                        Start Date :{{ startDate }} 
-                        End Date :{{ endDate }} 
-                    </p> -->
-                    <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                   
+                 
+                  <!-- <p-inputSwitch [(ngModel)]="isSourceColumnsChecked"  inputId="mySwitch"  (onChange)="handleToggleChange($event)" ></p-inputSwitch> 
+                  <label for="mySwitch" style="margin-left: 0.5rem;margin-bottom: -1.5rem;">Show Source Columns</label>  -->
+                  <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                       <thead>
                         <tr class="bg-gray-100">
+                          <!-- <p-checkbox label="Subscribe" [(ngModel)]="isSourceColumnsChecked" styleClass="my-checkbox"></p-checkbox>  -->
                           <th class="border border-gray-300 px-4 py-2"> Customer</th>
                           <th class="border border-gray-300 px-4 py-2">Previous Value</th>
                           <th class="border border-gray-300 px-4 py-2">Current Value</th>
@@ -337,6 +338,19 @@
                           <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
                           <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
                         </tr>
+
+                        
+                        <tr  *ngIf="isSourceColumnsChecked"  class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Update By</td>
+                          <td colspan="2"  class="border border-gray-300 px-4 py-2"  style="padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td>
+                          <!-- <td class="border border-gray-300 px-4 py-2"  style=" padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td> -->
+                        </tr>
+                        <tr *ngIf="isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Update Date</td>
+                          <td colspan="2"  class="border border-gray-300 px-4 py-2"  style="padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
+                          <!-- <td class="border border-gray-300 px-4 py-2"  style=" padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td> -->
+                        </tr>
+                        
                         <!-- <tr class="hover:bg-gray-50">
                                               <td class="border border-gray-300 px-4 py-2">Party Type</td>
                                               <td class="border border-gray-300 px-4 py-2">alice example.com</td>
@@ -480,9 +494,9 @@
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>
                             <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArray"  class="border border-gray-300 px-4 py-2" 
                               
-                            [ngStyle]="{ 'background-color': firstNameTrstArrayItem === maxTrustForFName ? 'pink' : 'transparent' }"
+                            [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust === maxTrustForFName &&  firstNameTrstArrayItem.mdmid === maxMDMIDForFName ? 'pink' : 'transparent' }"
                               >
-                              
+                                    
                             <div style="display: flex; justify-content: space-between;">
                               
                               <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span>
@@ -493,7 +507,7 @@
           
                           </td>
                           <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': firstNameTrstArrayItem === maxTrustForFName ? 'pink' : 'transparent' }">
+                          [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust === maxTrustForFName &&  firstNameTrstArrayItem.mdmid === maxMDMIDForFName ? 'pink' : 'transparent' }">
  
                             <div style="display: flex; justify-content: space-between;">
                               
@@ -508,7 +522,7 @@
                               <td class="border border-gray-300 px-4 py-2">Last Name</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LAST_NAME']}}</td>
                               <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': lastNameTrstArrayItem === maxTrustForLName ? 'pink' : 'transparent' }">
+                              [ngStyle]="{ 'background-color': lastNameTrstArrayItem.trust === maxTrustForLName &&  lastNameTrstArrayItem.mdmid === maxMDMIDForLName ? 'pink' : 'transparent' }">
                             
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['LAST_NAME'] || netSuiteObjectForTableData?.['LAST_NAME']}}</span>
@@ -517,7 +531,7 @@
                             </div>
                           </td>
                           <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': lastNameTrstArrayItem === maxTrustForLName ? 'pink' : 'transparent' }">
+                          [ngStyle]="{ 'background-color': lastNameTrstArrayItem.trust === maxTrustForLName &&  lastNameTrstArrayItem.mdmid === maxMDMIDForLName ? 'pink' : 'transparent' }">
                         
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['LAST_NAME'] || erpSourceObjectForTableData?.['LAST_NAME']}}</span>
@@ -531,7 +545,7 @@
                               <td class="border border-gray-300 px-4 py-2">Gender</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['GENDER_CD']}}</td>
                               <td *ngFor="let genderTrstArrayItem of genderTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': genderTrstArrayItem === maxTrustForGender ? 'pink' : 'transparent' }"
+                              [ngStyle]="{ 'background-color': genderTrstArrayItem.trust === maxTrustForGender &&  genderTrstArrayItem.mdmid === maxMDMIDForGender ? 'pink' : 'transparent' }"
                              
                               >
                               <!-- [ngStyle]="genderTrstArrayItem === maxValue ? { 'background-color': 'red' } : {}" -->
@@ -553,7 +567,7 @@
                             </div> -->
                           </td>
                           <td *ngFor="let genderTrstArrayItem of genderTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': genderTrstArrayItem === maxTrustForGender ? 'pink' : 'transparent' }">
+                          [ngStyle]="{ 'background-color': genderTrstArrayItem.trust === maxTrustForGender &&  genderTrstArrayItem.mdmid === maxMDMIDForGender? 'pink' : 'transparent' }">
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['GENDER_CD'] || erpSourceObjectForTableData?.['GENDER_CD']}}</span>
@@ -565,7 +579,7 @@
                               <td class="border border-gray-300 px-4 py-2">Birth Date</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['BIRTH_DATE']}}</td>
                               <td *ngFor="let birthTrstArrayItem of birthTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': birthTrstArrayItem === maxTrustForBdate ? 'pink' : 'transparent' }">
+                              [ngStyle]="{ 'background-color': birthTrstArrayItem.trust === maxTrustForBdate &&  birthTrstArrayItem.mdmid === maxMDMIDForBdate ? 'pink' : 'transparent' }">
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['BIRTH_DATE'] || netSuiteObjectForTableData?.['BIRTH_DATE'] }}</span>
@@ -574,7 +588,7 @@
                             </div>
                           </td>
                           <td *ngFor="let birthTrstArrayItem of birthTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': birthTrstArrayItem === maxTrustForBdate ? 'pink' : 'transparent' }" >
+                          [ngStyle]="{ 'background-color':birthTrstArrayItem.trust === maxTrustForBdate &&  birthTrstArrayItem.mdmid === maxMDMIDForBdate ? 'pink' : 'transparent' }" >
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['BIRTH_DATE'] || erpSourceObjectForTableData?.['BIRTH_DATE']}}</span>
@@ -586,7 +600,7 @@
                               <td class="border border-gray-300 px-4 py-2">Age</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['AGE']}}</td>
                               <td *ngFor="let ageTrstArrayItem of ageTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': ageTrstArrayItem === maxTrustForAge ? 'pink' : 'transparent' }" >
+                              [ngStyle]="{ 'background-color':  ageTrstArrayItem.trust === maxTrustForAge &&  ageTrstArrayItem.mdmid === maxMDMIDForAge ? 'pink' : 'transparent' }" >
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['AGE'] || netSuiteObjectForTableData?.['AGE'] }}</span>
@@ -596,7 +610,7 @@
           
                           </td>
                           <td *ngFor="let ageTrstArrayItem of ageTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': ageTrstArrayItem === maxTrustForAge ? 'pink' : 'transparent' }" >
+                          [ngStyle]="{ 'background-color': ageTrstArrayItem.trust === maxTrustForAge &&  ageTrstArrayItem.mdmid === maxMDMIDForAge? 'pink' : 'transparent' }" >
                          
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['AGE'] || erpSourceObjectForTableData?.['AGE'] }}</span>
@@ -609,7 +623,7 @@
                               <td class="border border-gray-300 px-4 py-2">Phone</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['PHONE']}}</td>
                               <td *ngFor="let phoneTrstArrayItem of phoneTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': phoneTrstArrayItem === maxTrustForPhone ? 'pink' : 'transparent' }" >
+                              [ngStyle]="{ 'background-color': phoneTrstArrayItem.trust === maxTrustForPhone &&  phoneTrstArrayItem.mdmid === maxMDMIDForPhone  ? 'pink' : 'transparent' }" >
                               <!-- <span style="width:100px;">  {{erpSourceObjectForTableData?.['PHONE']}}  </span> --
                                 <strong> {{ phoneTrstArrayItem }}  
                             </strong> -->
@@ -621,7 +635,7 @@
                           </td>
 
                           <td *ngFor="let phoneTrstArrayItem of phoneTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': phoneTrstArrayItem === maxTrustForPhone ? 'pink' : 'transparent' }">
+                          [ngStyle]="{ 'background-color':phoneTrstArrayItem.trust === maxTrustForPhone &&  phoneTrstArrayItem.mdmid === maxMDMIDForPhone  ? 'pink' : 'transparent' }">
                               
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['PHONE'] || erpSourceObjectForTableData?.['PHONE']}}</span>
@@ -633,7 +647,7 @@
                               <td class="border border-gray-300 px-4 py-2">EMAIL</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['EMAIL']}}</td>
                               <td *ngFor="let emailTrstArrayItem of emailTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': emailTrstArrayItem === maxTrustForEmail ? 'pink' : 'transparent' }">
+                              [ngStyle]="{ 'background-color':  emailTrstArrayItem.trust === maxTrustForEmail &&  emailTrstArrayItem.mdmid === maxMDMIDForEmail ? 'pink' : 'transparent' }">
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{erpSourceObjectForTableData?.['EMAIL'] || netSuiteObjectForTableData?.['EMAIL'] }}</span> &nbsp;
@@ -644,7 +658,7 @@
                           </td>
 
                           <td *ngFor="let emailTrstArrayItem of emailTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': emailTrstArrayItem === maxTrustForEmail ? 'pink' : 'transparent' }" >
+                          [ngStyle]="{ 'background-color': emailTrstArrayItem.trust === maxTrustForEmail &&  emailTrstArrayItem.mdmid === maxMDMIDForEmail ? 'pink' : 'transparent' }" >
                              
                             <div style="display: flex; justify-content: space-between;">
                               <span>{{netSuiteObjectForTableData?.['EMAIL'] || erpSourceObjectForTableData?.['EMAIL']}}</span> &nbsp;
@@ -657,7 +671,7 @@
                               <td class="border border-gray-300 px-4 py-2">Loyalty Score</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LOYALTY_SCORE']}}</td>
                               <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArray"  class="border border-gray-300 px-4 py-2" 
-                              [ngStyle]="{ 'background-color': loyolityTrstArrayItem === maxTrustForLoyolity ? 'pink' : 'transparent' }">
+                              [ngStyle]="{ 'background-color': loyolityTrstArrayItem.trust === maxTrustForLoyolity &&  loyolityTrstArrayItem.mdmid === maxMDMIDForLoyolity ? 'pink' : 'transparent' }">
                               <!-- <span style="width:100px;">  {{erpSourceObjectForTableData?.['LOYALTY_SCORE'] || ''}}  </span> --
                                 <strong> {{ loyolityTrstArrayItem }}  
                             </strong> -->
@@ -668,7 +682,7 @@
                             </div>
                           </td>
                           <td *ngFor="let loyolityTrstArrayItem of loyolityTrstArrayForNetSuitMatch"  class="border border-gray-300 px-4 py-2" 
-                          [ngStyle]="{ 'background-color': loyolityTrstArrayItem === maxTrustForLoyolity ? 'pink' : 'transparent' }" >
+                          [ngStyle]="{ 'background-color': loyolityTrstArrayItem.trust === maxTrustForLoyolity &&  loyolityTrstArrayItem.mdmid === maxMDMIDForLoyolity ? 'pink' : 'transparent' }" >
                         
                         <div style="display: flex; justify-content: space-between;">
                           <span>{{netSuiteObjectForTableData?.['LOYALTY_SCORE'] || erpSourceObjectForTableData?.['LOYALTY_SCORE'] }}</span>
