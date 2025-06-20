@@ -50,13 +50,12 @@
 </div>
 
 <p-dialog
-  header="Quuery Selection"
+  header="Quuery Selection "
   [modal]="true"
   [(visible)]="queryTableDisplay"
   [style]="{ width: '30.5rem' }"
 >
-  <!-- <span class="p-text-secondary block mb-5">Update your information.</span> -->
-  <!-- border: 1px solid black; -->
+  
   <table style="border: 1px solid black;" id="queryGenerator">
 	<thead style="border: 1px solid black;">
 	  <tr>
@@ -75,12 +74,10 @@
 		<td style="padding: 3px;" ><select >
 			<option value="like">like</option>
 			<option value="=" selected>=</option>
-			<!-- <option value="mercedes">Mercedes</option>
-			<option value="audi">Audi</option> -->
+			
 		  </select></td>
 		  <td style="padding: 8px; border: 1px solid black;"><input type="text" ></td>
-		<!-- <td>{{ user.name }}</td>
-		<td>{{ user.email }}</td> -->
+		
 	  </tr>
 	</tbody>
   </table>
@@ -88,6 +85,8 @@
 
   <p-button lstyle="float:right;"label="Query"  (click)="generateQueryData()" />
 </p-dialog>
+
+
 
 <div class="card">
 	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->

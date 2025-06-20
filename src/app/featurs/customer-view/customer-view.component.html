@@ -25,7 +25,7 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
-                        <label for="customer" class="block font-semibold mb-2"> Customer MDM ID</label>
+                        <label for="customer" class="block font-semibold mb-2"> Customer  ID</label>
                         <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_ID']}}"/>
                     </div>
                     <div class="flex-auto">
@@ -178,7 +178,7 @@
                    
                 </div>
                 <div class="flex-1" style="margin-top: 20px !important;">
-                  <p-button  label="Get History" icon="pi pi-external-link"     (onClick)="getHistoryDetails()" />
+                  <p-button  style="width: 150px !important;" label="Get History" icon="pi pi-external-link"     (onClick)="getHistoryDetails()" />
                                   
               </div>
               </div>
@@ -212,8 +212,8 @@
                     <div *ngIf="displayHistoryTable">
                    
                  
-                  <!-- <p-inputSwitch [(ngModel)]="isSourceColumnsChecked"  inputId="mySwitch"  (onChange)="handleToggleChange($event)" ></p-inputSwitch> 
-                  <label for="mySwitch" style="margin-left: 0.5rem;margin-bottom: -1.5rem;">Show Source Columns</label>  -->
+                  <p-inputSwitch [(ngModel)]="isSourceColumnsChecked"  inputId="mySwitch"  (onChange)="handleToggleChange($event)" ></p-inputSwitch> 
+                  <label for="mySwitch" style="margin-left: 0.5rem;margin-bottom: -1.5rem;">Show Source Columns</label> 
                   <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                       <thead>
                         <tr class="bg-gray-100">
@@ -339,17 +339,134 @@
                           <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
                         </tr>
 
+                    <!-- <span *ngIf="isSourceColumnsChecked" > -->
                         
+                        <tr *ngIf="customerHistorySelectedResult['updatedby_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Updated By </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['UPDATED_BY_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['UPDATED_BY']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['updatedby_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Updated By</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['UPDATED_BY_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['UPDATED_BY']}}</td>
+                        </tr>
+
+                        
+                        <tr *ngIf="customerHistorySelectedResult['lastupdateddate_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Updated Time </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['LAST_UPDATE_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['lastupdateddate_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Updated Time</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['LAST_UPDATE_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
+                        </tr>
+
+
+                        <tr *ngIf="customerHistorySelectedResult['hisrcreateddate_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">History Crated Date </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['HIST_CREATE_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['HIST_CREATE_DATE']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['hisrcreateddate_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">History Crated Date</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['HIST_CREATE_DATE_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['HIST_CREATE_DATE']}}</td>
+                        </tr>
+
+
+
+                        <tr *ngIf="customerHistorySelectedResult['consolidatedId_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Consolidation Ind </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CONSOLIDATION_IND_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CONSOLIDATION_IND']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['consolidatedId_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Consolidation Ind</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CONSOLIDATION_IND_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CONSOLIDATION_IND']}}</td>
+                        </tr>
+
+
+                        <tr *ngIf="customerHistorySelectedResult['custmdm_match'] === true && isSourceColumnsChecked " class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Customer MDM </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CUSTOMER_MDM_ID_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CUSTOMER_MDM_ID']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['custmdm_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Customer MDM</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CUSTOMER_MDM_ID_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CUSTOMER_MDM_ID']}}</td>
+                        </tr>
+
+                        <tr *ngIf="customerHistorySelectedResult['createdat_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created At </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CREATED_AT_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CREATED_AT']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['createdat_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created At</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CREATED_AT_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CREATED_AT']}}</td>
+                        </tr>
+
+
+                        <tr *ngIf="customerHistorySelectedResult['createdby_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created By </td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CREATED_BY_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                            {{customerHistorySelectedResult['CREATED_BY']}}</td>
+                        </tr>
+                        <tr *ngIf="customerHistorySelectedResult['createdby_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created By</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CREATED_BY_Old']}}</td>
+                          <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                            {{customerHistorySelectedResult['CREATED_BY']}}</td>
+                        </tr>
+                      <!-- </span> -->
+                        <!-- <tr  *ngIf="isSourceColumnsChecked"  class="hover:bg-gray-50">
+                          <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created By</td>
+                          <td colspan="2"  class="border border-gray-300 px-4 py-2"  style="padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['CREATED_BY']}}</td>
+                         
+                        </tr>
                         <tr  *ngIf="isSourceColumnsChecked"  class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Update By</td>
                           <td colspan="2"  class="border border-gray-300 px-4 py-2"  style="padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td>
-                          <!-- <td class="border border-gray-300 px-4 py-2"  style=" padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td> -->
+                         
                         </tr>
                         <tr *ngIf="isSourceColumnsChecked" class="hover:bg-gray-50">
                           <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Update Date</td>
                           <td colspan="2"  class="border border-gray-300 px-4 py-2"  style="padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
-                          <!-- <td class="border border-gray-300 px-4 py-2"  style=" padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['UPDATED_BY']}}</td> -->
-                        </tr>
+                        
+                        </tr> -->
                         
                         <!-- <tr class="hover:bg-gray-50">
                                               <td class="border border-gray-300 px-4 py-2">Party Type</td>
@@ -465,13 +582,13 @@
           <table class="table-auto border-collapse border border-gray-300 w-full text-left">
                           <thead>
                             <tr class="bg-gray-100">
-                              <th class="border border-gray-300 px-4 py-2">Customer ID = <strong>{{matchXrefTargetId}} </strong> </th>
+                              <th class="border border-gray-300 px-4 py-2"> MDM ID = <strong>{{matchXrefTargetId}} </strong> </th>
                               <th class="border border-gray-300 px-4 py-2">Merge Preview</th>
                             
                             <th *ngFor="let uniqueMDM of uniqueMDMs"  class="border border-gray-300 px-4 py-2">
                               
                                <div style="display: flex; justify-content: space-between;">
-                              <span>Source:ERP <br/>Customer MDM ID  = {{ uniqueMDM }}</span>
+                              <span>Source:ERP <br/> MDM ID  = {{ uniqueMDM }}</span>
                               <span> &nbsp;<br/>Trust Score </span>
                             </div>
                           </th>
@@ -480,7 +597,7 @@
                               
                             <div style="display: flex; justify-content: space-between;">
                               
-                           <span>Source:Net Suite <br/>Customer MDM ID  = {{ uniqueMDM }}</span>
+                           <span>Source:Net Suite <br/> MDM ID  = {{ uniqueMDM }}</span>
                            <span>  &nbsp;<br/> Trust Score </span>
                          </div>
                        </th>
@@ -489,6 +606,46 @@
                           </tr>
                           </thead>
                           <tbody>
+                            <tr class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2">Customer  ID</td>
+                              <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['CUSTOMER_ID']}}</td>
+                              <!-- *ngIf="customerIdsArrayForMatches.length > 0"  -->
+                              <td   *ngFor="let custID of customerIdsArrayForMatches; let i = index">
+                            
+                                <div style="display: flex; justify-content: space-between;"> 
+                                 
+                                  <!-- <span>&nbsp; &nbsp;  {{ custID .custid}}   </span> -->
+
+                                    <span>{{custID?.['custid'] || crossRefernceObjForCustomers?.['CUSTOMER_ID'] }}</span>
+                                  
+                                </div>
+                              </td>
+                        
+                              <!-- <td   *ngIf="customerIdsArrayForMatches.length = 0" >
+                            
+                                <div style="display: flex; justify-content: space-between;"> 
+                                 
+                                  <span>&nbsp; &nbsp; {{ custID .custid}}  </span>
+                                </div>
+                              </td> -->
+                              <!-- <td *ngFor="customerIdsArrayForCrossReferenceItem of customerIdsArrayForCrossReference"  class="border border-gray-300 px-4 py-2" 
+                              >
+                              <span>{{customerIdsArrayForCrossReferenceItem}}</span>
+                           
+                        
+                          </td> -->
+                          <!-- <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
+                          [ngStyle]="{ 'background-color': custIdTrstArrayItem.trust === maxTrustForCustIDForCross && custIdTrstArrayItem.mdmid ===maxTrustMDMForID ? 'pink' : 'transparent' }">
+                        
+                            <div style="display: flex; justify-content: space-between;">
+                              
+                              <span>{{custIdTrstArrayItem.mdmid}}</span>
+                            
+                              <span>{{ custIdTrstArrayItem.trust }}   </span>
+                            </div>
+                        
+                          </td> -->
+                            </tr>
                             <tr class="hover:bg-gray-50">
                               <td class="border border-gray-300 px-4 py-2">First Name</td>
                               <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>
@@ -697,51 +854,81 @@
        
 <p-tabpanel value="3">
 
+  
 <table class="table-auto border-collapse border border-gray-300 w-full text-left">
   <thead>
     <tr class="bg-gray-100">
-      <th class="border border-gray-300 px-4 py-2">Customer ID = {{matchXrefTargetId}}  </th>
+      <th class="border border-gray-300 px-4 py-2"> MDM ID = {{matchXrefTargetId}} </th>
       <th class="border border-gray-300 px-4 py-2">Master record</th>
     
-    <th *ngFor="let uniqueMDM of uniqueMDMsERPsForCrossRef"  class="border border-gray-300 px-4 py-2">
-      
-       <div style="display: flex; justify-content: space-between;">
-      <span>Source:ERP <br/> MDM ID  = {{ uniqueMDM }}</span>
-      <span> &nbsp;<br/>Trust Score </span>
-    </div>
-  </th>
-
-  <th *ngFor="let uniqueMDM of uniqueMDMsForNetSuiteForCrossRef"  class="border border-gray-300 px-4 py-2">
-      
-    <div style="display: flex; justify-content: space-between;">
-      
-   <span>Source:Net Suite <br/> MDM ID  = {{ uniqueMDM }}</span>
-   <span>  &nbsp;<br/> Trust Score </span>
- </div>
-</th>
+      <th *ngFor="let uniqueMDM of uniqueMDMsERPsForCrossRef" class="border border-gray-300 px-4 py-2">
+    
+        <div style="display: flex; justify-content: space-between;">
+          <span>Source:ERP <br /> MDM ID = {{ uniqueMDM }}</span>
+          <span> &nbsp;<br />Trust Score </span>
+        </div>
+      </th>
+    
+      <th *ngFor="let uniqueMDM of uniqueMDMsForNetSuiteForCrossRef" class="border border-gray-300 px-4 py-2">
+    
+        <div style="display: flex; justify-content: space-between;">
+    
+          <span>Source:Net Suite <br /> MDM ID = {{ uniqueMDM }}</span>
+          <span> &nbsp;<br /> Trust Score </span>
+        </div>
+      </th>
     
     
-  </tr>
+    </tr>
   </thead>
   <tbody>
     <tr class="hover:bg-gray-50">
-      <td class="border border-gray-300 px-4 py-2">Customer ID</td>
+      <td class="border border-gray-300 px-4 py-2"> MDM ID</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['CUSTOMER_MDM_ID']}}</td>
       
-      <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
+      <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+        [ngStyle]="{ 'background-color': custIdTrstArrayItem.trust === maxTrustForCustIDForCross && custIdTrstArrayItem.mdmid ===maxTrustMDMForID ? 'pink' : 'transparent' }">
       
-    [ngStyle]="{ 'background-color': custIdTrstArrayItem.trust === maxTrustForCustIDForCross && custIdTrstArrayItem.mdmid ===maxTrustMDMForID ? 'pink' : 'transparent' }"
-      >
+        <div style="display: flex; justify-content: space-between;">
       
+          <span>{{custIdTrstArrayItem.mdmid}}</span>
+      
+          <span>{{ custIdTrstArrayItem.trust }} </span>
+        </div>
+      
+      </td>
+  <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayNetSuitMatchForCross" class="border border-gray-300 px-4 py-2"
+    [ngStyle]="{ 'background-color': custIdTrstArrayItem.trust === maxTrustForCustIDForCross && custIdTrstArrayItem.mdmid ===maxTrustMDMForID ? 'pink' : 'transparent' }">
+  
     <div style="display: flex; justify-content: space-between;">
-      
+  
       <span>{{custIdTrstArrayItem.mdmid}}</span>
-    
-      <span>{{ custIdTrstArrayItem.trust }}   </span>
+  
+      <span>{{ custIdTrstArrayItem.trust }} </span>
     </div>
-
+  
   </td>
-  <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
+    </tr>
+
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-2">Customer  ID</td>
+      <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['CUSTOMER_ID']}}</td>
+      
+      <td *ngFor="let custID of customerIdsArrayForCrossReference; let i = index">
+    
+        <div style="display: flex; justify-content: space-between;"> 
+          <!-- <span>&nbsp; &nbsp; {{ custID .mdmid}}  </span> -->
+          <span>&nbsp; &nbsp; {{ custID .custid}}  </span>
+        </div>
+      </td>
+
+      <!-- <td *ngFor="customerIdsArrayForCrossReferenceItem of customerIdsArrayForCrossReference"  class="border border-gray-300 px-4 py-2" 
+      >
+      <span>{{customerIdsArrayForCrossReferenceItem}}</span>
+   
+
+  </td> -->
+  <!-- <td *ngFor="let custIdTrstArrayItem of custIdTrstArrayNetSuitMatchForCross"  class="border border-gray-300 px-4 py-2" 
   [ngStyle]="{ 'background-color': custIdTrstArrayItem.trust === maxTrustForCustIDForCross && custIdTrstArrayItem.mdmid ===maxTrustMDMForID ? 'pink' : 'transparent' }">
 
     <div style="display: flex; justify-content: space-between;">
@@ -751,9 +938,8 @@
       <span>{{ custIdTrstArrayItem.trust }}   </span>
     </div>
 
-  </td>
+  </td> -->
     </tr>
-
     <tr class="hover:bg-gray-50">
       <td class="border border-gray-300 px-4 py-2">First Name</td>
       <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td>

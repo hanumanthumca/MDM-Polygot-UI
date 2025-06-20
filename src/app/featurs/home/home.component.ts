@@ -13,6 +13,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Table } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
 import { MDMService } from 'src/app/Services/mdm-service';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { Select } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
 interface Column {
    field: string;
    header: string;
@@ -20,7 +24,7 @@ interface Column {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MenuModule,MenubarModule,SidebarModule,ChartModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule],
+  imports: [MenuModule,MenubarModule,FormsModule,SidebarModule,Select,ButtonModule,DialogModule,ChartModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -39,9 +43,12 @@ constructor(private mdmService: MDMService ) {}
   newCars:any[];
   products: any[];
     items: MenuItem[];
+    source = [];
+    sourceDept=[];
     basicData: any;
     mergedRecordData:any;
     recordGrowthData:any;
+    queryTableDisplay:boolean =false;
 options:any;
 yearGraphOptions:any;
 recordGrowthOptions:any;
@@ -61,8 +68,48 @@ customerCountBySystemOptions:any;
     activeItem: MenuItem;
 
     activeItem2: MenuItem;
+    selectedSource = [];
+    addressColumns=[];
+    columns=[];
+    //selectedColumns = [];
+    selectedColumnsForAddress = [];
 
     ngOnInit() {
+        
+        this.source = [
+            { name: 'Admin', value: 'Admin' },
+            { name: 'Reguler User', value: 'Reguler User' },
+            { name: 'Read', value: 'Read' },
+            { name: 'Write', value: 'Write' },
+           ];
+           this.sourceDept = [
+            { name: 'Finance', value: 'Finance' },
+            { name: 'Procurement', value: 'Procurement' },
+            { name: 'Admin', value: 'Admin' },
+            { name: 'HR', value: 'HR' },
+           ];
+
+           this.columns = [
+            { field: 'CUSTOMER_ID', headerVal: 'C.CUSTOMER_ID' },
+            { field: 'CUSTOMER_MDM_ID', headerVal: 'C.CUSTOMER_MDM_ID' },
+            { field: 'FIRST_NAME', headerVal: 'C.FIRST_NAME' },
+            { field: 'LAST_NAME', headerVal: 'C.LAST_NAME' },
+            { field: 'EMAIL', headerVal: 'C.EMAIL' },
+            { field: 'PHONE', headerVal: 'C.PHONE' },
+            { field: 'AGE', headerVal: 'C.AGE' },
+            { field: 'GENDER_CD', headerVal: 'C.GENDER_CD' },
+            { field: 'BIRTH_DATE', headerVal: 'C.BIRTH_DATE' },
+            { field: 'LOYALTY_SCORE', headerVal: 'C.LOYALTY_SCORE' },
+      
+          ];
+      
+          this.addressColumns = [
+            { field: 'CITY', headerVal: 'CA.CITY' },
+            { field: 'STATE', headerVal: 'CA.STATE' },
+            { field: 'COUNTRY', headerVal: 'CA.COUNTRY' },
+            { field: 'ZIP_CODE', headerVal: 'CA.ZIP_CODE' },
+      
+          ];
         let finalQueryString='where '
         this.getCustomerGraphDataByCountryFromAPI(finalQueryString);
         this.getCustomerGrraphDataForCustomersByYearFromAPI(finalQueryString);
@@ -1028,7 +1075,7 @@ customerCountBySystemOptions:any;
      
   ];
 
-  this.selectedColumns = this.cols;
+  //this.selectedColumns = this.cols;
 
       this.cars = [
         { "brand": "Volkswagen", "year": 2012, "color": "White", "vin": "dsad231ff" },
@@ -1562,6 +1609,10 @@ customerCountBySystemOptions:any;
 
 
     }
+    createNewUser(){
+        this.queryTableDisplay=true;
+      }
+  
   pageChange(event) {
    this.first = event.first;
    this.rows = event.rows;

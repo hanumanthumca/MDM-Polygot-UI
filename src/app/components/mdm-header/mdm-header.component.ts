@@ -23,6 +23,7 @@ export class MdmHeaderComponent {
   visible2 = false;
   failedLogin = false;
   isLoginVisble=true;
+  createUserTableDisplay=false;
   userName='';
   password='';
   myProperty
@@ -30,6 +31,9 @@ export class MdmHeaderComponent {
   constructor(private router: Router) {}
   showDialog() {
     this.visible = true;
+  }
+  createNewUser(){
+    this.createUserTableDisplay=true;
   }
   validateLogOut(){
     //this.isLoginVisble=true;

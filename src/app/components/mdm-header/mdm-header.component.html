@@ -28,6 +28,8 @@
        
         <a routerLink="/scheduleJobs" class="text-gray-700 hover:text-blue-600">Run Jobs</a>
         <a routerLink="/query" class="text-gray-700 hover:text-blue-600">Queries</a>
+        <!-- <i class="pi pi-check text-green-500"></i> -->
+        <p-button   icon="pi pi-plus"  label="New User" (click)="createNewUser()" />
         <p-button   label="Logout" (click)="validateLogOut()" />
         <!-- <a routerLink="/dashboards" class="text-gray-700 h
         over:text-blue-600">Dash Boards</a> -->
@@ -66,7 +68,7 @@
   <h2 class="text-3xl font-semibold">Tailwind Two-Split Page</h2>
   </div>
 
-
+ 
 <!-- Right Side -->
 <div class="w-1/2 bg-white flex flex-col justify-center items-center p-10">
   <h1 class="text-4xl font-bold mb-4">Welcome </h1>
@@ -93,4 +95,45 @@
    <p-button   label="Login" (click)="validateLogin()" />
   <!-- </form> -->
   </div>
+
+
+
+
+  <p-dialog
+  header="Quuery Selection"
+  [modal]="true"
+  [(visible)]="createUserTableDisplay"
+  [style]="{ width: '30.5rem' }"
+>
+  <!-- <span class="p-text-secondary block mb-5">Update your information.</span> -->
+  <!-- border: 1px solid black; -->
+  <table style="border: 1px solid black;" >
+	<thead style="border: 1px solid black;">
+	  <tr>
+		<!-- <th>ID</th> -->
+		<th style="padding: 8px;">Name</th>
+		<th style="padding: 3px;">Operator</th>
+		<th style="padding: 8px;">Value</th>
+
+
+		<!-- <th>Email</th> -->
+	  </tr>
+	</thead>
+	<!-- <tbody style="border: 1px solid black;">
+	  <tr *ngFor="let selectedColumn of allselectedColumns" style="border: 1px solid black;">
+		<td style="padding: 8px;border: 1px solid black;">{{ selectedColumn }}</td>
+		<td style="padding: 3px;" ><select >
+			<option value="like">like</option>
+			<option value="=" selected>=</option>
+		
+		  </select></td>
+		  <td style="padding: 8px; border: 1px solid black;"><input type="text" ></td>
+		
+	  </tr>
+	</tbody> -->
+  </table>
+
+
+  <p-button lstyle="float:right;"label="Query"  />
+</p-dialog>
 </div>

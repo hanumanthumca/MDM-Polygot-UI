@@ -160,6 +160,8 @@ customerHistory: any[]=[];
     { label: 'Option C', value: 'C' }
   ];
 options = [];
+customerIdsArrayForCrossReference=[];
+customerIdsArrayForMatches=[];
 loadSpinner =false;
 radioCategories: any[] =[];
 netsuiteArrayForCrossReference=[];
@@ -370,22 +372,41 @@ this.custType=[
           this.processXReferenceForCustomers(this.crossRefernceXReferenceObjForCustomers);
           let mdmId = this.custMdmId;
           let originalMDMId = mdmId;
+          let customerIdsArray=[];
           if (this.crossRefernceXReferenceObjForCustomers.length > 1) {
+
             let wholeResponse = this.crossRefernceXReferenceObjForCustomers;
             let originalId = '';
             let originalIds = [];
+        
             for (let i = 0; i < wholeResponse.length; i++) {
               //   sourceId=sourceId+','+wholeResponse[i]['SRC_CUSTOMER_MDM_ID'];
               originalIds.push(wholeResponse[i]['ORIGINAL_MDM_ID']);
+              let obj={};
+              obj={
+                'mdmid':wholeResponse[i]['ORIGINAL_MDM_ID'],
+                'custid':wholeResponse[i]['CUSTOMER_ID'],
+              }
+              // obj.mdmid=wholeResponse[i]['ORIGINAL_MDM_ID'];
+              // obj.custid=wholeResponse[i]['CUSTOMER_ID'];
+
+              customerIdsArray.push(obj);
             }
             let integerString = originalIds.join(',');
             originalMDMId = originalIds.join(',');
           } else {
             originalMDMId = this.crossRefernceXReferenceObjForCustomers[0]['ORIGINAL_MDM_ID'];
+            let obj={};
+            obj={
+              'mdmid':this.crossRefernceXReferenceObjForCustomers[0]['ORIGINAL_MDM_ID'],
+              'custid':this.crossRefernceXReferenceObjForCustomers[0]['CUSTOMER_ID']
+            }
+            customerIdsArray.push( obj);
+           // customerIdsArray.push( this.crossRefernceXReferenceObjForCustomers[0]['CUSTOMER_ID']);
           }
 
          // let originalMDMId = this.crossRefernceXReferenceObjForCustomers[0]['ORIGINAL_MDM_ID'];
-
+         this.customerIdsArrayForCrossReference=customerIdsArray;
          
           let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + mdmId + "," + originalMDMId + ")";
           console.log('new PI CALL', custQueryString);
@@ -845,6 +866,40 @@ if(netSuiteProcessedDataForCross.length>0){
     this.maxTrustMDMForFname= Math.max(...maxTrustSCoreObjectsForFName.map(maxTrustSCoreObjectsForFName => maxTrustSCoreObjectsForFName.mdmid));
     console.log('maxTrusFname', this.maxTrustForFNameForCross);
 
+    const erpArrayForCross=this.firstNameTrstArrayForCross;
+    const nscapeArrayForCross=this.firstNameTrstArrayForNetSuitMatchForCross;
+    const combinedForIds=erpArrayForCross.concat(nscapeArrayForCross);
+let orderdIds=this.customerIdsArrayForCrossReference;
+//const orderMap = new Map(combinedForIds.map((mdmid, index) => [mdmid, index]));
+//orderdIds.sort((a, b) => orderMap.get(a.mdmid) - orderMap.get(b.mdmid));
+
+//orderdIds.sort((a, b) => combinedForIds.indexOf(a.mdmid) - combinedForIds.indexOf(b.mdmid));
+
+// const common = combinedForIds.filter(obj1 =>
+//   orderdIds.some(obj2 => obj2.mdmid === obj1.mdmid)
+// );
+
+// orderdIds.sort((a, b) => {
+//   return combinedForIds.indexOf(a.mdmid) - combinedForIds.indexOf(b.mdmid);
+// });
+//const orderMap = new Map(combinedForIds.map((mdmid, index) => [mdmid, index]));
+
+// orderdIds.sort((a, b) => {
+//   return orderMap.get(a.mdmid) - orderMap.get(b.mdmid);
+// });
+const commonArraysForIds = [];
+
+combinedForIds.forEach(obj1 => {
+  const match = orderdIds.find(obj2 => obj2.mdmid === obj1.mdmid);
+  if (match) {
+    commonArraysForIds.push({ ...obj1, ...match }); // merge properties
+  }
+});
+
+console.log('helllo',commonArraysForIds);
+console.log('helllo',orderdIds);
+this.customerIdsArrayForCrossReference=commonArraysForIds;
+
     if (this.maxTrustForFNameForCross === 0 ||combinedFirstName.length < 2 ) {
       this.maxTrustForFNameForCross = 1000;
     }
@@ -952,12 +1007,21 @@ if(netSuiteProcessedDataForCross.length>0){
       this.matchXrefSourceId=resposeData['SRC_CUSTOMER_MDM_ID'];
       this.matchXrefTargetId=resposeData['TGT_CUSTOMER_MDM_ID'];
       let custQueryString ='';
+      let custIdswithSourceIds=[];
       if(wholeResponse.length >1){
         let sourceId='';
         let sourceIds=[];
+     
+        //CUSTOMER_MTCH_ID
         for (let i=0;i<wholeResponse.length;i++){
        //   sourceId=sourceId+','+wholeResponse[i]['SRC_CUSTOMER_MDM_ID'];
           sourceIds.push(wholeResponse[i]['SRC_CUSTOMER_MDM_ID']);
+          let obj={
+            'mdmid':wholeResponse[i]['SRC_CUSTOMER_MDM_ID'],
+            'custid':wholeResponse[i]['CUSTOMER_MTCH_ID'],
+
+          };
+          custIdswithSourceIds.push(obj);
         }
         let integerString=sourceIds.join(',');
          custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + integerString + "," + this.matchXrefTargetId + ")";
@@ -967,6 +1031,7 @@ if(netSuiteProcessedDataForCross.length>0){
         custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + this.matchXrefSourceId + "," + this.matchXrefTargetId + ")";
       }
       
+      this.customerIdsArrayForMatches=custIdswithSourceIds;
     //  let custQueryString = "WHERE CUSTOMER_MDM_ID IN (" + this.matchXrefSourceId + "," + this.matchXrefTargetId + ")";
       
       let finalQueryString = custQueryString;
@@ -1414,8 +1479,41 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
     let maxTrustSCoreObjectsForFName=combinedFirstName.filter(combinedFirstName => combinedFirstName.trust ===   this.maxTrustForFName);
     this.maxMDMIDForFName= Math.max(...maxTrustSCoreObjectsForFName.map(maxTrustSCoreObjectsForFName => maxTrustSCoreObjectsForFName.mdmid));
     
-	
+    const erpArrayForCross=this.firstNameTrstArray;
+    const nscapeArrayForCross=this.firstNameTrstArrayForNetSuitMatch;
+    const combinedForIds=erpArrayForCross.concat(nscapeArrayForCross);
+    let orderdIdsForMatch=this.customerIdsArrayForMatches;
+    //const missing = array1.filter(item => !array2.includes(item));
+    //const missingInArr2 = combinedForIds.filter(obj => !orderdIdsForMatch.has(obj.mdmid));
+    const missing = this.findMissingByKey(combinedForIds, orderdIdsForMatch, 'mdmid');
+    console.log('missing &&&&&&& ',missing);
+    let missingObj={
+      'mdmid':missing[0]['mdmid'],
+      'custid':null
+    }
+    orderdIdsForMatch.push(missingObj);
+    //findMissingByKey
+    const commonArraysForIds = [];
+
+combinedForIds.forEach(obj1 => {
+  const match = orderdIdsForMatch.find(obj2 => obj2.mdmid === obj1.mdmid);
+  if (match) {
+    commonArraysForIds.push({ ...obj1, ...match }); // merge properties
+  }
+});
+
+console.log('helllo',commonArraysForIds);
+//console.log('helllo',orderdIds);
+this.customerIdsArrayForMatches=commonArraysForIds;
     console.log('maxTrusFname', this.maxTrustForFName);
+    console.log('helllo',commonArraysForIds);
+    let emptyObje={
+      'mdmid':this.custMdmId,
+      'custid':this.crossRefernceObjForCustomers?.['CUSTOMER_ID']
+    }
+    if(this.customerIdsArrayForMatches.length===0 ){
+      this.customerIdsArrayForMatches.push(emptyObje);
+    }
     if (this.maxTrustForFName === 0 ||combinedFirstName.length < 2 ) {
       this.maxTrustForFName = 1000;
     }
@@ -1500,6 +1598,10 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
     if (this.maxTrustForLoyolity === 0 || combinedLoyol.length < 2) {
       this.maxTrustForLoyolity = 1000;
     }
+}
+ findMissingByKey(arr1, arr2, key) {
+  const valueSet = new Set(arr2.map(obj => obj[key]));
+  return arr1.filter(obj => !valueSet.has(obj[key]));
 }
   processXReferenceForCustomers(respose: any) {
     let resposeData=respose;
@@ -1732,6 +1834,15 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
         historyDataObject[i]['EMAIL_Old'] = historyDataObject[i + 1]['EMAIL'];
         historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i + 1]['LOYALTY_SCORE'];
         historyDataObject[i]['PHONE_Old'] = historyDataObject[i + 1]['PHONE'];
+        //source columns
+        historyDataObject[i]['UPDATED_BY_Old'] = historyDataObject[i + 1]['UPDATED_BY'];
+        historyDataObject[i]['LAST_UPDATE_DATE_Old'] = historyDataObject[i + 1]['LAST_UPDATE_DATE'];
+        historyDataObject[i]['HIST_CREATE_DATE_Old'] = historyDataObject[i + 1]['HIST_CREATE_DATE'];
+        historyDataObject[i]['CONSOLIDATION_IND_Old'] = historyDataObject[i + 1]['CONSOLIDATION_IND'];
+        historyDataObject[i]['CUSTOMER_MDM_ID_Old'] = historyDataObject[i + 1]['CUSTOMER_MDM_ID'];
+        historyDataObject[i]['CREATED_AT_Old'] = historyDataObject[i + 1]['CREATED_AT'];
+        historyDataObject[i]['CREATED_BY_Old'] = historyDataObject[i + 1]['CREATED_BY'];
+
       } else {
         historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i]['FIRST_NAME'];
         historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i]['LAST_NAME'];
@@ -1741,6 +1852,14 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
         historyDataObject[i]['EMAIL_Old'] = historyDataObject[i]['EMAIL'];
         historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i]['LOYALTY_SCORE'];
         historyDataObject[i]['PHONE_Old'] = historyDataObject[i]['PHONE'];
+         //source columns
+         historyDataObject[i]['UPDATED_BY_Old'] = historyDataObject[i]['UPDATED_BY'];
+         historyDataObject[i]['LAST_UPDATE_DATE_Old'] = historyDataObject[i]['LAST_UPDATE_DATE'];
+         historyDataObject[i]['HIST_CREATE_DATE_Old'] = historyDataObject[i]['HIST_CREATE_DATE'];
+         historyDataObject[i]['CONSOLIDATION_IND_Old'] = historyDataObject[i]['CONSOLIDATION_IND'];
+         historyDataObject[i]['CUSTOMER_MDM_ID_Old'] = historyDataObject[i]['CUSTOMER_MDM_ID'];
+         historyDataObject[i]['CREATED_AT_Old'] = historyDataObject[i]['CREATED_AT'];
+         historyDataObject[i]['CREATED_BY_Old'] = historyDataObject[i]['CREATED_BY'];
       }
     }
 
@@ -1803,6 +1922,57 @@ let netSuiteForMatchRef=this.netsuiteArrayForCrossReferenceForMatch;
       this.customerHistorySelectedResult['loyolity_match'] = false;
     }
 
+
+
+    if (this.customerHistorySelectedResult['UPDATED_BY_Old'] === this.customerHistorySelectedResult['UPDATED_BY']) {
+      this.customerHistorySelectedResult['updatedby_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['UPDATED_BY_Old'] !== this.customerHistorySelectedResult['UPDATED_BY']) {
+      this.customerHistorySelectedResult['updatedby_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['LAST_UPDATE_DATE_Old'] === this.customerHistorySelectedResult['LAST_UPDATE_DATE']) {
+      this.customerHistorySelectedResult['lastupdateddate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LAST_UPDATE_DATE_Old'] !== this.customerHistorySelectedResult['LAST_UPDATE_DATE']) {
+      this.customerHistorySelectedResult['lastupdateddate_match'] = false;
+    }
+
+
+    if (this.customerHistorySelectedResult['HIST_CREATE_DATE_Old'] === this.customerHistorySelectedResult['HIST_CREATE_DATE']) {
+      this.customerHistorySelectedResult['hisrcreateddate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['HIST_CREATE_DATE_Old'] !== this.customerHistorySelectedResult['HIST_CREATE_DATE']) {
+      this.customerHistorySelectedResult['hisrcreateddate_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CONSOLIDATION_IND_Old'] === this.customerHistorySelectedResult['CONSOLIDATION_IND']) {
+      this.customerHistorySelectedResult['consolidatedId_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CONSOLIDATION_IND_Old'] !== this.customerHistorySelectedResult['CONSOLIDATION_IND']) {
+      this.customerHistorySelectedResult['consolidatedId_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CUSTOMER_MDM_ID_Old'] === this.customerHistorySelectedResult['CUSTOMER_MDM_ID']) {
+      this.customerHistorySelectedResult['custmdm_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CUSTOMER_MDM_ID_Old'] !== this.customerHistorySelectedResult['CUSTOMER_MDM_ID']) {
+      this.customerHistorySelectedResult['custmdm_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CREATED_AT_Old'] === this.customerHistorySelectedResult['CREATED_AT']) {
+      this.customerHistorySelectedResult['createdat_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CREATED_AT_Old'] !== this.customerHistorySelectedResult['CREATED_AT']) {
+      this.customerHistorySelectedResult['createdat_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CREATED_BY_Old'] === this.customerHistorySelectedResult['CREATED_BY']) {
+      this.customerHistorySelectedResult['createdby_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CREATED_BY_Old'] !== this.customerHistorySelectedResult['CREATED_BY']) {
+      this.customerHistorySelectedResult['createdby_match'] = false;
+    }
 
   console.log('customerHistorySelectedResult :', this.customerHistorySelectedResult);
     // Add any custom logic here
