@@ -13,9 +13,9 @@
   <!-- <p-button   icon="pi pi-plus"  style="width:90px !important;float:right !important" label="New User" (click)="createNewUser()" /> -->
    </div>
 
-   <!-- <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
+   <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
     <p-button   icon="pi pi-plus"  style="width:90px !important;float:right !important" label="User" (click)="createNewUser()" />
-</div> -->
+</div>
 </div>
 <div class="flex">
   
@@ -63,143 +63,131 @@
 header="Create User"
 [modal]="true"
 [(visible)]="queryTableDisplay"
-[style]="{ width: '38.5rem',height:'50rem' }"
+[style]="{ width: '58.5rem',height:'68rem' }"
 >
 
-<!-- <div style="display: flex;margin-top: 2rem;"> -->
 
-<div class="flex flex-col sm:flex-row sm:items-center gap-6">
-  <div class="flex-auto">
-      <label for="customer" class="block font-semibold mb-2">  Name :</label>
-      <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
-  </div>
-  <div class="flex-auto">
-    <label for="customer" class="block font-semibold mb-2">  Email :</label>
+
+<div class="flex flex-wrap gap-6">
+  <div class="flex-1 min-w-[300px]">
+      <table class="table-auto w-full border border-gray-300">
+        <!-- <thead class="bg-gray-100">
+          <tr>
+            <th class="border px-4 py-2 text-left">Read Access : </th>
+            <th class="border px-4 py-2 text-left">Write Access : </th>
+          </tr>
+        </thead> -->
+    
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2">  Name :</label>
+              <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
+        
+            </td>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2">  Email :</label>
     <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
-</div>
- 
-  
-</div>
+            </td>
+          </tr>
 
-<div class="flex flex-col sm:flex-row sm:items-center gap-6">
-  <div class="flex-auto">
-      <label for="customer" class="block font-semibold mb-2"> Role :</label>
+          <tr>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Role :</label>
       <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  /> -->
       <p-select [options]="source"  optionLabel="name" 
       optionValue="value"  placeholder="Select a Role" class="w-full md:w-56" />
-    </div>
-  <div class="flex-auto">
-    <label for="customer" class="block font-semibold mb-2"> Department :</label>
+            </td>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Department :</label>
     <p-select [options]="sourceDept"  optionLabel="name" 
     optionValue="value"  placeholder="Select a Dept" class="w-full md:w-56" />
-</div>
- 
-  <br/>
-</div> 
-<div class="flex flex-col sm:flex-row sm:items-center gap-6">
-  <div class="flex-auto">
-      <label for="customer" class="block font-semibold mb-2"> 
-        <br/>
-        <h3> Read Access For Tables:</h3> </label>
-      <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  /> -->
-      <!-- <p-select [options]="source"  optionLabel="name" 
-      optionValue="value"  placeholder="Select a Role" class="w-full md:w-56" /> -->
+            </td>
+          </tr>
+         
+        </tbody>
+      </table>
     </div>
-  <div class="flex-auto">
-    <label for="customer" class="block font-semibold mb-2">  
-      <br/>
-      <h3> Write Access For Tables : </h3>  </label>
-    <!-- <p-select [options]="sourceDept"  optionLabel="name" 
-    optionValue="value"  placeholder="Select a Dept" class="w-full md:w-56" /> -->
-</div>
- 
   
-</div> 
-
-<div class="flex flex-col sm:flex-row sm:items-center gap-6">
-  <div class="flex-auto">
-      <!-- <label for="customer" class="block font-semibold mb-2"> Customer : </label> -->
-      <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  /> -->
-      <p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
-      defaultLabel=" Customer Table     "></p-multiSelect>
-    </div>
-  <div class="flex-auto">
-   
-    <!-- <label for="customer" class="block font-semibold mb-2"> Customer :</label> -->
-    <p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
-    defaultLabel="Customer Table "></p-multiSelect>
-</div>
- 
   
-</div>
-
-
-<div class="flex flex-col sm:flex-row sm:items-center gap-6">
-  <div class="flex-auto">
-    <br/>
-      <!-- <label for="customer" class="block font-semibold mb-2"> Customer Address: </label> -->
-      <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  /> -->
-      <p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
-      optionValue="headerVal" defaultLabel="Address Table"></p-multiSelect> 
-    </div>
-  <div class="flex-auto">
-    <br/>
-    <!-- <label for="customer" class="block font-semibold mb-2"> Customer Address :</label> -->
-    <p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
-		optionValue="headerVal" defaultLabel="Address Table"></p-multiSelect> 
-</div>
- 
-  
-</div>
-
-<!-- </div> -->
-<!-- <table style="border: 1px solid black;" >
-<thead style="border: 1px solid black;">
-  <tr>
-  
-  <th style="padding: 8px;">22222222222Name</th>
-  <th style="padding: 3px;">Operator</th>
-  <th style="padding: 8px;">Value</th>
-
-
-  
-  </tr>
-</thead>
-
-</table> -->
-
-<!-- <div class="flex mt-8">
-  <div class="card flex flex-col gap-6 w-full">
-      <div class="font-semibold text-xl">Advanced</div>
-      <div class="flex flex-col md:flex-row gap-6">
-          <div class="flex flex-wrap gap-2 w-full">
-              <label for="firstname2">Firstname</label>
-              <input pInputText id="firstname2" type="text" />
-          </div>
-          <div class="flex flex-wrap gap-2 w-full">
-              <label for="lastname2">Lastname</label>
-              <input pInputText id="lastname2" type="text" />
-          </div>
-      </div>
-
-      <div class="flex flex-wrap">
-          <label for="address">Address</label>
-          <textarea pTextarea id="address" rows="4"></textarea>
-      </div>
-
-      <div class="flex flex-col md:flex-row gap-6">
-          <div class="flex flex-wrap gap-2 w-full">
-              <label for="state">State</label>
-              <p-select id="state" [(ngModel)]="dropdownItem" [options]="dropdownItems" optionLabel="name" placeholder="Select One" class="w-full"></p-select>
-          </div>
-          <div class="flex flex-wrap gap-2 w-full">
-              <label for="zip">Zip</label>
-              <input pInputText id="zip" type="text" />
-          </div>
-      </div>
   </div>
-</div> -->
-<br/><br/>
+
+<div class="flex flex-wrap gap-6">
+  <div class="flex-1 min-w-[300px]">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border px-4 py-2 text-left">Read Access : </th>
+            <th class="border px-4 py-2 text-left">Write Access : </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Customer Table :</label>
+              <p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
+              defaultLabel=" Select Columns     "></p-multiSelect>
+            </td>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Customer Table :</label>
+              <p-multiSelect [(ngModel)]="selectedColumnsForWrite" [options]="columns" optionLabel="field" optionValue="headerVal"
+              defaultLabel=" Select Columns  "></p-multiSelect>
+            </td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Address Table :</label>
+              <p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
+      optionValue="headerVal" defaultLabel="Address Table"></p-multiSelect> 
+            </td>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> Address Table :</label>
+              <p-multiSelect [(ngModel)]="selectedColumnsForAddressWrite" [options]="addressColumns" optionLabel="field"
+              optionValue="headerVal" defaultLabel="Address Table"></p-multiSelect> 
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Table 2 -->
+    <!-- <div class="flex-1 min-w-[300px]">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border px-4 py-2 text-left">Product</th>
+            <th class="border px-4 py-2 text-left">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2">Phone</td>
+            <td class="border px-4 py-2">$699</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">Laptop</td>
+            <td class="border px-4 py-2">$1299</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+    <!-- <ul>
+      <li *ngFor="let col of selectedColumnsForAddressWrite">
+        {{ col.field }}
+      </li>
+    </ul> -->
+  </div>
+  <span> </span>
+   
+    <!-- {{ selectedColumnsForAddressWrite.map(user => user.field) | json }} -->
+    <!-- {{selectedColumnsForAddressWrite | json}} -->
+    <!-- <div *ngFor="let user of selectedColumnsForAddressWrite">
+      <pre>{{ user.field | json }}</pre>
+    </div> -->
+ 
+<br/>
+<!-- <br/> -->
 <p-button style="float:right;"label="Create User"   />
 
 </p-dialog>

@@ -38,6 +38,7 @@ constructor(private mdmService: MDMService ) {}
 @ViewChild('chart') chart: any;
   rows = 10;
   selectedColumns!: Column[];
+  // selectedColumns!: Column[];
   cars: any[];
   customers: any[];
   newCars:any[];
@@ -73,6 +74,9 @@ customerCountBySystemOptions:any;
     columns=[];
     //selectedColumns = [];
     selectedColumnsForAddress = [];
+    selectedColumnsForAddressWrite = [];
+
+    selectedColumnsForWrite = [];
 
     ngOnInit() {
         
