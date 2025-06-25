@@ -854,7 +854,78 @@
        
 <p-tabpanel value="3">
 
-  
+  <p-dialog header="Trust History" [modal]="true" [(visible)]="visibleDailogueForTrustDetails" [style]="{ width: '30rem' }" >
+    <!-- <p> -->
+
+      
+      <table class="table-auto w-full border border-gray-300" >
+      
+        <caption style="margin-left: -300px !important;"> <strong>Original Source</strong></caption>
+          <!-- <caption>Original Source</caption> -->
+        <thead class="bg-gray-100">
+               <tr>
+                 <th class="border px-4 py-2 text-left">Source System  </th>
+                 <th class="border px-4 py-2 text-left">Column </th>
+             <th class="border px-4 py-2 text-left">Trust Score  </th>
+               </tr>
+             </thead> 
+         <tbody>
+               <tr>
+            <td class="border px-4 py-2"> {{crossRefernceObjTrustLogs['SOURCE_SYSTEM']}}
+                   
+                
+             
+                 </td>
+           <td class="border px-4 py-2">
+                   
+                    {{crossRefernceObjTrustLogs['COLUMN_NAME']}} 
+             
+                 </td>
+           <td class="border px-4 py-2">
+                   
+                  {{crossRefernceObjTrustLogs['TRUST_SCORE']}}
+             
+                 </td>
+             </tr>
+           </tbody>
+     </table>
+
+     <table class="table-auto w-full border border-gray-300" >
+      <caption style="margin-left: -300px !important;"> <strong>Present  Source</strong></caption>
+      <thead class="bg-gray-100">
+             <tr>
+               <th class="border px-4 py-2 text-left">Source System  </th>
+               <th class="border px-4 py-2 text-left">Column </th>
+           <th class="border px-4 py-2 text-left">Trust Score  </th>
+             </tr>
+           </thead> 
+       <tbody>
+             <tr>
+          <td class="border px-4 py-2"> {{crossRefernceObjTrustLogsFromCurrentTable['SOURCE_SYSTEM']}}
+                 
+              
+           
+               </td>
+         <td class="border px-4 py-2">
+                 
+                  {{crossRefernceObjTrustLogsFromCurrentTable['COLUMN_NAME']}} 
+           
+               </td>
+         <td class="border px-4 py-2">
+                 
+                {{crossRefernceObjTrustLogsFromCurrentTable['TRUST_SCORE']}}
+           
+               </td>
+           </tr>
+         </tbody>
+   </table>
+    <!-- </p> -->
+<!--         
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+   
+</p-dialog>
+
 <table class="table-auto border-collapse border border-gray-300 w-full text-left">
   <thead>
     <tr class="bg-gray-100">
@@ -963,7 +1034,12 @@
       
       <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span>
       <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
-      <span>{{ firstNameTrstArrayItem.trust }}   </span>
+      <span>
+      
+        <a  (click)="viewCustomerTrustDetails(firstNameTrstArrayItem,'FIRST_NAME','NETSUITE');" class="text-blue-600 hover:underline">  {{ firstNameTrstArrayItem.trust }}  
+
+        </a>
+      </span>
     </div>
 
   </td>

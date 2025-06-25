@@ -23,11 +23,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-customer-view',
   standalone: true,
 
-  imports: [FormsModule,PanelModule,MenuModule,CheckboxModule,InputSwitchModule,CommonModule,ProgressSpinnerModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
+  imports: [FormsModule,PanelModule,MenuModule,CheckboxModule,DialogModule,InputSwitchModule,CommonModule,ProgressSpinnerModule,Select,RadioButtonModule,RadioButton,MenubarModule,SidebarModule,TabMenuModule,TabsModule,TableModule,MultiSelectModule,ButtonModule],
 
   templateUrl: './customer-view.component.html',
   providers:[DialogService],
@@ -72,6 +73,8 @@ matchXReferenceObjForCustomers=[];
 crossRefernceTrustObjForCustomers=[];
 matchTrustObjForCustomers=[];
 matchRefernceObjForCustomers=[];
+crossRefernceObjTrustLogs={};
+crossRefernceObjTrustLogsFromCurrentTable={};
 matchRefernceXReferenceObjForCustomers=[];
 matchRefernceTrustObjForCustomers=[];
 uniqueMDMsForNetSuiteForMatch=[];
@@ -80,7 +83,7 @@ uniqueSourcesForCreossReferences=[];
 uniqueMDMsForNetSuiteForCrossRef=[];
 uniqueMDMsERPsForCrossRef=[];
 uniqueSources=[];
-
+visibleDailogueForTrustDetails: boolean = false;
 customerHistory: any[]=[];
   erpSourceTrustObjectsFirstName = {};
   netSuiteSourceTrustObjectsFirstName = {};
@@ -738,13 +741,7 @@ if(netSuiteProcessedDataForCross.length>0){
      
     };});
 
-  // if (this.custIdTrstArrayNetSuitMatchForCross.length === 0 || this.custIdTrstArrayNetSuitMatchForCross.length < 1) {
-   
-  //   this.custIdTrstArrayNetSuitMatchForCross = this.createZeroArray(length);
-  // }
-  // this.custIdTrstArrayNetSuitMatchForCross = this.custIdTrstArrayNetSuitMatchForCross.map(Number);
-
-
+  
   this.genderTrstArrayForNetSuitMatchForCross = nameValuesForNet
     .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
     .map(erpData => 
@@ -1105,6 +1102,68 @@ this.customerIdsArrayForCrossReference=commonArraysForIds;
          console.error('API error:', error);
         }
       );
+    })
+
+  }
+
+  viewCustomerTrustDetails (customerTrust:any,attribute:any,source:any){
+    console.log('customer are',customerTrust);
+    let query='where';
+    this.getCrossRefTrustLogForCustomers(query);
+    this.getCrossRefTrustLogFromCurrentTable(query);
+    this.visibleDailogueForTrustDetails=true;
+    
+
+  }
+
+  
+  async getCrossRefTrustLogFromCurrentTable(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/getTrustLogFromCurrentTable';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.crossRefernceObjTrustLogsFromCurrentTable = response[0];
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
+    })
+
+  }
+  async getCrossRefTrustLogForCustomers(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/getTrustLog';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.crossRefernceObjTrustLogs = response[0];
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //this.processHistoryDataForSystemName(this.customerHistory);
+        }
+      })
     })
 
   }
@@ -1615,25 +1674,6 @@ this.customerIdsArrayForMatches=commonArraysForIds;
 
     console.log('hello log', this.erpSourceObjectForTableData);
     // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
-    // console.log('history dates are',historyDats);
-    // this.options=[];
-    // let historyDates=[];
-    // historyDats.forEach(function(date) {
-    //   console.log(date);
-    //   let dateObj={
-    //     label: date,
-    //     value: date, 
-        
-    // }
-    // historyDates.push(dateObj);
-    // });
-    // this.options=historyDates;
-
-    // // options = [
-    // //   { label: '2025-05-14 23:15:14', value: '2025-05-14 23:15:14' },
-    // //   { label: '2025-05-10 05:30:10', value: '2025-05-10 05:30:10' },
-    // //   { label: '2025-05-04 12:12:10', value: '2025-05-04 12:12:10' },
-    // //   { label: '2025-05-01 20:30:20', value: '2025-05-01 20:30:20' },
     
     // // ];
   }

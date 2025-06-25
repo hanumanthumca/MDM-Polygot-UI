@@ -14,7 +14,7 @@
    </div>
 
    <div class="w-1/2 bg-white-500 p-4 text-white">Right Div
-    <p-button   icon="pi pi-plus"  style="width:90px !important;float:right !important" label="User" (click)="createNewUser()" />
+    <!-- <p-button   icon="pi pi-plus"  style="width:90px !important;float:right !important" label="User" (click)="createNewUser()" /> -->
 </div>
 </div>
 <div class="flex">
@@ -81,7 +81,18 @@ header="Create User"
         <tbody>
           <tr>
             <td class="border px-4 py-2">
-              <label for="customer" class="block font-semibold mb-2">  Name :</label>
+              <label for="customer" class="block font-semibold mb-2">  Fisrt Name :</label>
+              <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
+        
+            </td>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2">  Last Name :</label>
+    <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
+            </td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">
+              <label for="customer" class="block font-semibold mb-2"> User Name :</label>
               <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  />
         
             </td>
