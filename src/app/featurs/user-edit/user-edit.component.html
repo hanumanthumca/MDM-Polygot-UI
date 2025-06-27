@@ -1,0 +1,70 @@
+
+<div class="flex flex-wrap gap-6">
+    <div class="flex-1 min-w-[300px]">
+        <table class="table-auto w-full border border-gray-300">
+          <!-- <thead class="bg-gray-100">
+            <tr>
+              <th class="border px-4 py-2 text-left">Read Access : </th>
+              <th class="border px-4 py-2 text-left">Write Access : </th>
+            </tr>
+          </thead> -->
+      
+          <tbody>
+            <tr>
+              <td class="border px-4 py-2">
+                <label for="customer" class="block font-semibold mb-2">  Fisrt Name :</label>
+                <input type="text" pInputText id="customer" class="w-full"  [(ngModel)]="firstName" style="border: 1px solid black; "   />
+          
+              </td>
+              <td class="border px-4 py-2">
+                <label for="customer" class="block font-semibold mb-2">  Last Name :</label>
+      <input type="text" pInputText id="customer" class="w-full" [(ngModel)]="lastName"  style="border: 1px solid black; "  />
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-4 py-2">
+                <label for="customer" class="block font-semibold mb-2"> User Name :</label>
+                <input type="text" pInputText id="customer" class="w-full"  [readonly]="true"   [(ngModel)]="userName"   style="border: 1px solid black; "  />
+          
+              </td>
+              <td class="border px-4 py-2">
+                <label for="customer" class="block font-semibold mb-2">  Email :</label>
+      <input type="text" pInputText id="customer" class="w-full"  [(ngModel)]="email"    style="border: 1px solid black; "  />
+              </td>
+            </tr>
+  
+             <tr>
+              <td class="border px-4 py-2">
+                <label for="customer" class="block font-semibold mb-2"> Phone Number:</label>
+                <input type="text" pInputText id="customer" class="w-full"  [(ngModel)]="phoneNumber"  style="border: 1px solid black; "  />
+          
+              </td>
+              <td class="border px-4 py-2">
+                <!-- <label for="customer" class="block font-semibold mb-2">  Email :</label>
+      <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; "  /> -->
+              </td>
+            </tr>
+          
+           
+          </tbody>
+        </table>
+      </div>
+    
+    
+    </div>
+  
+  <div class="flex flex-wrap gap-6">
+    <div class="flex-1 min-w-[300px]">
+        
+      </div>
+    
+    
+    </div>
+    <span> </span>
+     
+    
+   
+  <br/>
+  <!-- <br/> -->
+  <p-button class="buttonCls" label="Update User "    (click)="updateUser()" /> 
+  

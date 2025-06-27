@@ -1,0 +1,9 @@
+.buttonCls {
+   
+    float: right;
+  }
+  :host ::ng-deep .p-inputtext[readonly] {
+    background-color: #f0f0f0; /* Light gray background */
+    color: #808080;           /* Gray text color */
+    border: 1px solid #dcdcdc; /* Light gray border */
+  }

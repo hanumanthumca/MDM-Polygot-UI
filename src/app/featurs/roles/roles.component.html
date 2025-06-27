@@ -1,0 +1,101 @@
+<p>roles2222222222 works!</p>
+
+<p-checkbox
+
+  (onChange)="handleChange( $event)"
+  binary="true"
+  label="Writeqqqqqqqqqqqqq"
+></p-checkbox>
+<p-tree [value]="nodes">
+    <ng-template let-node pTemplate="default">
+        <span>{{ node.label }}</span>
+        <label style="margin-left: 10px">
+            <input
+              type="checkbox"
+              [checked]="node.data?.read" 
+              (change)="openPermissionChange(node, 'read', $event)"
+            />
+            Read
+          </label>
+
+          <label style="margin-left: 10px">
+            <!-- <input
+              type="checkbox"
+              [checked]="node.data?.write" 
+              (change)="openPermissionChange(node, 'write', $event)"
+            /> -->
+            <p-checkbox
+ 
+  (onChange)="handleChange( $event)"
+ 
+  label="Write1"
+></p-checkbox>
+            <!-- <input
+            type="checkbox"
+          
+            (change)="openPermissionChange(node, 'write', $event)"
+          /> -->
+            Write
+          </label>
+    </ng-template>
+</p-tree>
+
+<!-- <p-tree [value]="files">
+    <ng-template let-node pTemplate="default">
+      <span>{{ node.label }}</span>
+  
+    
+      <label style="margin-left: 10px">
+        <input
+          type="checkbox"
+          [(ngModel)]="node.data.read" 
+          (change)="togglePermission(node, 'read', $event.target.checked)"
+        />
+        Read
+      </label>
+  
+      
+      <label style="margin-left: 10px">
+        <input
+          type="checkbox"
+          [(ngModel)]="node.data.write" 
+          (change)="togglePermission(node, 'write', $event.target.checked)"
+        />
+        Write
+      </label>
+    </ng-template>
+  </p-tree> -->
+
+  
+<!-- <p-tree [value]="files" selectionMode="checkbox">
+    <ng-template let-node pTemplate="default">
+      <span>{{ node.label }}</span>
+      
+    
+      <input
+        type="checkbox"
+        [checked]="node.data.read"
+        (change)="togglePermission(node, 'read', $event.target.checked)"
+        style="margin-left: 15px"
+      /> Read
+  
+     
+      <input
+        type="checkbox"
+        [checked]="node.data.write"
+        (change)="togglePermission(node, 'write', $event.target.checked)"
+        style="margin-left: 10px"
+      /> Write
+    </ng-template>
+  </p-tree> -->
+
+  <!-- <p-tree [value]="files" >
+<ng-template let-node pTemplate="node">
+<div>
+    <span> {{node.label}}</span>
+    <input type="checkbox" [(ngModel)]="node.data.read" /> Read
+    <input type="checkbox" [(ngModel)]="node.data.write" /> Write
+</div>
+</ng-template>
+
+  </p-tree> -->

@@ -8,11 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { Table } from 'primeng/table';
 //import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; 
+import { MenuItem, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { UserEditComponent } from '../user-edit/user-edit.component';
 @Component({
   selector: 'app-users',
   standalone: true,
   imports: [TableModule, ButtonModule,DialogModule,Select,FormsModule,CommonModule],
   templateUrl: './users.component.html',
+  providers:[MessageService,DialogService],
   styleUrl: './users.component.scss'
 })
 // constructor(public dynamicDialogRef:DynamicDialogRef, 
@@ -22,7 +26,8 @@ import { CommonModule } from '@angular/common';
 //   ){}
 export class UsersComponent {
 
-constructor(private mdmService: MDMService ) {}
+constructor(private mdmService: MDMService ,private dialogService:DialogService,
+        private messageService:MessageService) {}
 
 @ViewChild("myCustTable") myCustTable:Table | undefined;
   users=[];
@@ -30,6 +35,9 @@ constructor(private mdmService: MDMService ) {}
   firstName='';
   lastName='';
   email='';
+  rows = 10;
+  first = 0;
+  totalRecords=0;
   phoneNumber='';
   queryTableDisplay:boolean =false;
   ngOnInit() {
@@ -41,6 +49,10 @@ createNewUser(){
   this.queryTableDisplay=true;
 }
 
+pageChange(event) {
+  this.first = event.first;
+  this.rows = event.rows;
+}
 submitUser(){
   console.log('hello');
   console.log('hello');
@@ -52,9 +64,12 @@ async createUserwithAPI() : Promise<void>{
  
 
   let apiUrl = 'http://localhost:3000/api/createUser';
+  let userPwd=this.generatePassword();
+ // let userPwd=this.userName+this.phoneNumber;
   let userObj={
    // custId: this.custId,
    custUserName:this.userName,
+   custPwd:userPwd,
     custFirstName: this.firstName,
     custLastName:this.lastName,
     custEmail:this.email,
@@ -83,6 +98,38 @@ async createUserwithAPI() : Promise<void>{
     })
   })
 }
+
+ generatePassword() {
+  ///const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let password = "";
+  let length = 12
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+}
+
+ viewUser(user:any){
+    let emailid=user['EMAIL'];
+    let id=user['USER_ID'];
+    console.log('email is',emailid);
+
+    const viewComponentForCust =this.dialogService.open(UserEditComponent,{
+  
+      data:{
+        custId:id,
+        userObj:user,
+      },
+      width:"30 rem",
+      header:"Edit User Details",
+      closable:true
+    });
+    viewComponentForCust.onClose.subscribe((result) =>{
+      let finalQueryString='where ';
+  this.getAllCustomers(finalQueryString);
+    })
+   }
 async getAllCustomers(queryForAPI:string) : Promise<void>{
    
   let builtString=queryForAPI;
@@ -95,6 +142,7 @@ async getAllCustomers(queryForAPI:string) : Promise<void>{
        // this.customerByCountryResponse=response;
        //this.customerCountBySystemName=response;
        this.users=response;
+       this.totalRecords=  this.users.length;
         }else{
 
         }
