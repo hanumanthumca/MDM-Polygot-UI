@@ -1,21 +1,96 @@
 <p>roles2222222222 works!</p>
 
-<p-checkbox
+
+<p-tree [value]="newnodes">
+    <ng-template let-node pTemplate="default">
+      <div style="display: flex; align-items: center;">
+        <span style="flex: 1;">{{ node.label }}</span>
+  
+        <!-- READ -->
+        <p-checkbox
+          binary="true"
+          [ngModel]="node.data.read"
+          [indeterminate]="node.data.readIndeterminate"
+          (ngModelChange)="onPermissionToggle(node, 'read', $event)"
+          style="margin-right: 8px;"
+        ></p-checkbox>
+        R
+  
+        <!-- WRITE -->
+        <p-checkbox
+          binary="true"
+          [ngModel]="node.data.write"
+          [indeterminate]="node.data.writeIndeterminate"
+          (ngModelChange)="onPermissionToggle(node, 'write', $event)"
+          style="margin-left: 16px; margin-right: 8px;"
+        ></p-checkbox>
+        W
+      </div>
+    </ng-template>
+  </p-tree>
+
+  
+<!-- <p-treeSelect
+  [options]="roleFiles"
+  [(ngModel)]="selectedNodes"
+  selectionMode="checkbox"
+  placeholder="Select files"
+  display="chip"
+  [metaKeySelection]="false"
+  appendTo="body"
+>
+  <ng-template let-node pTemplate="default">
+    <div style="display: flex; align-items: center;">
+      <span style="flex: 1">{{ node.label }}</span>
+
+   
+      <label style="margin-right: 10px;">
+        <input
+          type="checkbox"
+          [checked]="node.data?.read"
+          (change)="togglePermission(node, 'read', $event.target.checked)"
+        />
+        R
+      </label>
+
+     
+      <label>
+        <input
+          type="checkbox"
+          [checked]="node.data?.write"
+          (change)="togglePermission(node, 'write', $event.target.checked)"
+        />
+        W
+      </label>
+    </div>
+  </ng-template>
+</p-treeSelect> -->
+<!-- <p-checkbox
 
   (onChange)="handleChange( $event)"
   binary="true"
   label="Writeqqqqqqqqqqqqq"
-></p-checkbox>
+></p-checkbox> -->
+
+
 <p-tree [value]="nodes">
     <ng-template let-node pTemplate="default">
         <span>{{ node.label }}</span>
         <label style="margin-left: 10px">
-            <input
+            <!-- <input
               type="checkbox"
               [checked]="node.data?.read" 
               (change)="openPermissionChange(node, 'read', $event)"
             />
-            Read
+            Read -->
+            <p-checkbox
+            [(ngModel)]="node.data.read"
+            binary="true"
+            label="Read"
+            (onChange)="handleChange( $event)"
+           
+           
+          ></p-checkbox>
           </label>
 
           <label style="margin-left: 10px">
@@ -26,9 +101,10 @@
             /> -->
             <p-checkbox
  
-  (onChange)="handleChange( $event)"
- 
-  label="Write1"
+            [(ngModel)]="node.data.write"
+            binary="true"
+            label="Write"
+            (onChange)="handleChange( $event)"
 ></p-checkbox>
             <!-- <input
             type="checkbox"

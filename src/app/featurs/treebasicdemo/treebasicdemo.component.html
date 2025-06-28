@@ -1,0 +1,29 @@
+<p>treebasicdemo works!</p>
+
+<p-tree [value]="files" [propagateSelectionDown]="false" [propagateSelectionUp]="false">
+    <ng-template let-node pTemplate="default">
+      <div style="display: flex; align-items: center;">
+        <span style="flex: 1;">{{ node.label }}</span>
+  
+        <!-- Read Checkbox -->
+        <p-checkbox
+          binary="true"
+          [ngModel]="node.data.read"
+          [indeterminate]="node.data.readIndeterminate"
+          (ngModelChange)="onToggle(node, 'read', $event)"
+          style="margin-right: 10px;"
+        ></p-checkbox>
+        <small>R</small>
+  
+        <!-- Write Checkbox -->
+        <p-checkbox
+          binary="true"
+          [ngModel]="node.data.write"
+          [indeterminate]="node.data.writeIndeterminate"
+          (ngModelChange)="onToggle(node, 'write', $event)"
+          style="margin-left: 15px; margin-right: 10px;"
+        ></p-checkbox>
+        <small>W</small>
+      </div>
+    </ng-template>
+  </p-tree>
