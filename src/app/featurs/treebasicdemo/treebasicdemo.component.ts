@@ -21,9 +21,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { RadioButtonModule } from 'primeng/radiobutton';
 //import { FormsModule } from '@angular/forms';
-
-
+import { Select } from 'primeng/select';
+import { MDMService } from 'src/app/Services/mdm-service';
 
 interface FoodNode {
   name: string;
@@ -81,11 +82,18 @@ const TREE_DATA: FoodNode[] = [
   selector: 'app-treebasicdemo',
   standalone: true,
    //imports: [TreeModule,CommonModule,FormsModule,CheckboxModule,MatButtonModule,MatInputModule,MatDialogModule],
-   imports: [CommonModule,FormsModule,MatTreeModule, ButtonModule,MatButtonModule, MatIconModule,MatCheckboxModule,TreeModule,CheckboxModule,MatInputModule,MatDialogModule],
+
+imports: [CommonModule,FormsModule,MatTreeModule, Select,RadioButtonModule,ButtonModule,MatButtonModule, MatIconModule,MatCheckboxModule,TreeModule,CheckboxModule,MatInputModule,MatDialogModule],
    templateUrl: './treebasicdemo.component.html',
   styleUrl: './treebasicdemo.component.scss'
 })
 export class TreebasicdemoComponent {
+  selectedColor: string = '';
+  colors: string[] = ['Data Manager', 'Data Steward', 'Data Admin'];
+  userNames=[];
+  selectedUserName=[];
+  roles=[];
+  selectedRole=[];
   files: TreeNode[]=[];
   childrenAccessor = (node: FoodNode) => node.children ?? [];
   private transformer = (node: PermissionNode, level: number, parent?: FlatNode): FlatNode => {
@@ -118,62 +126,327 @@ export class TreebasicdemoComponent {
   );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
    //
-   constructor() {
+   constructor(private mdmService: MDMService) {
     this.dataSource.data = this.buildPermissionTree();
   }
   hasChild = (_: number, node: FlatNode) => node.expandable;
   ngOnInit() {
-    
+   // colors: string[] = ['Data Manager', 'Data Steward', 'Data Admin'];
+    this.roles = [
+      { name: 'Data Manager', value: 'Data Manager' },
+      { name: 'Data Steward', value: 'Data Steward' },
+      { name: 'Data Admin', value: 'Data Admin' },
+     ];
+    let finalQueryString='where ';
+  this.getAllColumns(finalQueryString);
+  this.getAllUserNames(finalQueryString);
+  
   }
+
+  async getAllUserNames(queryForAPI:string) : Promise<void>{
+   
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/getAllUserNames';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+            this.userNames=response;
+         // this.customerByCountryResponse=response;
+         //this.customerCountBySystemName=response;
+        // this.users=response;
+        // this.totalRecords=  this.users.length;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+         // this.users=response;
+            //this.customerByC
+            // ountryResponse=response;
+           // this.processGraphDataForSystemName(this.customerCountBySystemName);
+  
+            
+        }
+      })
+    })
+      
+    }
+  async getAllColumns(queryForAPI:string) : Promise<void>{
+   
+    let builtString=queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/getAllTableColumns';
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+         // this.customerByCountryResponse=response;
+         //this.customerCountBySystemName=response;
+        // this.users=response;
+        // this.totalRecords=  this.users.length;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+         // this.users=response;
+            //this.customerByC
+            // ountryResponse=response;
+           // this.processGraphDataForSystemName(this.customerCountBySystemName);
+  
+            
+        }
+      })
+    })
+      
+    }
   buildPermissionTree(): PermissionNode[] {
     return [
       {
-        name: 'Documents',
+        name: 'All Tables',
         read: false,
         write: false,
         create:false,
         delete:false,
         children: [
           {
-            name: 'Reports',
+            name: 'BO_CUSTOMER',
             read: false,
             write: false,
-            create:false,
-            delete:false,
+            create: false,
+            delete: false,
             children: [
-              { name: 'Annual.pdf', read: false, write: false, create:false,
-                delete:false, },
-              { name: 'Monthly.pdf', read: false, write: false, create:false,
-                delete:false, }
+              { name: 'CUSTOMER_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'UPDATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'CONSOLIDATION_IND', read: false, write: false, create: false, delete: false, },
+              { name: 'IS_ACTIVE', read: false, write: false, create: false, delete: false, },
+              { name: 'FIRST_NAME', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_NAME', read: false, write: false, create: false, delete: false, },
+              { name: 'EMAIL', read: false, write: false, create: false, delete: false, },
+              { name: 'PHONE', read: false, write: false, create: false, delete: false, },
+              { name: 'AGE', read: false, write: false, create: false, delete: false, },
+              { name: 'LOYALTY_SCORE', read: false, write: false, create: false, delete: false, },
+              { name: 'GENDER_CD', read: false, write: false, create: false, delete: false, },
+              { name: 'BIRTH_DATE', read: false, write: false, create: false, delete: false, }
             ]
           },
-          { name: 'Invoices', read: false, write: false ,create:false,
-            delete:false, }
-        ]
-      },
-      {
-        name: 'Pictures',
-        read: false,
-        write: false,
-        create:false,
-        delete:false,
-        children: [
-          { name: 'Vacation.png', read: false, write: false, create:false,
-            delete:false, },
-          { name: 'Events.png', read: false, write: false, create:false,
-            delete:false, }
+          {
+            name: 'BO_CUSTOMER_ADDRESS',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'CUSTOMER_ADDRESS_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'UPDATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'CONSOLIDATION_IND', read: false, write: false, create: false, delete: false, },
+              { name: 'IS_ACTIVE', read: false, write: false, create: false, delete: false, },
+
+              { name: 'CUSTOMER_ADDRESS_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_ADDRESS', read: false, write: false, create: false, delete: false, },
+              { name: 'CITY', read: false, write: false, create: false, delete: false, },
+              { name: 'STATE', read: false, write: false, create: false, delete: false, },
+
+              { name: 'COUNTRY', read: false, write: false, create: false, delete: false, },
+              { name: 'ZIP_CODE', read: false, write: false, create: false, delete: false, },
+
+
+            ]
+          },
+          {
+            name: 'BO_CUSTOMER_ADDRESS_BRIDGE',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'CUSTOMER_ADDRESS_BRIDGE_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_ADDRESS_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'UPDATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'CONSOLIDATION_IND', read: false, write: false, create: false, delete: false, },
+              { name: 'IS_ACTIVE', read: false, write: false, create: false, delete: false, }
+            ]
+          },
+
+          {
+            name: 'BO_CUSTOMER_BUS_REL',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'CUSTOMER_BUS_REL_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'UPDATED_BY', read: false, write: false, create: false, delete: false, },
+              { name: 'CONSOLIDATION_IND', read: false, write: false, create: false, delete: false, },
+              { name: 'IS_ACTIVE', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_BUS_REL_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'CUSTOMER_MDM_ID', read: false, write: false, create: false, delete: false, },
+              { name: 'RELATIONSHIP_TYPE_CD', read: false, write: false, create: false, delete: false, },
+              { name: 'RELATIONSHIP_START_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'RELATIONSHIP_END_DATE', read: false, write: false, create: false, delete: false, }
+            ]
+          },
+          {
+            name: 'REF_COUNTRY',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'COUNTRY_CD', read: false, write: false, create: false, delete: false, },
+              { name: 'COUNTRY_DESC', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+             
+            ]
+          },
+          {
+            name: 'REF_GENDER',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'GENDER_CD', read: false, write: false, create: false, delete: false, },
+              { name: 'GENDER_DESC', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+             
+            ]
+          },
+          {
+            name: 'REF_RELATIONSHIP_TYPE',
+            read: false,
+            write: false,
+            create: false,
+            delete: false,
+            children: [
+              { name: 'RELATIONSHIP_TYPE_CD', read: false, write: false, create: false, delete: false, },
+              { name: 'RELATIONSHIP_TYPE_DESC', read: false, write: false, create: false, delete: false, },
+              { name: 'CREATE_DATE', read: false, write: false, create: false, delete: false, },
+              { name: 'LAST_UPDATE_DATE', read: false, write: false, create: false, delete: false, },
+             
+            ]
+          },
+          
         ]
       }
+      
     ];
   }
 
   onSavePermissions() {
     const permissions = this.getSelectedPermissions();
     console.log('hello selected data is',permissions);
+    
+    for (let i = 0; i < permissions.length; i++) {
+      //   sourceId=sourceId+','+wholeResponse[i]['SRC_CUSTOMER_MDM_ID'];
+     
+      let string=permissions[i]['path'];
+      let parts=string.split('/');
+      if(parts.length>2){
+        let tableName=parts[1];
+        let colName=parts[2];
+        let createPermission=permissions[i]['create'];
+        let updatePermission=permissions[i]['write'];
+        let deletePermission=permissions[i]['delete'];
+        let readPermission=permissions[i]['read'];
+      let userName=this.selectedUserName;
+      let role=this.selectedRole;
+   
+    let permissionObj={
+      // custId: this.custId,
+      userName:userName,
+      role:role,
+       tableName: tableName,
+       coulumnName:colName,
+       readPermission:readPermission,
+       createPermission:createPermission,
+       updatePermission:updatePermission,
+       deletePermission:deletePermission
+     };
+    console.log('query string values are permissionObj ',permissionObj) ;
+    //createUserPermission
+
+    this.createUserPermissionswithAPI(permissionObj);
+      }
+
+    }
+
+
+    
+
+  
+   
   // this.permissionService.savePermissions(permissions).subscribe({
   //   next: () => alert('Permissions saved!'),
   //   error: err => alert('Error saving permissions: ' + err.message)
   // });
+  }
+
+  async createUserPermissionswithAPI(userObj:any) : Promise<void>{
+
+ 
+    let apiUrl = 'http://localhost:3000/api/createUserPermission';
+   // let userPwd=this.generatePassword();
+   // let userPwd=this.userName+this.phoneNumber;
+    // let userObj={
+    //  // custId: this.custId,
+    //  custUserName:this.userName,
+    //  custPwd:userPwd,
+    //   custFirstName: this.firstName,
+    //   custLastName:this.lastName,
+    //   custEmail:this.email,
+    //   custPhone:this.phoneNumber,
+      
+    // };
+    return new Promise((resolve,rejects) =>{
+      this.mdmService.sendPostRequestToAPI(apiUrl,userObj).subscribe({
+        next:(response:any) =>{
+          
+          if(response){
+            // this.customers=response;
+            // this.totalRecords= this.customers.length;
+           // this.showSuccess=true;
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+         
+        }
+      })
+    })
   }
   getSelectedPermissions() {
     const flatList: { path: string; read: boolean; write: boolean;create: boolean; delete: boolean }[] = [];

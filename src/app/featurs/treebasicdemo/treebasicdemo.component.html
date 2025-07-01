@@ -1,108 +1,194 @@
-<p>treebasicdemo works!</p>
-<button mat-raised-button color="primary">Material Button</button>
 
-<!-- <p-tree [value]="files" [propagateSelectionDown]="false" [propagateSelectionUp]="false">
-    <ng-template let-node pTemplate="default">
-      <div style="display: flex; align-items: center;">
-        <span style="flex: 1;">{{ node.label }}</span>
-  
-        
-        <p-checkbox
-          binary="true"
-          [ngModel]="node.data.read"
-          [indeterminate]="node.data.readIndeterminate"
-          (ngModelChange)="onToggle(node, 'read', $event)"
-          style="margin-right: 10px;"
-        ></p-checkbox>
-        <small>R</small>
-  
-       
-        <p-checkbox
-          binary="true"
-          [ngModel]="node.data.write"
-          [indeterminate]="node.data.writeIndeterminate"
-          (ngModelChange)="onToggle(node, 'write', $event)"
-          style="margin-left: 15px; margin-right: 10px;"
-        ></p-checkbox>
-        <small>W</small>
-      </div>
-    </ng-template>
-  </p-tree> -->
-  <p-button   label="Save Permissions" (click)="onSavePermissions()" />
+ 
   <!-- <button mat-raised-button color="primary" (click)="onSavePermissions()">Save Permissions</button> -->
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-      {{ node.name }}  <mat-checkbox
-        [(ngModel)]="node.read"
-        [indeterminate]="node.readIndeterminate"
-        (change)="onToggle(node, 'read', $event.checked)"
-      >
-        Read
-      </mat-checkbox>
-  
-      <mat-checkbox
-        [(ngModel)]="node.write"
-        [indeterminate]="node.writeIndeterminate"
-        (change)="onToggle(node, 'write', $event.checked)"
-        style="margin-left: 20px"
-      >
-        Write
-      </mat-checkbox>
-      <mat-checkbox
-      [(ngModel)]="node.create"
-      [indeterminate]="node.createIndeterminate"
-      (change)="onToggle(node, 'create', $event.checked)"
-      style="margin-left: 20px"
-    >
-      Create
-    </mat-checkbox>
-    <mat-checkbox
-    [(ngModel)]="node.delete"
-    [indeterminate]="node.deleteIndeterminate"
-    (change)="onToggle(node, 'delete', $event.checked)"
-    style="margin-left: 20px"
-  >
-    Delete
-  </mat-checkbox>
-    </mat-tree-node>
-  
-    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-      <div class="mat-tree-node">
-        <button mat-icon-button matTreeNodeToggle>
-          <mat-icon>
-            {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-          </mat-icon>
-        </button>
-        {{ node.name }}
-        <mat-checkbox
-          [(ngModel)]="node.read"
-          [indeterminate]="node.readIndeterminate"
-          (change)="onToggle(node, 'read', $event.checked)"
-        >
-        Read
-        </mat-checkbox>
-  
-        <mat-checkbox
-          [(ngModel)]="node.write"
-          [indeterminate]="node.writeIndeterminate"
-          (change)="onToggle(node, 'write', $event.checked)"
-          style="margin-left: 20px"
-        >
-          Write
-        </mat-checkbox>
-        <mat-checkbox
-      [(ngModel)]="node.create"
-      [indeterminate]="node.createIndeterminate"
-      (change)="onToggle(node, 'create', $event.checked)"
-      style="margin-left: 20px"
-    >
-      Create
-    </mat-checkbox>
-    <mat-checkbox [(ngModel)]="node.delete" [indeterminate]="node.deleteIndeterminate"
-        (change)="onToggle(node, 'delete', $event.checked)" style="margin-left: 20px">
-        Delete
-    </mat-checkbox>
+  <div class="flex h-full">
+    
+    <div class="w-1/2 bg-white flex flex-col justify-center items-center p-10">
+        <div class="flex align-items-center gap-4 mb-4">
+            <p-select [options]="userNames" [(ngModel)]="selectedUserName" optionLabel="USERNAME" optionValue="USERNAME"
+            placeholder="Select a User" class="w-full md:w-56" />
+            <p-select [options]="roles" [(ngModel)]="selectedRole" optionLabel="name" 
+            optionValue="value"  placeholder="Select a Role" class="w-full md:w-56" />
+        </div>
+      
       </div>
-    </mat-tree-node>
-  </mat-tree>
+    
+     
+    <!-- Right Side -->
+    <div class="w-1/2 bg-white flex flex-col justify-center items-center p-10">
+    
+        <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+              {{ node.name }}  <mat-checkbox
+                [(ngModel)]="node.read"
+                [indeterminate]="node.readIndeterminate"
+                (change)="onToggle(node, 'read', $event.checked)"
+              >
+                Read
+              </mat-checkbox>
+          
+              <mat-checkbox
+                [(ngModel)]="node.write"
+                [indeterminate]="node.writeIndeterminate"
+                (change)="onToggle(node, 'write', $event.checked)"
+                style="margin-left: 20px"
+              >
+                Write
+              </mat-checkbox>
+              <mat-checkbox
+              [(ngModel)]="node.create"
+              [indeterminate]="node.createIndeterminate"
+              (change)="onToggle(node, 'create', $event.checked)"
+              style="margin-left: 20px"
+            >
+              Create
+            </mat-checkbox>
+            <mat-checkbox
+            [(ngModel)]="node.delete"
+            [indeterminate]="node.deleteIndeterminate"
+            (change)="onToggle(node, 'delete', $event.checked)"
+            style="margin-left: 20px"
+          >
+            Delete
+          </mat-checkbox>
+            </mat-tree-node>
+          
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+              <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle>
+                  <mat-icon>
+                    {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                  </mat-icon>
+                </button>
+                {{ node.name }}
+                <mat-checkbox
+                  [(ngModel)]="node.read"
+                  [indeterminate]="node.readIndeterminate"
+                  (change)="onToggle(node, 'read', $event.checked)"
+                >
+                Read
+                </mat-checkbox>
+          
+                <mat-checkbox
+                  [(ngModel)]="node.write"
+                  [indeterminate]="node.writeIndeterminate"
+                  (change)="onToggle(node, 'write', $event.checked)"
+                  style="margin-left: 20px"
+                >
+                  Write
+                </mat-checkbox>
+                <mat-checkbox
+              [(ngModel)]="node.create"
+              [indeterminate]="node.createIndeterminate"
+              (change)="onToggle(node, 'create', $event.checked)"
+              style="margin-left: 20px"
+            >
+              Create
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="node.delete" [indeterminate]="node.deleteIndeterminate"
+                (change)="onToggle(node, 'delete', $event.checked)" style="margin-left: 20px">
+                Delete
+            </mat-checkbox>
+              </div>
+            </mat-tree-node>
+          </mat-tree>
+        
+          <p-button   style="float: right;"label="Save Permissions" (click)="onSavePermissions()" /> -->
+      </div>
+    </div>
   
+  
+    <div class="flex h-full">
+    
+        <!-- <div class="w-1/4 bg-white flex flex-col justify-center items-center p-10">
+          
+          
+          </div> -->
+        
+         
+        <!-- Right Side -->
+        <div class=" bg-white flex flex-col justify-center items-center p-10">
+            <!-- <div class="w-3/4 bg-white flex flex-col justify-center items-center p-10"> -->
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                
+                    <span style="min-width: 300px;">  {{ node.name }}  </span>
+                    <!-- <mat-label><span style="width:300px !important"> {{ node.name }} </span></mat-label> -->
+                    <mat-checkbox
+                    [(ngModel)]="node.read"
+                    [indeterminate]="node.readIndeterminate"
+                    (change)="onToggle(node, 'read', $event.checked)"
+                  >
+                    Read
+                  </mat-checkbox>
+              
+                  <mat-checkbox
+                    [(ngModel)]="node.write"
+                    [indeterminate]="node.writeIndeterminate"
+                    (change)="onToggle(node, 'write', $event.checked)"
+                    style="margin-left: 20px"
+                  >
+                    Update
+                  </mat-checkbox>
+                  <mat-checkbox
+                  [(ngModel)]="node.create"
+                  [indeterminate]="node.createIndeterminate"
+                  (change)="onToggle(node, 'create', $event.checked)"
+                  style="margin-left: 20px"
+                >
+                  Create
+                </mat-checkbox>
+                <mat-checkbox
+                [(ngModel)]="node.delete"
+                [indeterminate]="node.deleteIndeterminate"
+                (change)="onToggle(node, 'delete', $event.checked)"
+                style="margin-left: 20px"
+              >
+                Delete
+              </mat-checkbox>
+                </mat-tree-node>
+              
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                  <div class="mat-tree-node">
+                    <button mat-icon-button matTreeNodeToggle>
+                      <mat-icon>
+                        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                      </mat-icon>
+                    </button>
+                    <span style="min-width: 300px;">  {{ node.name }}  </span>
+                    <!-- <mat-label><span style="width:300px !important" > {{ node.name }} </span></mat-label> -->
+                    <mat-checkbox
+                      [(ngModel)]="node.read"
+                      [indeterminate]="node.readIndeterminate"
+                      (change)="onToggle(node, 'read', $event.checked)"
+                    >
+                    Read
+                    </mat-checkbox>
+              
+                    <mat-checkbox
+                      [(ngModel)]="node.write"
+                      [indeterminate]="node.writeIndeterminate"
+                      (change)="onToggle(node, 'write', $event.checked)"
+                      style="margin-left: 20px"
+                    >
+                    Update
+                    </mat-checkbox>
+                    <mat-checkbox
+                  [(ngModel)]="node.create"
+                  [indeterminate]="node.createIndeterminate"
+                  (change)="onToggle(node, 'create', $event.checked)"
+                  style="margin-left: 20px"
+                >
+                  Create
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="node.delete" [indeterminate]="node.deleteIndeterminate"
+                    (change)="onToggle(node, 'delete', $event.checked)" style="margin-left: 20px">
+                    Delete
+                </mat-checkbox>
+                  </div>
+                </mat-tree-node>
+              </mat-tree>
+            
+              <p-button   style="margin-left:590px;float: right !important;;"label="Save Permissions" (click)="onSavePermissions()" />
+          </div>
+        </div>

@@ -32,4 +32,10 @@
     margin-right: 10px;
   }
 
- 
+  .p-field-radiobutton {
+    margin: 10px 0;
+  }
+  .min-width-label {
+    min-width: 190px;
+   // display: inline-block; /* Required for min-width to apply on inline elements */
+  }
