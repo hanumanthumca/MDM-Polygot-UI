@@ -1,177 +1,79 @@
-<p>roles2222222222 works!</p>
-
-
-<p-tree [value]="newnodes">
-    <ng-template let-node pTemplate="default">
-      <div style="display: flex; align-items: center;">
-        <span style="flex: 1;">{{ node.label }}</span>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
   
-        <!-- READ -->
-        <p-checkbox
-          binary="true"
-          [ngModel]="node.data.read"
-          [indeterminate]="node.data.readIndeterminate"
-          (ngModelChange)="onPermissionToggle(node, 'read', $event)"
-          style="margin-right: 8px;"
-        ></p-checkbox>
-        R
-  
-        <!-- WRITE -->
-        <p-checkbox
-          binary="true"
-          [ngModel]="node.data.write"
-          [indeterminate]="node.data.writeIndeterminate"
-          (ngModelChange)="onPermissionToggle(node, 'write', $event)"
-          style="margin-left: 16px; margin-right: 8px;"
-        ></p-checkbox>
-        W
-      </div>
-    </ng-template>
-  </p-tree>
+      <span style="min-width: 300px;">  {{ node.name }}  </span>
+      <!-- <mat-label><span style="width:300px !important"> {{ node.name }} </span></mat-label> -->
+      <mat-checkbox
+      [(ngModel)]="node.read"
+      [indeterminate]="node.readIndeterminate"
+      (change)="onToggle(node, 'read', $event.checked)"
+    >
+      Read
+    </mat-checkbox>
 
-  
-<!-- <p-treeSelect
-  [options]="roleFiles"
-  [(ngModel)]="selectedNodes"
-  selectionMode="checkbox"
-  placeholder="Select files"
-  display="chip"
-  [metaKeySelection]="false"
-  appendTo="body"
+    <mat-checkbox
+      [(ngModel)]="node.write"
+      [indeterminate]="node.writeIndeterminate"
+      (change)="onToggle(node, 'write', $event.checked)"
+      style="margin-left: 20px"
+    >
+      Update
+    </mat-checkbox>
+    <mat-checkbox
+    [(ngModel)]="node.create"
+    [indeterminate]="node.createIndeterminate"
+    (change)="onToggle(node, 'create', $event.checked)"
+    style="margin-left: 20px"
+  >
+    Create
+  </mat-checkbox>
+  <mat-checkbox
+  [(ngModel)]="node.delete"
+  [indeterminate]="node.deleteIndeterminate"
+  (change)="onToggle(node, 'delete', $event.checked)"
+  style="margin-left: 20px"
 >
-  <ng-template let-node pTemplate="default">
-    <div style="display: flex; align-items: center;">
-      <span style="flex: 1">{{ node.label }}</span>
+  Delete
+</mat-checkbox>
+  </mat-tree-node>
 
-   
-      <label style="margin-right: 10px;">
-        <input
-          type="checkbox"
-          [checked]="node.data?.read"
-          (change)="togglePermission(node, 'read', $event.target.checked)"
-        />
-        R
-      </label>
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <div class="mat-tree-node">
+      <button mat-icon-button matTreeNodeToggle>
+        <mat-icon>
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <span style="min-width: 300px;">  {{ node.name }}  </span>
+      <!-- <mat-label><span style="width:300px !important" > {{ node.name }} </span></mat-label> -->
+      <mat-checkbox
+        [(ngModel)]="node.read"
+        [indeterminate]="node.readIndeterminate"
+        (change)="onToggle(node, 'read', $event.checked)"
+      >
+      Read
+      </mat-checkbox>
 
-     
-      <label>
-        <input
-          type="checkbox"
-          [checked]="node.data?.write"
-          (change)="togglePermission(node, 'write', $event.target.checked)"
-        />
-        W
-      </label>
+      <mat-checkbox
+        [(ngModel)]="node.write"
+        [indeterminate]="node.writeIndeterminate"
+        (change)="onToggle(node, 'write', $event.checked)"
+        style="margin-left: 20px"
+      >
+      Update
+      </mat-checkbox>
+      <mat-checkbox
+    [(ngModel)]="node.create"
+    [indeterminate]="node.createIndeterminate"
+    (change)="onToggle(node, 'create', $event.checked)"
+    style="margin-left: 20px"
+  >
+    Create
+  </mat-checkbox>
+  <mat-checkbox [(ngModel)]="node.delete" [indeterminate]="node.deleteIndeterminate"
+      (change)="onToggle(node, 'delete', $event.checked)" style="margin-left: 20px">
+      Delete
+  </mat-checkbox>
     </div>
-  </ng-template>
-</p-treeSelect> -->
-<!-- <p-checkbox
-
-  (onChange)="handleChange( $event)"
-  binary="true"
-  label="Writeqqqqqqqqqqqqq"
-></p-checkbox> -->
-
-
-<p-tree [value]="nodes">
-    <ng-template let-node pTemplate="default">
-        <span>{{ node.label }}</span>
-        <label style="margin-left: 10px">
-            <!-- <input
-              type="checkbox"
-              [checked]="node.data?.read" 
-              (change)="openPermissionChange(node, 'read', $event)"
-            />
-            Read -->
-            <p-checkbox
-            [(ngModel)]="node.data.read"
-            binary="true"
-            label="Read"
-            (onChange)="handleChange( $event)"
-           
-           
-          ></p-checkbox>
-          </label>
-
-          <label style="margin-left: 10px">
-            <!-- <input
-              type="checkbox"
-              [checked]="node.data?.write" 
-              (change)="openPermissionChange(node, 'write', $event)"
-            /> -->
-            <p-checkbox
- 
-            [(ngModel)]="node.data.write"
-            binary="true"
-            label="Write"
-            (onChange)="handleChange( $event)"
-></p-checkbox>
-            <!-- <input
-            type="checkbox"
-          
-            (change)="openPermissionChange(node, 'write', $event)"
-          /> -->
-            Write
-          </label>
-    </ng-template>
-</p-tree>
-
-<!-- <p-tree [value]="files">
-    <ng-template let-node pTemplate="default">
-      <span>{{ node.label }}</span>
-  
-    
-      <label style="margin-left: 10px">
-        <input
-          type="checkbox"
-          [(ngModel)]="node.data.read" 
-          (change)="togglePermission(node, 'read', $event.target.checked)"
-        />
-        Read
-      </label>
-  
-      
-      <label style="margin-left: 10px">
-        <input
-          type="checkbox"
-          [(ngModel)]="node.data.write" 
-          (change)="togglePermission(node, 'write', $event.target.checked)"
-        />
-        Write
-      </label>
-    </ng-template>
-  </p-tree> -->
-
-  
-<!-- <p-tree [value]="files" selectionMode="checkbox">
-    <ng-template let-node pTemplate="default">
-      <span>{{ node.label }}</span>
-      
-    
-      <input
-        type="checkbox"
-        [checked]="node.data.read"
-        (change)="togglePermission(node, 'read', $event.target.checked)"
-        style="margin-left: 15px"
-      /> Read
-  
-     
-      <input
-        type="checkbox"
-        [checked]="node.data.write"
-        (change)="togglePermission(node, 'write', $event.target.checked)"
-        style="margin-left: 10px"
-      /> Write
-    </ng-template>
-  </p-tree> -->
-
-  <!-- <p-tree [value]="files" >
-<ng-template let-node pTemplate="node">
-<div>
-    <span> {{node.label}}</span>
-    <input type="checkbox" [(ngModel)]="node.data.read" /> Read
-    <input type="checkbox" [(ngModel)]="node.data.write" /> Write
-</div>
-</ng-template>
-
-  </p-tree> -->
+  </mat-tree-node>
+</mat-tree>

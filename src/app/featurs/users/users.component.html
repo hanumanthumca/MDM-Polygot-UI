@@ -99,6 +99,8 @@
 [rowsPerPageOptions]="[5, 10, 20]"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 (onPage)="pageChange($event)"
+class="shadow rounded-lg overflow-hidden border border-gray-200 text-sm"
+style="min-width: 1090px;"
 >
 <!-- <p-iconfield iconPosition="left" class="ml-auto">
     <p-inputicon>
@@ -125,7 +127,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             
             <td>{{ user.USERNAME }}</td>
             <td>{{ user.EMAIL }}</td>
-            <td><p-button    label="Detailed View" (click)="viewUser(user);" /></td>
+            <td><p-button    label="Edit" (click)="viewUser(user);" /></td>
         </tr>
     </ng-template>
 </p-table>
