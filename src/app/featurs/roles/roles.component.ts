@@ -219,65 +219,8 @@ export class RolesComponent {
     ]
     }
   ];
-  // files: TreeNode[] = [
-  //   {
-  //         label: 'Documents',
-  //         data: 'Documents Folder',
-  //         children: [
-  //           {
-  //             label: 'Reports',data: 'Reports Folder',
-              
-              
-  //           },
-  //           {
-  //             label: 'Home',data: 'Home Folder',
-              
-              
-  //           }]
-  //         },
-  //         {
-  //           label: 'Pics',
-  //           data: 'Pics Folder',
-  //           children: [
-  //             {
-  //               label: 'Vaction',data: 'Vaction Folder',
-                
-                
-  //             },
-  //             {
-  //               label: 'Family',data: 'Family Folder',
-                
-                
-  //             }]
-  //           },
-  // ];
   
-  // files: TreeNode[] = [
-  //   {
-  //     label: 'Documents',
-  //     data: { read: false, write: false },
-  //     children: [
-  //       {
-  //         label: 'Reports',
-  //         data: { read: false, write: false },
-  //         children: [
-  //           { label: 'Annual.pdf', data: { read: false, write: false } }
-  //         ]
-  //       },
-  //       {
-  //         label: 'Invoices',
-  //         data: { read: false, write: false }
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     label: 'Pictures',
-  //     data: { read: false, write: false },
-  //     children: [
-  //       { label: 'Vacation.png', data: { read: false, write: false } }
-  //     ]
-  //   }
-  // ];
+  
   ngOnInit() {
 
     let finalQueryString='where ';
@@ -662,8 +605,21 @@ async getAllUserRoles(queryForAPI:string) : Promise<void>{
   }
 
   processTreeData(response:any){
-    let rolesData=response;
+    let rolesData1=response;
+    //let rolesData=response;
+    const booleanKeys = ['UPDATE_PERMISSION', 'CREATE_PERMISSION','DELETE_PERMISSION', 'READ_PERMISSION',];
 
+    const rolesData = rolesData1.map(obj => {
+      const newObj = { ...obj };
+    
+      booleanKeys.forEach(key => {
+        if (key in newObj) {
+          newObj[key] = newObj[key] === 'true';
+        }
+      });
+    
+      return newObj;
+    });
     const uniqueTableNames = [...new Set(rolesData.map(roles => roles['TABLE_NAME']))];
 console.log('uniqueTableNames',uniqueTableNames); // ['Alice', 'Bob', 'Charlie']
 
@@ -682,17 +638,6 @@ const groupedArray = Object.entries(groupedByTableName).map(([name, children]) =
   name,
   children
 }));
-//@ts-ignore
-//const cleaned = groupedArray.map(({ CREATED_BY, CREATE_DATE,LAST_UPDATE_DATE,ROLE_NAME,UPDATED_BY,USERNAME, ...rest }) => rest);
-// const cleaned = groupedArray.map(group => ({
-//   ...group,
-//   people: group.people.map(({ CREATED_BY,CREATE_DATE,LAST_UPDATE_DATE,ROLE_NAME,UPDATED_BY,USERNAME,  ...rest }) => rest) // removes `id`
-// }));
-// const result = groupedArray.map(person => {
-//   //@ts-ignore
-//   const clone = { ...person, roles: { ...person.roles } };
-//   delete clone.roles.CREATED_BY;
-//   return clone;
 // });
 const fieldsToRemove = ['CREATED_BY', 'CREATE_DATE','LAST_UPDATE_DATE','ROLE_NAME','UPDATED_BY','USERNAME','TABLE_NAME'];
 // const cleanedPeople = groupedArray.map(person =>
@@ -749,6 +694,69 @@ const renamedData = formattedData.map(group => ({
 }));
 
 console.log('renamedDatarenamedDatarenamedData ',renamedData);
+
+let responseObjForTree={ 
+  name: 'All Tables',
+  read: false,
+  write: false,
+  create:false,
+  delete:false,
+  children:renamedData
+}
+// renamedData
+
+
+console.log('responseObjForTree ',responseObjForTree);
+//this.dataSource.data = this.buildPermissionTree();
+let responseArray=[];
+responseArray.push(responseObjForTree);
+
+let colNames={name: 'UPDATED_BY', read: false, write: false, create: false, delete: true};
+let oldObj=this.dataSource.data;
+
+// const updatedData = oldObj.map(children => ({
+//   ...children,
+//   children: children.children.map(user =>
+//     user.name === colNames.name ? colNames : user
+//   )
+// }));
+console.log('hello old obj',oldObj);
+let formartedObject=oldObj[0]['children'];
+console.log('hello formartedObject',formartedObject);
+console.log('hello formartedObject',formartedObject);
+let updated =[];
+let iteratedData=renamedData;
+let objectNamesForRoles=[];
+for (let i = 0; i < iteratedData.length; i++) {
+  for (let j = 0; j < iteratedData[i]['children'].length; j++) {
+    let colNames=iteratedData[i]['children'][j];
+    objectNamesForRoles.push(colNames);
+   // console.log('singleObj',colNames);
+ 
+  }
+}
+
+// Create a lookup map from newUsers by id
+const objectNamesForRolesMap = Object.fromEntries(objectNamesForRoles.map(user => [user.name, user]));
+updated = formartedObject.map(group =>
+  group['children'].map(user =>
+    objectNamesForRolesMap[user.name] ? objectNamesForRolesMap[user.name] : user
+  )
+);
+ 
+// updated = formartedObject.map(group =>
+//   group['children'].map(col =>
+//     col.name === colNames.name ? colNames : col
+//   )
+// );
+console.log(updated);
+
+console.log('updatedupdatedupdated ',updated);
+
+//@ts-ignore
+this.dataSource.data = responseArray;
+//this.dataSource.data = responseObjForTree;
+
 
 }
 
