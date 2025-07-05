@@ -721,7 +721,16 @@ let oldObj=this.dataSource.data;
 //   )
 // }));
 console.log('hello old obj',oldObj);
-let formartedObject=oldObj[0]['children'];
+let formartedObjectsForProceesing=oldObj[0]['children'];
+
+const formartedObject = formartedObjectsForProceesing.map(parent => ({
+  ...parent,
+  children: parent.children.map(child => ({
+    ...child,
+    tablename: parent.name // 👈 added property
+  }))
+}));
+
 console.log('hello formartedObject',formartedObject);
 console.log('hello formartedObject',formartedObject);
 let updated =[];
@@ -730,7 +739,18 @@ let objectNamesForRoles=[];
 for (let i = 0; i < iteratedData.length; i++) {
   for (let j = 0; j < iteratedData[i]['children'].length; j++) {
     let colNames=iteratedData[i]['children'][j];
-    objectNamesForRoles.push(colNames);
+    colNames.tablename=iteratedData[i]['name'];
+    // let wholeObj={
+    //   name:iteratedData[i]['name'],
+    //   colNames:colNames,
+    //   read: false,
+    //   write: false,
+    //   create:false,
+    //   delete:false,
+
+    // }
+    //objectNamesForRoles.push(wholeObj);
+   objectNamesForRoles.push(colNames);
    // console.log('singleObj',colNames);
  
   }
@@ -751,10 +771,67 @@ updated = formartedObject.map(group =>
 // );
 console.log(updated);
 
-console.log('updatedupdatedupdated ',updated);
 
+
+let grouped ={};
+
+// updated.flat().forEach(parent => {
+//   parent.children.forEach(child => {
+//     const key = child.tablename;
+//     if (!grouped[key]) {
+//       grouped[key] = [];
+//     }
+//     grouped[key].push(child);
+//   });
+// });
+
+const seen = new Set();
+// Flatten outer array
+updated.flat().forEach(item => {
+  // Support both `tablename` and `tabName` keys
+  const key = item.tablename || 'UNKNOWN';
+  const uniqueKey = `${item.name}|${key}`;
+  if (!seen.has(uniqueKey)) {
+    seen.add(uniqueKey);
+
+    if (!grouped[key]) {
+      grouped[key] = [];
+    }
+
+    grouped[key].push(item);
+  }
+});
+
+
+console.log('grouped ',grouped);
+
+let namedGroups = Object.entries(grouped).map(([key, items]) => ({
+  name: key,
+  create: false,
+  delete: false,
+  read: false,
+  write: false,
+  children:items
+}));
+
+console.log('updatedupdatedupdated ',updated);
+console.log('grouped ',grouped);
+console.log('namedGroups ',namedGroups);
+
+
+let newResponseObjForTree={ 
+  name: 'All Tables',
+  read: false,
+  write: false,
+  create:false,
+  delete:false,
+  children:namedGroups
+}
+let newresponseArray=[];
+newresponseArray.push(newResponseObjForTree);
 //@ts-ignore
-this.dataSource.data = responseArray;
+//this.dataSource.data = responseArray;
+this.dataSource.data = newresponseArray;
 //this.dataSource.data = responseObjForTree;
 
 

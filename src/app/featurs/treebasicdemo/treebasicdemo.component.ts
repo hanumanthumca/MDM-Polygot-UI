@@ -133,10 +133,21 @@ export class TreebasicdemoComponent {
   ngOnInit() {
    // colors: string[] = ['Data Manager', 'Data Steward', 'Data Admin'];
     this.roles = [
-      { name: 'Data Manager', value: 'Data Manager' },
+    
       { name: 'Data Steward', value: 'Data Steward' },
-      { name: 'Data Admin', value: 'Data Admin' },
+      { name: 'Manager', value: 'Manager' },
+      { name: 'Sr.Manager', value: 'Sr.Manager' },
+      
+      { name: 'Read Only Role', value: 'Read Only Role' },
      ];
+
+    //  this.userRoles = [
+    //   { id: 1, name: 'Read Only Role' },
+    //   { id: 101, name: 'Data Steward' },
+    //   { id: 102, name: 'Manager' },
+    //   { id: 103, name: 'Sr. Manager' },
+  
+    // ];
     let finalQueryString='where ';
   this.getAllColumns(finalQueryString);
   this.getAllUserNames(finalQueryString);

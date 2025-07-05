@@ -10,11 +10,12 @@ import { Table } from 'primeng/table';
 import { CommonModule } from '@angular/common'; 
 import { MenuItem, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { MultiSelectModule } from "primeng/multiselect";
 import { UserEditComponent } from '../user-edit/user-edit.component';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TableModule, ButtonModule,DialogModule,Select,FormsModule,CommonModule],
+  imports: [TableModule, ButtonModule,MultiSelectModule,DialogModule,Select,FormsModule,CommonModule],
   templateUrl: './users.component.html',
   providers:[MessageService,DialogService],
   styleUrl: './users.component.scss'
@@ -39,16 +40,29 @@ constructor(private mdmService: MDMService ,private dialogService:DialogService,
   first = 0;
   totalRecords=0;
   phoneNumber='';
+  userRoles=[];
+  selectedRoles = [];
   queryTableDisplay:boolean =false;
   ngOnInit() {
     
  let finalQueryString='where ';
   this.getAllCustomers(finalQueryString);
+  this.getAllUserRoles(finalQueryString);
+
+  this.userRoles = [
+    { id: 1, name: 'Read Only Role' },
+    { id: 101, name: 'Data Steward' },
+    { id: 102, name: 'Manager' },
+    { id: 103, name: 'Sr. Manager' },
+
+  ];
 }
+
+
 createNewUser(){
   this.queryTableDisplay=true;
 }
-
+u
 pageChange(event) {
   this.first = event.first;
   this.rows = event.rows;
@@ -65,6 +79,7 @@ async createUserwithAPI() : Promise<void>{
 
   let apiUrl = 'http://localhost:3000/api/createUser';
   let userPwd=this.generatePassword();
+  //let serRoles=this.selectedRoles;
  // let userPwd=this.userName+this.phoneNumber;
   let userObj={
    // custId: this.custId,
@@ -74,6 +89,7 @@ async createUserwithAPI() : Promise<void>{
     custLastName:this.lastName,
     custEmail:this.email,
     custPhone:this.phoneNumber,
+    userRoles:this.selectedRoles
     
   };
   return new Promise((resolve,rejects) =>{
@@ -130,6 +146,40 @@ async createUserwithAPI() : Promise<void>{
   this.getAllCustomers(finalQueryString);
     })
    }
+
+   async  getAllUserRoles(queryForAPI:string): Promise<void>{
+    
+    let builtString=queryForAPI;
+  let apiUrl = 'http://localhost:3000/api/getAllUserRoles';
+  return new Promise((resolve,rejects) =>{
+    this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+      next:(response:any) =>{
+        
+        if(response){
+       // this.customerByCountryResponse=response;
+       //this.customerCountBySystemName=response;
+      // this.users=response;
+       //this.totalRecords=  this.users.length;
+        }else{
+
+        }
+        resolve();
+      },
+      error:(error:object) =>{
+        rejects(error);
+      },
+      complete:() =>{
+       // this.users=response;
+          //this.customerByC
+          // ountryResponse=response;
+         // this.processGraphDataForSystemName(this.customerCountBySystemName);
+
+          
+      }
+    })
+  })
+
+  }
 async getAllCustomers(queryForAPI:string) : Promise<void>{
    
   let builtString=queryForAPI;
