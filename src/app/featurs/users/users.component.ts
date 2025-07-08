@@ -89,7 +89,7 @@ async createUserwithAPI() : Promise<void>{
     custLastName:this.lastName,
     custEmail:this.email,
     custPhone:this.phoneNumber,
-    userRoles:this.selectedRoles
+  
     
   };
   return new Promise((resolve,rejects) =>{

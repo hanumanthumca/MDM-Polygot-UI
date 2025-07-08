@@ -134,13 +134,20 @@ export class TreebasicdemoComponent {
    // colors: string[] = ['Data Manager', 'Data Steward', 'Data Admin'];
     this.roles = [
     
-      { name: 'Data Steward', value: 'Data Steward' },
-      { name: 'Manager', value: 'Manager' },
-      { name: 'Sr.Manager', value: 'Sr.Manager' },
+      { name: 'Data Steward', value: '101' },
+      { name: 'Manager', value: '102' },
+      { name: 'Sr.Manager', value: '103' },
       
-      { name: 'Read Only Role', value: 'Read Only Role' },
+      { name: 'Read Only Role', value: '1' },
      ];
 
+    //  this.userRoles = [
+    //   { id: 1, name: 'Read Only Role' },
+    //   { id: 101, name: 'Data Steward' },
+    //   { id: 102, name: 'Manager' },
+    //   { id: 103, name: 'Sr. Manager' },
+  
+    // ];
     //  this.userRoles = [
     //   { id: 1, name: 'Read Only Role' },
     //   { id: 101, name: 'Data Steward' },
@@ -393,7 +400,7 @@ export class TreebasicdemoComponent {
    
     let permissionObj={
       // custId: this.custId,
-      userName:userName,
+      //userName:userName,
       role:role,
        tableName: tableName,
        coulumnName:colName,

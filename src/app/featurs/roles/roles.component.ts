@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
+import { ButtonModule } from 'primeng/button';
+//import { MatButtonModule } from '@angular/material/button';
 //import {MatButtonModule} from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 //import { CommonModule } from '@angular/common';
@@ -51,7 +53,7 @@ interface FlatNode {
 @Component({
   selector: 'app-roles',
   standalone: true,
-  imports: [CommonModule,FormsModule,MatTreeModule, Select,RadioButtonModule,MatButtonModule, MatIconModule,MatCheckboxModule,TreeModule,CheckboxModule,MatInputModule,MatDialogModule],
+  imports: [CommonModule,FormsModule,MatTreeModule, Select,RadioButtonModule,MatButtonModule, ButtonModule,MatIconModule,MatCheckboxModule,TreeModule,CheckboxModule,MatInputModule,MatDialogModule],
   templateUrl: './roles.component.html',
   styleUrl: './roles.component.scss'
 })
@@ -104,6 +106,8 @@ export class RolesComponent {
   selectedNodes: TreeNode[] = [];
   newnodes: TreeNode[] = [];
   assignedRolesForUser=[];
+  roles=[];
+  selectedRole=[];
   nodes: TreeNode[] = [
     {
       label:'All Tables',
@@ -223,8 +227,16 @@ export class RolesComponent {
   
   ngOnInit() {
 
+    this.roles = [
+    
+      { name: 'Data Steward', value: 101 },
+      { name: 'Manager', value: 102 },
+      { name: 'Sr.Manager', value: 103 },
+      
+      { name: 'Read Only Role', value: 1 },
+     ];
     let finalQueryString='where ';
-  this.getAllUserRoles(finalQueryString);
+ // this.getAllUserRoles(finalQueryString);
     this.newnodes = [
       {
         label: 'Documents',
@@ -570,10 +582,15 @@ export class RolesComponent {
 
 async getAllUserRoles(queryForAPI:string) : Promise<void>{
    
-  let builtString=queryForAPI;
+  //let builtString='where role_id=';
+  let  roleId=this.selectedRole;
+  let builtString = "WHERE role_id =" + roleId ;
   let apiUrl = 'http://localhost:3000/api/getAllUserRolesByName';
+ 
+//  this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+  //let apiUrl = 'http://localhost:3000/api/getAllUserRolesByName';
   return new Promise((resolve,rejects) =>{
-    this.mdmService.getRequestForAPI(apiUrl,"?buildQuery="+builtString).subscribe({
+    this.mdmService.getRequestForAPI(apiUrl,"?buildQuery=" + builtString).subscribe({
       next:(response:any) =>{
         
         if(response){
@@ -831,7 +848,9 @@ let newresponseArray=[];
 newresponseArray.push(newResponseObjForTree);
 //@ts-ignore
 //this.dataSource.data = responseArray;
-this.dataSource.data = newresponseArray;
+
+//this.dataSource.data = newresponseArray;
+this.dataSource.data = [...newresponseArray];
 //this.dataSource.data = responseObjForTree;
 
 
@@ -858,6 +877,173 @@ deepOmitPaths(obj: any, paths: string[]): any {
   }
 
   return result;
+}
+
+getSelectedPermissions() {
+  const flatList: { path: string; read: boolean; write: boolean;create: boolean; delete: boolean }[] = [];
+
+  const walk = (
+    node: any,
+    path: string = '',
+    level: number = 0,
+    parent?: any
+  ) => {
+    const currentPath = path ? `${path}/${node.name}` : node.name;
+
+    const hasPermission = node.read || node.write||node.create || node.delete;
+    if (hasPermission) {
+      flatList.push({
+        path: currentPath,
+        read: node.read,
+        write: node.write,
+        create: node.create,
+        delete: node.delete,
+
+      });
+    }
+
+    const children = this.treeControl.getDescendants(node).filter(
+      (n) => n.level === node.level + 1
+    );
+
+    for (const child of children) {
+      walk(child, currentPath, level + 1, node);
+    }
+  };
+
+  const roots = this.treeControl.dataNodes.filter(n => n.level === 0);
+  for (const root of roots) {
+    walk(root);
+  }
+
+  return flatList;
+}
+onSavePermissions() {
+  const permissions = this.getSelectedPermissions();
+  console.log('hello selected data is',permissions);
+  let selectedRole=this.selectedRole;
+  let permissionObjForDel={
+    // custId: this.custId,
+    //userName:userName,
+    role:selectedRole,
+     
+   };
+  
+  this.deleteUserPermissionswithAPI(permissionObjForDel);
+  
+  for (let i = 0; i < permissions.length; i++) {
+    //   sourceId=sourceId+','+wholeResponse[i]['SRC_CUSTOMER_MDM_ID'];
+   
+    let string=permissions[i]['path'];
+    let parts=string.split('/');
+    if(parts.length>2){
+      let tableName=parts[1];
+      let colName=parts[2];
+      let createPermission=permissions[i]['create'];
+      let updatePermission=permissions[i]['write'];
+      let deletePermission=permissions[i]['delete'];
+      let readPermission=permissions[i]['read'];
+    //let userName=this.selectedUserName;
+    let role=this.selectedRole;
+ 
+  let permissionObj={
+    // custId: this.custId,
+    //userName:userName,
+    role:role,
+     tableName: tableName,
+     coulumnName:colName,
+     readPermission:readPermission,
+     createPermission:createPermission,
+     updatePermission:updatePermission,
+     deletePermission:deletePermission
+   };
+  console.log('query string values are permissionObj ',permissionObj) ;
+  //createUserPermission
+
+  this.createUserPermissionswithAPI(permissionObj);
+    }
+
+  }
+
+
+  
+
+
+ 
+// this.permissionService.savePermissions(permissions).subscribe({
+//   next: () => alert('Permissions saved!'),
+//   error: err => alert('Error saving permissions: ' + err.message)
+// });
+}
+async deleteUserPermissionswithAPI(userObj:any) : Promise<void>{
+
+ 
+  let apiUrl = 'http://localhost:3000/api/deleteRolePermission';
+ 
+  return new Promise((resolve,rejects) =>{
+    this.mdmService.sendPostRequestToAPI(apiUrl,userObj).subscribe({
+      next:(response:any) =>{
+        
+        if(response){
+          // this.customers=response;
+          // this.totalRecords= this.customers.length;
+         // this.showSuccess=true;
+        }else{
+
+        }
+        resolve();
+      },
+      error:(error:object) =>{
+        rejects(error);
+      },
+      complete:() =>{
+       
+      }
+    })
+  })
+}
+async createUserPermissionswithAPI(userObj:any) : Promise<void>{
+
+ 
+  let apiUrl = 'http://localhost:3000/api/createUserPermission';
+ // let userPwd=this.generatePassword();
+ // let userPwd=this.userName+this.phoneNumber;
+  // let userObj={
+  //  // custId: this.custId,
+  //  custUserName:this.userName,
+  //  custPwd:userPwd,
+  //   custFirstName: this.firstName,
+  //   custLastName:this.lastName,
+  //   custEmail:this.email,
+  //   custPhone:this.phoneNumber,
+    
+  // };
+  return new Promise((resolve,rejects) =>{
+    this.mdmService.sendPostRequestToAPI(apiUrl,userObj).subscribe({
+      next:(response:any) =>{
+        
+        if(response){
+          // this.customers=response;
+          // this.totalRecords= this.customers.length;
+         // this.showSuccess=true;
+        }else{
+
+        }
+        resolve();
+      },
+      error:(error:object) =>{
+        rejects(error);
+      },
+      complete:() =>{
+       
+      }
+    })
+  })
+}
+handleTableChange(){
+  console.log('selected role is f',this.selectedRole);
+  let finalQueryString='where ';
+   this.getAllUserRoles(finalQueryString);
 }
 
   openPermissionChange(node: TreeNode, type: 'read' | 'write', event:any) {

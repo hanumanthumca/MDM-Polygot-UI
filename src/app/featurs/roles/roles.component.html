@@ -1,3 +1,9 @@
+<br/>
+&nbsp; &nbsp; 
+<p-select [options]="roles" [(ngModel)]="selectedRole" optionLabel="name" 
+optionValue="value"  placeholder="Select a Role" class="w-full md:w-56" (onChange)="handleTableChange()" />
+<br/>
+<br/>
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
   
@@ -77,3 +83,4 @@
     </div>
   </mat-tree-node>
 </mat-tree>
+<p-button   style="margin-left:500px;float: right !important;;"label="Save Permissions" (click)="onSavePermissions()" /> &nbsp;&nbsp;&nbsp;
