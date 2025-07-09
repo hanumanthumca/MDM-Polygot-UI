@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MDMService } from 'src/app/Services/mdm-service';
 @Component({
   selector: 'app-mdm-header',
   standalone: true,
@@ -26,9 +27,10 @@ export class MdmHeaderComponent {
   createUserTableDisplay=false;
   userName='';
   password='';
+  loggedInUserName=''
   myProperty
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private mdmService: MDMService) {}
   showDialog() {
     this.visible = true;
   }
@@ -37,6 +39,7 @@ export class MdmHeaderComponent {
   }
   validateLogOut(){
     //this.isLoginVisble=true;
+    this.loggedInUserName='';
     localStorage.setItem('isLoggedIN',JSON.stringify(false));
     let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
       if(loginValue){
@@ -47,37 +50,85 @@ export class MdmHeaderComponent {
  
     this.router.navigate(['/']);
   }
+
   validateLogin() {
    // this.visible = true;
+   //getUserLoginForDetails
   localStorage.setItem('isLoggedIN',JSON.stringify(false));
 
     console.log('login hit');
-    if(this.userName==='hanumanth'&& this.password==='hanumanth'){
-      localStorage.setItem('isLoggedIN',JSON.stringify(true));
-      let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
-     if(loginValue){
-      this.isLoginVisble=false;
-     }else{
-      this.isLoginVisble=true;
-    }
-     
+
+    let permissionObjForDel={
+      // custId: this.custId,
+      //userName:userName,
+      userName:this.userName,
+      password:this.password
+       
+     };
     
-      console.log('login success');
-      this.failedLogin=false;
-      this.router.navigate(['/home']);
-    }else{
-      localStorage.setItem('isLoggedIN',JSON.stringify(false));
-      let loginValue=JSON.parse(localStorage.getItem('isLoggedIN'));
-      if(loginValue){
-       this.isLoginVisble=false;
-      }else{
-        this.isLoginVisble=true;
-      }
-     
-      this.failedLogin=true;
-      console.log('login fail');
-      
-    }
+    this.getLogin(permissionObjForDel); 
+
+   
+  }
+
+  async getLogin(userObj:any) : Promise<void>{
+    let apiUrl = 'http://localhost:3000/api/getUserLoginForDetails';
+
+
+    return new Promise((resolve, rejects) => {
+      this.mdmService.sendPostRequestToAPI(apiUrl, userObj).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            let responseuserObj = response[0];
+            console.log('response ', response[0]);
+            console.log('response api', responseuserObj);
+            //if(this.userName==='hanumanth'&& this.password==='hanumanth'){
+            if (responseuserObj) {
+              this.loggedInUserName = responseuserObj['FIRSTNAME'];
+              localStorage.setItem('isLoggedIN', JSON.stringify(true));
+              let loginValue = JSON.parse(localStorage.getItem('isLoggedIN'));
+              if (loginValue) {
+                this.isLoginVisble = false;
+              } else {
+                this.isLoginVisble = true;
+              }
+
+
+              console.log('login success');
+              this.failedLogin = false;
+              this.router.navigate(['/home']);
+            } else {
+              localStorage.setItem('isLoggedIN', JSON.stringify(false));
+              let loginValue = JSON.parse(localStorage.getItem('isLoggedIN'));
+              this.loggedInUserName = '';
+              if (loginValue) {
+                this.isLoginVisble = false;
+              } else {
+                this.isLoginVisble = true;
+              }
+
+              this.failedLogin = true;
+              console.log('login fail');
+
+            }
+
+          
+          //  }
+           
+          }else{
+  
+          }
+          resolve();
+        },
+        error:(error:object) =>{
+          rejects(error);
+        },
+        complete:() =>{
+        
+        }
+      })
+    })
   }
   showDialog2() {
     this.visible2 = true;
