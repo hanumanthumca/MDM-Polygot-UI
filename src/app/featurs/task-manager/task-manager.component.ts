@@ -58,9 +58,20 @@ export class TaskManagerComponent {
  queryTableDisplay:boolean =false;
  customers: any[]=[];
  userName = '';
-
+ assignedRolesForUser=[];
+ groupedByColumnsForRoles=[];
   ngOnInit() {
+   
+    let loggedInUserId=localStorage.getItem('userId');
+    let userObj={
+      // custId: this.custId,
+      //userName:userName,
+      userid:loggedInUserId,
+       
+     };
     
+    this.getUserRoles(userObj); 
+   // getUserRoles
     this.carsData = [
         { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
         { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
@@ -161,6 +172,7 @@ export class TaskManagerComponent {
       data:{
         custId:id,
         customerObj:customer,
+        roles: this.assignedRolesForUser
       },
       width:"95vw",
       header:"View Customer",
@@ -320,4 +332,323 @@ export class TaskManagerComponent {
     })
       
     }
+
+  async getUserRoles(userObj: any): Promise<void> {
+    let apiUrl = 'http://localhost:3000/api/getUserRolesForDetails';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.sendPostRequestToAPI(apiUrl, userObj).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+
+            console.log('user roles are', response);
+            let rolesFromAPI = response;
+            let newArray = [];
+            for (var i = 0; i < rolesFromAPI.length; i++) {
+              let roleName = 'Data Steward';
+
+              newArray.push(rolesFromAPI[i]['ROLE_ID']);
+            }
+            console.log('newArray', newArray);
+            const resultedRoles = newArray.join(', ');
+            console.log('resultedRoles', resultedRoles);
+
+            let custQueryString = "WHERE role_id IN (" + resultedRoles + ")";
+            this.getAllUserRoles(custQueryString);
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+
+        }
+      })
+    })
+  }
+
+    async getAllUserRoles(queryForAPI:string) : Promise<void>{
+   
+      let builtString = queryForAPI ;
+      //   custQueryString
+      let apiUrl = 'http://localhost:3000/api/getAllUserRolesByName';
+           //let apiUrl = 'http://localhost:3000/api/getAllUserRolesByName';
+      return new Promise((resolve,rejects) =>{
+        this.mdmService.getRequestForAPI(apiUrl,"?buildQuery=" + builtString).subscribe({
+          next:(response:any) =>{
+            
+            if(response){
+             this.assignedRolesForUser=response;
+           
+            }else{
+    
+            }
+            resolve();
+          },
+          error:(error:object) =>{
+            rejects(error);
+          },
+          complete:() =>{
+
+            let data=  this.assignedRolesForUser;
+            const groupedArray = Object.values(
+              data.reduce((acc, item) => {
+                const key = item.COLUMN_NAME;
+                if (!acc[key]) {
+                  acc[key] = [];
+                }
+                acc[key].push(item);
+                return acc;
+              }, {})
+            );
+            
+            const groupedByColumn = data.reduce((acc, item) => {
+              const key = item.COLUMN_NAME;
+              if (!acc[key]) {
+                acc[key] = [];
+              }
+              acc[key].push(item);
+              return acc;
+            }, {});
+//use these two values to segragate the fields for user roles
+this.groupedByColumnsForRoles=groupedByColumn;
+            console.log('groupedByColumn for roles',groupedByColumn);
+            console.log('grouped array for roles',groupedArray);
+            this.processUserRoles(groupedByColumn);
+           // this.users=response;
+              //this.customerByC
+              // ountryResponse=response;
+             // this.processGraphDataForSystemName(this.customerCountBySystemName);
+    
+              
+          }
+        })
+      })
+        
+      }
+
+      processUserRoles(groupedByColumn:any){
+        let  ageArray = groupedByColumn['AGE'] || [];
+        let  custIdArray = groupedByColumn['CUSTOMER_ID'] || [];
+        let  custMDMIdArray = groupedByColumn['CUSTOMER_MDM_ID'] || [];
+        let  firstNameArray = groupedByColumn['FIRST_NAME'] || [];
+        let  lastNameArray = groupedByColumn['LAST_NAME'] || [];
+        
+        let  birthDateArray = groupedByColumn['BIRTH_DATE'] || [];
+        let  emailArray = groupedByColumn['EMAIL'] || [];
+        let  phoneArray = groupedByColumn['PHONE'] || [];
+        let  loylityArray = groupedByColumn['LOYALTY_SCORE'] || [];
+        let  genderArray = groupedByColumn['GENDER_CD'] || [];
+        let  countryArray = groupedByColumn['COUNTRY'] || [];
+        let  stateArray = groupedByColumn['STATE'] || [];
+        let  zipCodeArray = groupedByColumn['ZIP_CODE'] || [];
+        console.log('ageArray',ageArray);
+        const zipCodePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        zipCodeArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") zipCodePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") zipCodePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") zipCodePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") zipCodePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('zipCodePermissionCounts', zipCodePermissionCounts);
+        const statePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        stateArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") statePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") statePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") statePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") statePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('statePermissionCounts', statePermissionCounts);
+        const countryPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        countryArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") countryPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") countryPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") countryPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") countryPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('countryPermissionCounts', countryPermissionCounts);
+        const genderPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        genderArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") genderPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") genderPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") genderPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") genderPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('genderPermissionCounts', genderPermissionCounts);
+        const loylityPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        loylityArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") loylityPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") loylityPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") loylityPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") loylityPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('loylityPermissionCounts', loylityPermissionCounts);
+        const phonePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        phoneArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") phonePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") phonePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") phonePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") phonePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('phonePermissionCounts', phonePermissionCounts);
+
+        const emailPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        emailArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") emailPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") emailPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") emailPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") emailPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('emailPermissionCounts', emailPermissionCounts);
+
+
+
+
+        const birthDatePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        birthDateArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") birthDatePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") birthDatePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") birthDatePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") birthDatePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('birthDatePermissionCounts', birthDatePermissionCounts);
+
+        const agePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        ageArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") agePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") agePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") agePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") agePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('agePermissionCounts  counts are*** ', agePermissionCounts);
+
+        const custIdPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        custIdArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") custIdPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") custIdPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") custIdPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") custIdPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('custIdPermissionCounts', custIdPermissionCounts);
+        const custMDMIdPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        custMDMIdArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") custMDMIdPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") custMDMIdPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") custMDMIdPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") custMDMIdPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('custMDMIdPermissionCounts', custIdPermissionCounts);
+
+        const firstNamePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        firstNameArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") firstNamePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") firstNamePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") firstNamePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") firstNamePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('firstNamePermissionCounts', firstNamePermissionCounts);
+        const lastNamePermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        lastNameArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") lastNamePermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") lastNamePermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") lastNamePermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") lastNamePermissionCounts.CREATE_PERMISSION++;
+        });
+
+        console.log('lastNamePermissionCounts', lastNamePermissionCounts);
+
+      }
 }

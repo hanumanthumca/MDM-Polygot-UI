@@ -86,6 +86,7 @@ export class MdmHeaderComponent {
             //if(this.userName==='hanumanth'&& this.password==='hanumanth'){
             if (responseuserObj) {
               this.loggedInUserName = responseuserObj['FIRSTNAME'];
+              localStorage.setItem('userId',responseuserObj['USER_ID']);
               localStorage.setItem('isLoggedIN', JSON.stringify(true));
               let loginValue = JSON.parse(localStorage.getItem('isLoggedIN'));
               if (loginValue) {
@@ -100,6 +101,7 @@ export class MdmHeaderComponent {
               this.router.navigate(['/home']);
             } else {
               localStorage.setItem('isLoggedIN', JSON.stringify(false));
+              localStorage.setItem('userId','');
               let loginValue = JSON.parse(localStorage.getItem('isLoggedIN'));
               this.loggedInUserName = '';
               if (loginValue) {
