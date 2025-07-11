@@ -24,6 +24,60 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DialogModule } from 'primeng/dialog';
+export interface PermissionObj {
+  permissionObjForzipCode: {
+    zipCodeReadWritePermissions: boolean;
+    zipCodeReadPermissions: boolean;
+  };
+  permissionObjForAge: {
+    ageReadWritePermissions: boolean;
+    ageReadPermissions: boolean;
+  };
+  permissionObjForbirthDate: {
+    birthDateReadWritePermissions: boolean;
+    birthDateReadPermissions: boolean;
+  };
+  permissionObjForcountry: {
+    countryReadWritePermissions: boolean;
+    countryReadPermissions: boolean;
+  };
+  permissionObjForcustId: {
+    custIdReadWritePermissions: boolean;
+    custIdReadPermissions: boolean;
+  };
+  permissionObjForcustMDMId: {
+    custMDMIdReadWritePermissions: boolean;
+    custMDMIdReadPermissions: boolean;
+  };
+  permissionObjForemail: {
+    emailReadWritePermissions: boolean;
+    emailReadPermissions: boolean;
+  };
+  permissionObjForfname: {
+    fnameReadWritePermissions: boolean;
+    fnameReadPermissions: boolean;
+  };
+  permissionObjForgender: {
+    genderReadWritePermissions: boolean;
+    genderReadPermissions: boolean;
+  };
+  permissionObjForlname: {
+    lnameReadWritePermissions: boolean;
+    lnameReadPermissions: boolean;
+  };
+  permissionObjForloylity: {
+    loylityReadWritePermissions: boolean;
+    loylityReadPermissions: boolean;
+  };
+  permissionObjForphone: {
+    phoneReadWritePermissions: boolean;
+    phoneReadPermissions: boolean;
+  };
+  permissionObjForstate: {
+    stateReadWritePermissions: boolean;
+    stateReadPermissions: boolean;
+  };
+}
 @Component({
   selector: 'app-customer-view',
   standalone: true,
@@ -35,6 +89,7 @@ import { DialogModule } from 'primeng/dialog';
   styleUrl: './customer-view.component.scss',
   
 })
+
 export class CustomerViewComponent  {
   formGroup!: FormGroup;
   isSourceColumnsChecked: boolean = false;
@@ -208,7 +263,8 @@ ageTrstArrayForNetSuitMatchForCross=[];
 phoneTrstArrayForNetSuitMatchForCross=[];
 emailTrstArrayForNetSuitMatchForCross=[];
 loyolityTrstArrayForNetSuitMatchForCross=[];
-
+//userRolesForDetailScreenDisplay={};
+userRolesForDetailScreenDisplay: PermissionObj = {} as PermissionObj;
   constructor(public dynamicDialogRef:DynamicDialogRef, 
     public dynamicDialogConfig:DynamicDialogConfig,
     private dialogService:DialogService,
@@ -216,7 +272,7 @@ loyolityTrstArrayForNetSuitMatchForCross=[];
   ){}
   ngOnInit() {
     this.custId=this.dynamicDialogConfig.data['custId']; 
-    
+    this.userRolesForDetailScreenDisplay=this.dynamicDialogConfig['data']['formattedRoles'];
     this.customerResult=this.dynamicDialogConfig.data['customerObj'];
     console.log('this config data is',this.dynamicDialogConfig.data['custId']);
     this.custFirstName=this.customerResult['FIRST_NAME'];

@@ -50,7 +50,17 @@
               </div>
                 <div class="flex-auto">
                   <label for="age" class="block font-semibold mb-2">Age </label>
-                  <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"    [(ngModel)]="custAge"  >
+                  <!-- <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"    [(ngModel)]="custAge"  > -->
+                   <!-- Case 1: readWrite is true (editable input) -->
+<input  pInputText id="age"  class="w-full"  style="border: 1px solid black;" *ngIf="userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions" type="text" [readonly]="false" [(ngModel)]="custAge" />
+
+<!-- Case 2: read is true (readonly input) -->
+<input  pInputText id="age"  class="w-full"  style="border: 1px solid black;" *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadPermissions" type="text" [readonly]="true" [(ngModel)]="custAge" />
+
+<!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions">***</span>
+
+  
               </div> 
                   
                     

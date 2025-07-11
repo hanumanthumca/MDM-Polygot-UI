@@ -60,6 +60,8 @@ export class TaskManagerComponent {
  userName = '';
  assignedRolesForUser=[];
  groupedByColumnsForRoles=[];
+ foramttedObjForRoles={};
+ wholeObjForRoles
   ngOnInit() {
    
     let loggedInUserId=localStorage.getItem('userId');
@@ -172,7 +174,8 @@ export class TaskManagerComponent {
       data:{
         custId:id,
         customerObj:customer,
-        roles: this.assignedRolesForUser
+        roles: this.assignedRolesForUser,
+       formattedRoles: this.foramttedObjForRoles
       },
       width:"95vw",
       header:"View Customer",
@@ -446,6 +449,7 @@ this.groupedByColumnsForRoles=groupedByColumn;
         let  stateArray = groupedByColumn['STATE'] || [];
         let  zipCodeArray = groupedByColumn['ZIP_CODE'] || [];
         console.log('ageArray',ageArray);
+       
         const zipCodePermissionCounts = {
           READ_PERMISSION: 0,
           UPDATE_PERMISSION: 0,
@@ -649,6 +653,134 @@ this.groupedByColumnsForRoles=groupedByColumn;
         });
 
         console.log('lastNamePermissionCounts', lastNamePermissionCounts);
+        const ageReadPermiisions = agePermissionCounts.READ_PERMISSION;
+        const ageWritePermissions = agePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForAge = {
+          ageReadWritePermissions: ageReadPermiisions > 0 && ageWritePermissions > 0,
+          ageReadPermissions: ageReadPermiisions > 0
 
+        }
+
+        const fnameReadPermiisions = firstNamePermissionCounts.READ_PERMISSION;
+        const fnameWritePermissions = firstNamePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForfname = {
+          fnameReadWritePermissions: fnameReadPermiisions > 0 && fnameWritePermissions > 0,
+          fnameReadPermissions: fnameReadPermiisions > 0
+
+        }
+
+        const lnameReadPermiisions = lastNamePermissionCounts.READ_PERMISSION;
+        const lnameWritePermissions = lastNamePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForlname = {
+          lnameReadWritePermissions: lnameReadPermiisions > 0 && lnameWritePermissions > 0,
+          lnameReadPermissions: lnameReadPermiisions > 0
+
+        }
+        const custIdReadPermiisions = custIdPermissionCounts.READ_PERMISSION;
+        const custIdWritePermissions = custIdPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForcustId = {
+          custIdReadWritePermissions: custIdReadPermiisions > 0 && custIdWritePermissions > 0,
+          custIdReadPermissions: custIdReadPermiisions > 0
+
+        }
+
+        const custMDMIdReadPermiisions = custMDMIdPermissionCounts.READ_PERMISSION;
+        const custMDMIdWritePermissions = custMDMIdPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForcustMDMId = {
+          custMDMIdReadWritePermissions: custMDMIdReadPermiisions > 0 && custMDMIdWritePermissions > 0,
+          custMDMIdReadPermissions: custMDMIdReadPermiisions > 0
+
+        }
+        const birthDateReadPermiisions = birthDatePermissionCounts.READ_PERMISSION;
+        const birthDateWritePermissions = birthDatePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForbirthDate = {
+          birthDateReadWritePermissions: birthDateReadPermiisions > 0 && birthDateWritePermissions > 0,
+          birthDateReadPermissions: birthDateReadPermiisions > 0
+
+        }
+        const emailReadPermiisions = emailPermissionCounts.READ_PERMISSION;
+        const emailWritePermissions = emailPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForemail = {
+          emailReadWritePermissions: emailReadPermiisions > 0 && emailWritePermissions > 0,
+          emailReadPermissions: emailReadPermiisions > 0
+
+        }
+        const phoneReadPermiisions = phonePermissionCounts.READ_PERMISSION;
+        const phoneWritePermissions = phonePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForphone = {
+          phoneReadWritePermissions: phoneReadPermiisions > 0 && phoneWritePermissions > 0,
+          phoneReadPermissions: phoneReadPermiisions > 0
+
+        }
+        const loylityReadPermiisions = loylityPermissionCounts.READ_PERMISSION;
+        const loylityWritePermissions = loylityPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForloylity = {
+          loylityReadWritePermissions: loylityReadPermiisions > 0 && loylityWritePermissions > 0,
+          loylityReadPermissions: loylityReadPermiisions > 0
+
+        }
+        const genderReadPermiisions = genderPermissionCounts.READ_PERMISSION;
+        const genderWritePermissions = genderPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForgender = {
+          genderReadWritePermissions: genderReadPermiisions > 0 && genderWritePermissions > 0,
+          genderReadPermissions: genderReadPermiisions > 0
+
+        }
+        const countryReadPermiisions = countryPermissionCounts.READ_PERMISSION;
+        const countryWritePermissions = countryPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForcountry = {
+          countryReadWritePermissions: countryReadPermiisions > 0 && countryWritePermissions > 0,
+          countryReadPermissions: countryReadPermiisions > 0
+
+        }
+        const stateReadPermiisions = statePermissionCounts.READ_PERMISSION;
+        const stateWritePermissions = statePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForstate = {
+          stateReadWritePermissions: stateReadPermiisions > 0 && stateWritePermissions > 0,
+          stateReadPermissions: stateReadPermiisions > 0
+
+        }
+        const zipCodeReadPermiisions = zipCodePermissionCounts.READ_PERMISSION;
+        const zipCodeWritePermissions = zipCodePermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForzipCode = {
+          zipCodeReadWritePermissions: zipCodeReadPermiisions > 0 && zipCodeWritePermissions > 0,
+          zipCodeReadPermissions: zipCodeReadPermiisions > 0
+
+        }
+        
+        let wholeObjForRoles={
+          permissionObjForcustId:permissionObjForcustId,
+          permissionObjForcustMDMId:permissionObjForcustMDMId,
+          permissionObjForlname:permissionObjForlname,
+          permissionObjForfname:permissionObjForfname,
+          permissionObjForAge:permissionObjForAge,
+          permissionObjForbirthDate:permissionObjForbirthDate,
+          permissionObjForemail:permissionObjForemail,
+          permissionObjForphone:permissionObjForphone,
+          permissionObjForloylity:permissionObjForloylity,
+          permissionObjForgender:permissionObjForgender,
+          permissionObjForcountry:permissionObjForcountry,
+          permissionObjForstate :permissionObjForstate,
+          permissionObjForzipCode:permissionObjForzipCode
+        }
+        // let wholeObjForRoles={
+        //   custIdPermissionCounts:custIdPermissionCounts,
+        //   custMDMIdPermissionCounts:custMDMIdPermissionCounts,
+        //   lastNamePermissionCounts:lastNamePermissionCounts,
+        //   firstNamePermissionCounts:firstNamePermissionCounts,
+        //   agePermissionCounts:agePermissionCounts,
+        //   birthDatePermissionCounts:birthDatePermissionCounts,
+        //   emailPermissionCounts:emailPermissionCounts,
+        //   phonePermissionCounts:phonePermissionCounts,
+        //   loylityPermissionCounts:loylityPermissionCounts,
+        //   genderPermissionCounts:genderPermissionCounts,
+        //   countryPermissionCounts:countryPermissionCounts,
+        //   statePermissionCounts :statePermissionCounts,
+        //   zipCodePermissionCounts:zipCodePermissionCounts
+        // }
+        
+        this.foramttedObjForRoles=wholeObjForRoles;
+
+        
       }
 }
