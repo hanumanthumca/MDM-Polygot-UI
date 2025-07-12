@@ -26,15 +26,53 @@
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div class="flex-auto">
                         <label for="customer" class="block font-semibold mb-2"> Customer  ID</label>
-                        <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_ID']}}"/>
+                        <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_ID']}}"/> -->
+                        <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                        *ngIf="userRolesForDetailScreenDisplay?.permissionObjForcustId?.custIdReadWritePermissions" type="text" [readonly]="false"
+                        value="{{customerResult['CUSTOMER_ID']}}" />
+                        
+                        <!-- Case 2: read is true (readonly input) -->
+                        <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                        *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcustId?.custIdReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForcustId?.custIdReadPermissions"
+                        type="text" [readonly]="true"  value="{{customerResult['CUSTOMER_ID']}}"  />
+                        
+                        <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                        <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcustId?.custIdReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForcustId?.custIdReadWritePermissions">***</span>
+                        
                     </div>
                     <div class="flex-auto">
                       <label for="customer" class="block font-semibold mb-2"> Customer MDM ID</label>
-                      <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_MDM_ID']}}"/>
+                      <!-- <input type="text" pInputText id="customer" class="w-full"  style="border: 1px solid black; background-color: #f0f0f0 !important;"  [readonly]="true" value="{{customerResult['CUSTOMER_MDM_ID']}}"/> -->
+                      <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                      *ngIf="userRolesForDetailScreenDisplay?.permissionObjForcustMDMId?.custMDMIdReadWritePermissions" type="text" [readonly]="false"
+                      value="{{customerResult['CUSTOMER_MDM_ID']}}" />
+                      
+                      <!-- Case 2: read is true (readonly input) -->
+                      <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                      *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcustMDMId?.custMDMIdReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForcustMDMId?.custMDMIdReadPermissions"
+                      type="text" [readonly]="true"  value="{{customerResult['CUSTOMER_MDM_ID']}}" />
+                      
+                      <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                      <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcustMDMId?.custMDMIdReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForcustMDMId?.custMDMIdReadWritePermissions">***</span>
+                      
                   </div>
                     <div class="flex-auto">
                         <label for="firstname" class="block font-semibold mb-2">First name</label>
-                        <input type="text" pInputText id="firstname" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custFirstName"  />
+                        <!-- <input type="text" pInputText id="firstname" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custFirstName"  /> -->
+                        <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                        *ngIf="userRolesForDetailScreenDisplay?.permissionObjForfname?.fnameReadWritePermissions" type="text" [readonly]="false"
+                        [(ngModel)]="custFirstName" />
+                        
+                        <!-- Case 2: read is true (readonly input) -->
+                        <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                        *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForfname?.fnameReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForfname?.fnameReadPermissions"
+                        type="text" [readonly]="true" [(ngModel)]="custFirstName" />
+                        
+                        <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                        <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForfname?.fnameReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForfname?.fnameReadWritePermissions">***</span>
+                        
+                        
+                        
                     </div>
                     
                 </div>
@@ -42,49 +80,118 @@
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div class="flex-auto">
                     <label for="lastname" class="block font-semibold mb-2">Last Name</label>
-                    <input type="text" pInputText id="lastname" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custLastName" />
+                    <!-- <input type="text" pInputText id="lastname" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custLastName" /> -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                    *ngIf="userRolesForDetailScreenDisplay?.permissionObjForlname?.lnameReadWritePermissions" type="text" [readonly]="false"
+                    [(ngModel)]="custLastName" />
+                    
+                    <!-- Case 2: read is true (readonly input) -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                    *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForlname?.lnameReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForlname?.lnameReadPermissions"
+                    type="text" [readonly]="true" [(ngModel)]="custLastName" />
+                    
+                    <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                    <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForlname?.lnameReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForlname?.lnameReadWritePermissions">***</span>
+                    
                 </div>
                 <div class="flex-auto">
                   <label for="bdate" class="block font-semibold mb-2">Birth Date </label>
-                  <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;  background-color: #f0f0f0 !important;" readonly value="{{customerResult['BIRTH_DATE']}}"/>
+                  
+                  <input pInputText id="age" class="w-full" style="border: 1px solid black;"
+  *ngIf="userRolesForDetailScreenDisplay?.permissionObjForbirthDate?.birthDateReadWritePermissions" type="text" [readonly]="false"
+  value="{{customerResult['BIRTH_DATE']}}"  />
+
+<!-- Case 2: read is true (readonly input) -->
+<input pInputText id="age" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+  *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForbirthDate?.birthDateReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForbirthDate?.birthDateReadPermissions"
+  type="text" [readonly]="true" value="{{customerResult['BIRTH_DATE']}}" />
+
+<!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForbirthDate?.birthDateReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForbirthDate?.birthDateReadWritePermissions">***</span>
+                  <!-- <input type="text" pInputText id="bdate" class="w-full"  style="border: 1px solid black;  background-color: #f0f0f0 !important;" readonly value="{{customerResult['BIRTH_DATE']}}"/> -->
               </div>
                 <div class="flex-auto">
                   <label for="age" class="block font-semibold mb-2">Age </label>
                   <!-- <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"    [(ngModel)]="custAge"  > -->
                    <!-- Case 1: readWrite is true (editable input) -->
-<input  pInputText id="age"  class="w-full"  style="border: 1px solid black;" *ngIf="userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions" type="text" [readonly]="false" [(ngModel)]="custAge" />
+<input pInputText id="age" class="w-full" style="border: 1px solid black;"
+  *ngIf="userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions" type="text" [readonly]="false"
+  [(ngModel)]="custAge" />
 
 <!-- Case 2: read is true (readonly input) -->
-<input  pInputText id="age"  class="w-full"  style="border: 1px solid black;" *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadPermissions" type="text" [readonly]="true" [(ngModel)]="custAge" />
+<input pInputText id="age" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+  *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadPermissions"
+  type="text" [readonly]="true" [(ngModel)]="custAge" />
 
 <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
 <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForAge?.ageReadWritePermissions">***</span>
-
-  
-              </div> 
-                  
-                    
-                    
-                </div>
+</div> 
+ </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                   <div class="flex-auto">
                     <label for="email" class="block font-semibold mb-2">Email </label>
-                    <input type="text" pInputText id="email" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custEmail" />
-                </div>
+                    <!-- <input type="text" pInputText id="email" class="w-full"  style="border: 1px solid black;"  [(ngModel)]="custEmail" /> -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                    *ngIf="userRolesForDetailScreenDisplay?.permissionObjForemail?.emailReadWritePermissions" type="text" [readonly]="false"
+                    [(ngModel)]="custEmail" />
+                    
+                    <!-- Case 2: read is true (readonly input) -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                    *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForemail?.emailReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForemail?.emailReadPermissions"
+                    type="text" [readonly]="true" [(ngModel)]="custEmail" />
+                    
+                    <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                    <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForemail?.emailReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForemail?.emailReadWritePermissions">***</span>
+                    
+                  </div>
                 <div class="flex-auto">
                     <label for="phone" class="block font-semibold mb-2"> Phone </label>
-                    <input type="text" pInputText id="phone" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custPhone" />
-                </div>
+                    <!-- <input type="text" pInputText id="phone" class="w-full"  style="border: 1px solid black;" [(ngModel)]="custPhone" /> -->
+                             <!-- Case 1: readWrite is true (editable input) -->
+          <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+            *ngIf="userRolesForDetailScreenDisplay?.permissionObjForphone?.phoneReadWritePermissions" type="text"
+            [readonly]="false" [(ngModel)]="custPhone" />
+
+          <!-- Case 2: read is true (readonly input) -->
+          <input pInputText id="phone" class="w-full" style="border: 1px solid black;background-color: #f0f0f0 !important;"
+            *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForphone?.phoneReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForphone?.phoneReadPermissions"
+            type="text" [readonly]="true" [(ngModel)]="custPhone" />
+
+          <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+          <span
+            *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForphone?.phoneReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForphone?.phoneReadWritePermissions">***</span>
+
+                        
+                  </div>
                 <div class="flex-auto">
                   <label for="loyolity" class="block font-semibold mb-2">Loyalty Score </label>
-                  <input type="text" pInputText id="loyolity" class="w-full"  style="border: 1px solid black;" [(ngModel)]="loyolScore" />
+                  <!-- <input type="text" pInputText id="loyolity" class="w-full"  style="border: 1px solid black;" [(ngModel)]="loyolScore" /> -->
+                  <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                  *ngIf="userRolesForDetailScreenDisplay?.permissionObjForloylity?.loylityReadWritePermissions" type="text" [readonly]="false"
+                  [(ngModel)]="loyolScore" />
+                  
+                  <!-- Case 2: read is true (readonly input) -->
+                  <input pInputText id="phone" class="w-full" style="border: 1px solid black;background-color: #f0f0f0 !important;"
+                  *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForloylity?.loylityReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForloylity?.loylityReadPermissions"
+                  type="text" [readonly]="true" [(ngModel)]="loyolScore" />
+                  
+                  <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                  <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForloylity?.loylityReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForloylity?.loylityReadWritePermissions">***</span>
+                  
               </div>
                   <div class="flex-auto">
                         <label for="age" class="block font-semibold mb-2">Gender</label>
                         <!-- <input type="text" pInputText id="age" class="w-full"  style="border: 1px solid black;"   [(ngModel)]="custGender"   > -->
-                        <p-select [options]="genders" [(ngModel)]="custGender" optionLabel="name" 
+                     
+                        <!-- <p-select [options]="genders" [(ngModel)]="custGender" optionLabel="name" 
+                        optionValue="value"   class="w-full md:w-56" /> -->
+                        <p-select  *ngIf="userRolesForDetailScreenDisplay?.permissionObjForgender?.genderReadWritePermissions" [options]="genders" [(ngModel)]="custGender" optionLabel="name" 
                         optionValue="value"   class="w-full md:w-56" />
-                   
+                      
+                        <p-select  *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForgender?.genderReadWritePermissions && userRolesForDetailScreenDisplay?.permissionObjForgender?.genderReadPermissions" [options]="genders" [(ngModel)]="custGender"   [disabled]="true" optionLabel="name" 
+                        optionValue="value"   class="w-full md:w-56" />
+                        <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForgender?.genderReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForgender?.genderReadWritePermissions">***</span>
+
                       </div>
                     
                     
@@ -98,15 +205,62 @@
                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                   <div class="flex-auto">
                     <label for="address" class="block font-semibold mb-2">Customer Address </label>
-                    <input type="text" pInputText id="address" class="w-full"  style="border: 1px solid black;" value="{{customerResult['CUSTOMER_ADDRESS']}}"/>
+                    <!-- <input type="text" pInputText id="address" class="w-full"  style="border: 1px solid black;" value="{{customerResult['CUSTOMER_ADDRESS']}}"/> -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+                    *ngIf="userRolesForDetailScreenDisplay?.permissionObjForAddress?.addressReadWritePermissions" type="text" [readonly]="false"
+                    
+                    value="{{customerResult['CUSTOMER_ADDRESS']}}"  />
+                    
+                    <!-- Case 2: read is true (readonly input) -->
+                    <input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+                    *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAddress?.addressReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForAddress?.addressReadPermissions"
+                    type="text" [readonly]="true"  
+                    value="{{customerResult['CUSTOMER_ADDRESS']}}"  />
+                    
+                    <!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+                    <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForAddress?.addressReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForAddress?.addressReadWritePermissions">***</span>
+                    
+                    
                 </div>
                      <div class="flex-auto">
                          <label for="city" class="block font-semibold mb-2"> City</label>
-                         <input type="text" pInputText id="city" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['CITY']}}"/>
+                         <!-- <input type="text" pInputText id="city" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['CITY']}}"/> -->
+                          
+<input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+*ngIf="userRolesForDetailScreenDisplay?.permissionObjForCity?.cityReadWritePermissions" type="text" [readonly]="false"
+
+value="{{customerResult['CITY']}}"  />
+
+<!-- Case 2: read is true (readonly input) -->
+<input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+*ngIf="!userRolesForDetailScreenDisplay?.permissionObjForCity?.cityReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForCity?.cityReadPermissions"
+type="text" [readonly]="true"  
+value="{{customerResult['CITY']}}"  />
+
+<!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForCity?.cityReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForCity?.cityReadWritePermissions">***</span>
+
                      </div>
                      <div class="flex-auto">
                          <label for="State" class="block font-semibold mb-2">State</label>
-                         <input type="State" pInputText id="State" class="w-full"  style="border: 1px solid black;" value="{{customerResult['STATE']}}"/>
+                         <!-- <input type="State" pInputText id="State" class="w-full"  style="border: 1px solid black;" value="{{customerResult['STATE']}}"/> -->
+                          
+<input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+*ngIf="userRolesForDetailScreenDisplay?.permissionObjForstate?.stateReadWritePermissions" type="text" [readonly]="false"
+
+value="{{customerResult['STATE']}}"  />
+
+<!-- Case 2: read is true (readonly input) -->
+<input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+*ngIf="!userRolesForDetailScreenDisplay?.permissionObjForstate?.stateReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForstate?.stateReadPermissions"
+type="text" [readonly]="true"  
+value="{{customerResult['STATE']}}"  />
+
+<!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForstate?.stateReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForstate?.stateReadWritePermissions">***</span>
+
+
+
                      </div>
                      
                     
@@ -118,15 +272,41 @@
                 
                     <div class="flex-auto">
                         <label for="zip" class="block font-semibold mb-2">ZIP Code </label>
-                        <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/>
+                        <!-- <input type="text" pInputText id="zip" class="w-full"  style="border: 1px solid black;" value="{{customerResult['ZIP_CODE']}}"/> -->
+                         
+<input pInputText id="phone" class="w-full" style="border: 1px solid black;"
+*ngIf="userRolesForDetailScreenDisplay?.permissionObjForzipCode?.zipCodeReadWritePermissions" type="text" [readonly]="false"
+
+value="{{customerResult['ZIP_CODE']}}"  />
+
+<!-- Case 2: read is true (readonly input) -->
+<input pInputText id="phone" class="w-full" style="border: 1px solid black; background-color: #f0f0f0 !important;"
+*ngIf="!userRolesForDetailScreenDisplay?.permissionObjForzipCode?.zipCodeReadWritePermissions&&userRolesForDetailScreenDisplay?.permissionObjForzipCode?.zipCodeReadPermissions"
+type="text" [readonly]="true"  
+value="{{customerResult['ZIP_CODE']}}"  />
+
+<!-- Case 3: Neither read nor readWrite is true (default *** display) -->
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForzipCode?.zipCodeReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForzipCode?.zipCodeReadWritePermissions">***</span>
+
+
                     </div>
                    
                     <div class="flex-auto">
                       <label for="Country" class="block font-semibold mb-2">Country</label>
                       <!-- <input type="text" pInputText id="Country" class="w-full"  style="border: 1px solid black;" value="{{customerResult['COUNTRY']}}"/>
                   -->
- <p-select [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
+ <!-- <p-select [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
+ optionValue="value"   class="w-full md:w-56" /> -->
+
+ <p-select  *ngIf="userRolesForDetailScreenDisplay?.permissionObjForcountry?.countryReadWritePermissions" [options]="countries" [(ngModel)]="custCountry" optionLabel="name" 
  optionValue="value"   class="w-full md:w-56" />
+  <p-select   *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcountry?.countryReadWritePermissions && userRolesForDetailScreenDisplay?.permissionObjForcountry?.countryReadPermissions" [options]="countries" [(ngModel)]="custCountry" [disabled]="true"  optionLabel="name" 
+ optionValue="value"   class="w-full md:w-56" />
+
+<span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForcountry?.countryReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForcountry?.countryReadWritePermissions">***</span>
+
+
+
  
                      </div>
 
@@ -141,8 +321,15 @@
                      <div class="flex-auto">
                          <label for="relationship" class="block font-semibold mb-2"> Relation Ship Type</label>
                        
-                         <p-select [options]="custType" [(ngModel)]="custRel" optionLabel="name" 
-                         optionValue="value"   class="w-full md:w-56" />
+                         <!-- <p-select [options]="custType" [(ngModel)]="custRel" optionLabel="name" 
+                         optionValue="value"   class="w-full md:w-56" /> -->
+                         <p-select *ngIf="userRolesForDetailScreenDisplay?.permissionObjForrelationship?.relationshipReadWritePermissions"  [options]="custType" [(ngModel)]="custRel" optionLabel="name"  optionValue="value"   class="w-full md:w-56" />
+
+                         <p-select  *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForrelationship?.relationshipReadWritePermissions && userRolesForDetailScreenDisplay?.permissionObjForrelationship?.relationshipReadPermissions"  [options]="custType" [(ngModel)]="custRel"  [disabled]="true"  optionLabel="name"  optionValue="value"   class="w-full md:w-56" />
+                         
+                         <span *ngIf="!userRolesForDetailScreenDisplay?.permissionObjForrelationship?.relationshipReadPermissions && !userRolesForDetailScreenDisplay?.permissionObjForrelationship?.relationshipReadWritePermissions">***</span>
+                         
+                         
                          <!-- <input type="text" pInputText id="relationship" class="w-full"  style="border: 1px solid black;"  value="{{customerResult['RELATIONSHIP_TYPE_CD']}}"/>  -->
                      </div>
                      <div class="flex-auto">

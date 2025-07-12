@@ -448,14 +448,57 @@ this.groupedByColumnsForRoles=groupedByColumn;
         let  countryArray = groupedByColumn['COUNTRY'] || [];
         let  stateArray = groupedByColumn['STATE'] || [];
         let  zipCodeArray = groupedByColumn['ZIP_CODE'] || [];
+
+        let  cityArray = groupedByColumn['CITY'] || [];
+        let  addressArray = groupedByColumn['CUSTOMER_ADDRESS'] || [];
+        let  relationshipArray = groupedByColumn['RELATIONSHIP_TYPE_CD'] || [];
         console.log('ageArray',ageArray);
-       
+
+        const addressPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+        addressArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") addressPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") addressPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") addressPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") addressPermissionCounts.CREATE_PERMISSION++;
+        });
+
+        const  relationshipAPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+
+        relationshipArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") relationshipAPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") relationshipAPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") relationshipAPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") relationshipAPermissionCounts.CREATE_PERMISSION++;
+        });
+        const cityPermissionCounts = {
+          READ_PERMISSION: 0,
+          UPDATE_PERMISSION: 0,
+          DELETE_PERMISSION: 0,
+          CREATE_PERMISSION: 0
+        };
+        cityArray.forEach(item => {
+          if (item.READ_PERMISSION === "true") cityPermissionCounts.READ_PERMISSION++;
+          if (item.UPDATE_PERMISSION === "true") cityPermissionCounts.UPDATE_PERMISSION++;
+          if (item.DELETE_PERMISSION === "true") cityPermissionCounts.DELETE_PERMISSION++;
+          if (item.CREATE_PERMISSION === "true") cityPermissionCounts.CREATE_PERMISSION++;
+        });
         const zipCodePermissionCounts = {
           READ_PERMISSION: 0,
           UPDATE_PERMISSION: 0,
           DELETE_PERMISSION: 0,
           CREATE_PERMISSION: 0
         };
+
 
         zipCodeArray.forEach(item => {
           if (item.READ_PERMISSION === "true") zipCodePermissionCounts.READ_PERMISSION++;
@@ -747,6 +790,32 @@ this.groupedByColumnsForRoles=groupedByColumn;
           zipCodeReadPermissions: zipCodeReadPermiisions > 0
 
         }
+
+
+        const cityReadPermiisions = cityPermissionCounts.READ_PERMISSION;
+        const cityWritePermissions = cityPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForCity = {
+          cityReadWritePermissions: cityReadPermiisions > 0 && cityWritePermissions > 0,
+          cityReadPermissions: cityReadPermiisions > 0
+
+        }
+
+        const addressReadPermiisions = addressPermissionCounts.READ_PERMISSION;
+        const addressWritePermissions = addressPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForAddress = {
+          addressReadWritePermissions: addressReadPermiisions > 0 && addressWritePermissions > 0,
+          addressReadPermissions: addressReadPermiisions > 0
+
+        }
+
+        const relationshipReadPermiisions = relationshipAPermissionCounts.READ_PERMISSION;
+        const relationshipWritePermissions = relationshipAPermissionCounts.UPDATE_PERMISSION;
+        let permissionObjForrelationship = {
+          relationshipReadWritePermissions: relationshipReadPermiisions > 0 && relationshipWritePermissions > 0,
+          relationshipReadPermissions: relationshipReadPermiisions > 0
+
+        }
+
         
         let wholeObjForRoles={
           permissionObjForcustId:permissionObjForcustId,
@@ -761,7 +830,10 @@ this.groupedByColumnsForRoles=groupedByColumn;
           permissionObjForgender:permissionObjForgender,
           permissionObjForcountry:permissionObjForcountry,
           permissionObjForstate :permissionObjForstate,
-          permissionObjForzipCode:permissionObjForzipCode
+          permissionObjForzipCode:permissionObjForzipCode,
+          permissionObjForCity:permissionObjForCity,
+          permissionObjForAddress:permissionObjForAddress,
+          permissionObjForrelationship:permissionObjForrelationship
         }
         // let wholeObjForRoles={
         //   custIdPermissionCounts:custIdPermissionCounts,

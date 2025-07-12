@@ -77,6 +77,18 @@ export interface PermissionObj {
     stateReadWritePermissions: boolean;
     stateReadPermissions: boolean;
   };
+  permissionObjForCity: {
+    cityReadWritePermissions: boolean;
+    cityReadPermissions: boolean;
+  };
+  permissionObjForAddress: {
+    addressReadWritePermissions: boolean;
+    addressReadPermissions: boolean;
+  };
+  permissionObjForrelationship: {
+    relationshipReadWritePermissions: boolean;
+    relationshipReadPermissions: boolean;
+  };
 }
 @Component({
   selector: 'app-customer-view',
