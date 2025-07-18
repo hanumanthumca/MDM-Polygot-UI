@@ -11,6 +11,7 @@ import { MdmFooterComponent } from './components/mdm-footer/mdm-footer.component
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { HomeComponent } from './featurs/home/home.component';
 import { TaskManagerComponent } from './featurs/task-manager/task-manager.component';
+import { PersonComponent } from './featurs/person/person.component';
 import { UsersComponent } from './featurs/users/users.component';
 import { RolesComponent } from './featurs/roles/roles.component';
 import { TreebasicdemoComponent } from './featurs/treebasicdemo/treebasicdemo.component';
@@ -32,7 +33,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FormsModule,RadioButtonModule, ProgressSpinnerModule,ReactiveFormsModule,CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,JobTriggerComponent,DashboardsComponent,QuerisComponent,TaskManagerComponent,UsersComponent,RolesComponent,TreebasicdemoComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
+  imports: [RouterOutlet,FormsModule,RadioButtonModule, ProgressSpinnerModule,ReactiveFormsModule,CommonModule,ChartModule, InputTextModule,MenuModule,MenubarModule,ButtonModule,MdmHeaderComponent,LeftMenuComponent,HomeComponent,JobTriggerComponent,DashboardsComponent,QuerisComponent,TaskManagerComponent,PersonComponent,UsersComponent,RolesComponent,TreebasicdemoComponent,SidebarModule,MdmFooterComponent,MultiSelectModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

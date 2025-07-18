@@ -1,0 +1,204 @@
+
+<div>
+	<br/>
+	<br/>
+	
+</div>
+<div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+
+    <!-- MultiSelect Dropdown -->
+    <div class="flex-1 w-full">
+      <p-multiselect 
+        [options]="groupedTables" 
+        [group]="true" 
+        [(ngModel)]="selectedColumnsForAllTables"
+        placeholder="Select Columns" 
+        scrollHeight="250px" 
+        display="chip" 
+        styleClass="w-full"
+      >
+        <ng-template let-group #group>
+          <div class="flex items-center">
+            <img 
+              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" 
+              [class]="'mr-2 flag flag-' + group.value" 
+              style="width: 20px" 
+            />
+            <span>{{ group.label }}</span>
+          </div>
+        </ng-template>
+      </p-multiselect>
+    </div>
+  
+    <!-- Search Button -->
+    <div class="flex-shrink-0">
+      <p-button 
+        label="Search" 
+        (click)="generateData()" 
+        styleClass="p-button-primary"
+      ></p-button>
+    </div>
+  </div>
+  
+<!-- <div class="flex align-items-center gap-4 mb-6">
+      
+	  <p-multiselect [options]="groupedTables" [group]="true" [(ngModel)]="selectedColumnsForAllTables" placeholder="Select Columns" scrollHeight="250px" display="chip" styleClass="w-full md:w-100">
+        <ng-template let-group #group>
+            <div class="flex items-center">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px" />
+                <span>{{ group.label }}</span>
+            </div>
+        </ng-template>
+    </p-multiselect>
+
+		<div class="flex justify-end gap-2">
+			
+			<p-button label="Search"  (click)="generateData()" />
+			
+		  </div>
+		
+		
+</div> -->
+	<!-- <p-multiSelect [(ngModel)]="selectedColumns" [options]="columns" optionLabel="field" optionValue="headerVal"
+		defaultLabel="Choose Person Table Columns"></p-multiSelect>
+	<p-multiSelect [(ngModel)]="selectedColumnsForAddress" [options]="addressColumns" optionLabel="field"
+		optionValue="headerVal" defaultLabel="Choose Person Address Columns"></p-multiSelect> -->
+<p-dialog
+  header="Quuery Selection "
+  [modal]="true"
+  [(visible)]="queryTableDisplay"
+  [style]="{ width: '30.5rem' }"
+>
+  
+  <table style="border: 1px solid black;" id="queryGenerator">
+	<thead style="border: 1px solid black;">
+	  <tr>
+		<!-- <th>ID</th> -->
+		<th style="padding: 8px;">Name</th>
+		<th style="padding: 3px;">Operator</th>
+		<th style="padding: 8px;">Value</th>
+
+
+		<!-- <th>Email</th> -->
+	  </tr>
+	</thead>
+	<tbody style="border: 1px solid black;">
+	  <tr *ngFor="let selectedColumn of allselectedColumns" style="border: 1px solid black;">
+		<td style="padding: 8px;border: 1px solid black;">{{ selectedColumn }}</td>
+		<td style="padding: 3px;" ><select >
+			<option value="like">like</option>
+			<option value="=" selected>=</option>
+			
+		  </select></td>
+		  <td style="padding: 8px; border: 1px solid black;"><input type="text" ></td>
+		
+	  </tr>
+	</tbody>
+  </table>
+
+
+  <p-button lstyle="float:right;"label="Query"  (click)="generateQueryData()" />
+</p-dialog>
+
+
+
+<div class="card">
+	<!-- <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'Balance'" offLabel="Balance" /> -->
+	<p-table  [value]="customers" #myCustTable [scrollable]="true" styleClass="mt-4" stripedRows 
+	[paginator]="true"
+	[globalFilterFields]="['CUSTOMER_ID','CUSTOMER_MDM_ID','FIRST_NAME', 'LAST_NAME', 'EMAIL', 'PHONE','AGE']"
+[rows]="10"
+[first]="first"
+[totalRecords]="totalRecords"
+[rowsPerPageOptions]="[5, 10, 20]"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+(onPage)="pageChange($event)"
+	>
+	
+	<ng-template #caption>
+		<div class="flex">
+			<!-- <div class="text-end pb-4" style="float: right;">
+                <p-button icon="pi pi-external-link" label="Export" (click)="myCustTable.exportCSV();" />
+            </div> -->
+			<!-- <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(myCustTable)" /> -->
+		
+			<p-iconfield iconPosition="left" class="ml-auto">
+				<p-inputicon>
+					<i class="pi pi-search"></i>
+				</p-inputicon>
+				<input pInputText style="height:39px !important;"type="text" (input)="myCustTable.filterGlobal($event.target.value, 'contains')" placeholder=" Global Search " />
+			</p-iconfield>
+			&nbsp;&nbsp;<button type="button" pButton label="Export CSV" icon="pi pi-file" (click)="exportExcel()"></button>
+		</div>
+	</ng-template>
+		<ng-template #header>
+			<tr>
+			
+
+				<th style="min-width:100px"  > Party MDM Id</th>
+                <th style="min-width:100px"  >Party Id</th>
+				<!-- <th style="min-width:200px" pFrozenColumn>Id</th> -->
+				<th style="min-width:200px">First Name</th>
+                <th style="min-width:200px">Middle Name</th>
+				<th style="min-width:100px">Last Name</th>
+                <th style="min-width:100px">Full Name</th>
+				<th style="min-width:200px">Birth Date</th>
+				<!-- <th style="min-width:100px" >Email</th> -->
+				<!-- <th style="min-width:90px">Age</th> -->
+				<th style="min-width:200px">Gender</th>
+			
+				<!-- <th style="min-width:200px">Phone</th> -->
+				<!-- <th style="min-width:100px">Address </th>
+                <th style="min-width:100px">City</th>
+				<th style="min-width:100px">ZIP</th>
+				<th style="min-width:50px">State</th>
+				<th style="min-width:100px">Country</th> -->
+				<th ></th>
+				<!-- <th style="min-width:200px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">Balance</th> -->
+			</tr>
+		</ng-template>
+		<ng-template #body let-customer>
+			<tr>
+                <td >
+					<a  (click)="viewPerson(customer);" class="text-blue-600 hover:underline">{{customer.PARTY_MDM_ID}}
+
+					</a>
+					</td>
+				<td >{{customer.PARTY_ID}}</td>
+				
+				
+				<!-- <td style="min-width:200px">{{customer.id}}</td> -->
+				<td >{{customer.FIRST_NAME}}</td>
+                <td >{{customer.MIDDLE_NAME}}</td>
+				<td >{{customer.LAST_NAME}}</td>
+                <td >{{customer.FULL_NAME}}</td>
+                
+				<td>{{customer.BIRTHDATE}}</td>
+                <td>{{customer.GENDER_CD}}</td>
+                
+				<!-- <td class="text-overlap-wrap email-wrap" pTooltip="{{customer.EMAIL}}">{{customer.EMAIL_ADDR}}</td> -->
+				<!-- <td>{{customer.AGE}}</td> -->
+				<!-- <td >{{customer.GENDER_CD}}</td> -->
+				
+				<!-- <td>{{customer.PHONE}}</td> -->
+                <!-- <td>{{customer.ADDRESS_LINE_1}}</td>
+				<td>{{customer.CITY_NAME}}</td>
+			  
+				<td>{{customer.POSTAL_CD}}</td>
+				<td>{{customer.STATE_CD}}</td>
+				<td>{{customer.COUNTRY_CD}}</td> -->
+			  
+				<!-- <td><p-button icon="pi pi-eye"  (click)="viewCustomerTest(customer);" /></td> -->
+				<td>
+                    <!-- <p-button    label="Detailed View" (click)="viewPerson(customer);" /> -->
+                    <button type="button" pButton  icon="pi pi-eye" (click)="viewPerson(customer)"></button>
+                </td>
+			   
+				<!-- <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen">{{formatCurrency(customer.balance)}}</td>
+			</tr> -->
+		</ng-template>
+	</p-table>
+
+	<!-- <p-button icon="pi pi-external-link" label="OpenPopUp" (click)="viewCustomer(6060);" /> -->
+	<!-- <button type="button" pButton label="Export CSV" icon="pi pi-file" (click)="exportExcel()"></button> -->
+</div>

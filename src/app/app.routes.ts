@@ -7,10 +7,11 @@ import { TreebasicdemoComponent } from './featurs/treebasicdemo/treebasicdemo.co
 import { QuerisComponent } from './featurs/queris/queris.component';
 import { JobTriggerComponent } from './featurs/job-trigger/job-trigger.component';
 import { DashboardsComponent } from './featurs/dashboards/dashboards.component';
-
+import { PersonComponent } from './featurs/person/person.component';
 export const routes: Routes = [
     {path:'home',component:HomeComponent},
     {path:'taskManager',component:TaskManagerComponent},
+    {path:'personSearch',component:PersonComponent},
     {path:'query',component:QuerisComponent},
     {path:'scheduleJobs',component:JobTriggerComponent},
     {path:'dashboards',component:DashboardsComponent},

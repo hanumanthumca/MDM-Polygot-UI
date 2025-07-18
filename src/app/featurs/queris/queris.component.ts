@@ -215,19 +215,26 @@ export class QuerisComponent {
     console.log('slected cust fileds are', this.selectedColumns);
     console.log('slected adrees fileds are', this.selectedColumnsForAddress);
     //let custQueryString = ''; 
-    let custQueryString = this.selectedColumns.join(',');
+    //let custQueryString = this.selectedColumns.join(',');
     let custAddressQueryString = this.selectedColumnsForAddress.join(',');
-    console.log('slected quey is', custQueryString);
+   
     console.log('slected quey is', custAddressQueryString);
    
+    let custQueryString = this.selectedColumnsForAllTables.join(',');
+   // this.selectedColumnsForAllTables
 
-  
+   console.log('slected quey is', custQueryString);
 
-      if(this.selectedTable==='CUSTOMER'){
-        this.submitColumnsForQuery=this.selectedColumns;
-      }else{
-        this.submitColumnsForQuery=this.selectedColumnsForAddress;
-      }
+      // if(this.selectedTable==='CUSTOMER'){
+      //   this.submitColumnsForQuery=this.selectedColumns;
+      // }else{
+      //   this.submitColumnsForQuery=this.selectedColumnsForAddress;
+      // }
+      this.submitColumnsForQuery=this.selectedColumnsForAllTables;
+    //  this.selectedColumnsForAllTables
+
+
+
 
     let objectArrayForColumns =this.selectedColumns.map(item =>({name:item,condition:'',value:''}))
     
