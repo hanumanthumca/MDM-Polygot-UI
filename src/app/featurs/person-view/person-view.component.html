@@ -1,4 +1,4 @@
-<p>person-view works!</p>
+
 <p-tabs value="0">
     <p-tablist>
         <p-tab style="border-bottom: 2px solid blue" value="0">Detailed View &nbsp;&nbsp;&nbsp;</p-tab>
@@ -10,51 +10,361 @@
     </p-tablist>
     <p-tabpanels>
         <p-tabpanel value="0">
-            firsttab
-            <!-- <div class="p-6"> 
-                <caption>Over View</caption>
+            <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                Over View :
+              </h2>
+            <div class="p-6"> 
+               
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-white rounded-lg shadow-md p-6">
                   
              
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">Alice Johnson</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Person MDM ID</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_MDM_ID']}}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Email</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">alice_example.com</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Party ID</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_ID']}}</div>
                   </div>
               
            
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Role</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">Developer</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Name Prefix</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['NAME_PREFIX_CD']}}</div>
                   </div>
               
                
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">Bob Smith</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">First Name</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FIRST_NAME']}}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Email</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">bob_example.com</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME']}}</div>
                   </div>
               
                   
                   <div class="flex flex-col">
-                    <label class="text-sm font-semibold text-gray-600 mb-1">Role</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">Designer</div>
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Last Name</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['LAST_NAME']}}</div>
+                  </div>
+              
+
+                  <div class="flex flex-col">
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Full Name</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FULL_NAME']}}</div>
+                  </div>
+              
+                
+                  <div class="flex flex-col">
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Gender</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['GENDER_CD']}}</div>
+                  </div>
+                  
+                  
+                  
+                  <div class="flex flex-col">
+                    <label class="text-sm font-semibold text-gray-600 mb-1">Birth Date</label>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE']}}</div>
+                  </div>
+                </div>
+              </div>
+
+             Personal Details
+              <div class="p-6"> 
+                 
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-white rounded-lg shadow-md p-6">
+                    
+               
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">MARITAL_STATUS_CD</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['MARITAL_STATUS_CD']}}</div>
+                    </div>
+                
+                  
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">EDUCATION_LEVEL_CD</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['EDUCATION_LEVEL_CD']}}</div>
+                    </div>
+                
+             
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">PRIMARY_LANGUAGE</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['PRIMARY_LANGUAGE']}}</div>
+                    </div>
+                
+                 
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">IS_EMPLOYEE_IND</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_EMPLOYEE_IND']}}</div>
+                    </div>
+                
+                  
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_VIP_IND']}}</div>
+                    </div>
+                
+                    
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">INCOME</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['INCOME']}}</div>
+                    </div>
+                
+  
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">HOME_OWNERSHIP</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['HOME_OWNERSHIP']}}</div>
+                    </div>
+                
+                  
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">NUMBER_OF_CHILDREN</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['NUMBER_OF_CHILDREN']}}</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">REMARKS</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['REMARKS']}}</div>
+                    </div>
+
+                    <div class="flex flex-col">
+                      <label class="text-sm font-semibold text-gray-600 mb-1">CRIMINAL_RECORD</label>
+                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['CRIMINAL_RECORD']}}</div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-sm font-semibold text-gray-600 mb-1">DEATH_DATE</label>
+                        <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['DEATH_DATE']}}</div>
+                      </div>
+
+                  </div>
+                </div>
+              Alternative Names
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+                <div *ngFor="let item of additionalDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+                  
+              
+                  <!-- Description Label -->
+                  <label class="block text-sm font-medium text-gray-500 mb-1">Alternative Name:</label>
+              
+                  <!-- Description Text -->
+                  <p class="text-gray-700">
+                        {{ item ['ALTERNATE_NAME']}}
+                  </p>
+              
+                </div><br/>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+                <div *ngFor="let item of phoneDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300 space-y-2">
+              
+                  <!-- PHONE_NUM -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Phone Number:</label>
+                    <p class="text-gray-800 font-medium">{{ item['PHONE_NUM'] }}</p>
+                  </div>
+              
+                  <!-- PHONE_EXT_NUM -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Extension:</label>
+                    <p class="text-gray-800">{{ item['PHONE_EXT_NUM'] }}</p>
+                  </div>
+              
+                  <!-- PHONE_TYPE_CD -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Type:</label>
+                    <p class="text-gray-800">{{ item['PHONE_TYPE_CD'] }}</p>
+                  </div>
+              
+                  <!-- PHONE_COUNTRY_CD -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Country Code:</label>
+                    <p class="text-gray-800">{{ item['PHONE_COUNTRY_CD'] }}</p>
+                  </div>
+              
+                  <!-- IS_VALID_IND -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Is Valid:</label>
+                    <p class="text-gray-800">{{ item['IS_VALID_IND'] }}</p>
+                  </div>
+              
+                  <!-- DO_NOT_CALL_IND -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Do Not Call:</label>
+                    <p class="text-gray-800">{{ item['DO_NOT_CALL_IND'] }}</p>
                   </div>
               
                 </div>
-              </div> -->
+              </div>
+
+            
+
+              <div class="flex flex-col gap-4 p-6">
+                <div *ngFor="let item of emailDetailsArray" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start">
               
+                  <!-- EMAIL_ADDR -->
+                  <div >
+                    <label class="block text-sm font-medium text-gray-500">Email Address:</label>
+                    <p class="text-gray-800 font-medium">{{ item['EMAIL_ADDR'] }}</p>
+                  </div>
               
+                  <!-- EMAIL_TYPE_CD -->
+                  <div >
+                    <label class="block text-sm font-medium text-gray-500">Email Type:</label>
+                    <p class="text-gray-800">{{ item['EMAIL_TYPE_CD'] }}</p>
+                  </div>
+              
+                  <!-- DO_NOT_CALL_IND -->
+                  <div >
+                    <label class="block text-sm font-medium text-gray-500">Do Not Contact:</label>
+                    <p class="text-gray-800">{{ item['DO_NOT_CALL_IND'] }}</p>
+                  </div>
+              
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-6 p-6">
+                <div *ngFor="let item of identifierDetailsArray"
+                     class="bg-white rounded-lg shadow-md p-4 w-full sm:w-1/2 md:w-1/3 hover:shadow-lg transition-shadow duration-300">
+              
+                  <!-- IDENTIFIER_TYPE_CD -->
+                  <div class="mb-2">
+                    <label class="block text-sm font-medium text-gray-500">Identifier Type:</label>
+                    <p class="text-gray-800 font-semibold">{{ item['IDENTIFIER_TYPE_CD'] }}</p>
+                  </div>
+              
+                  <!-- IDENTIFIER_VAL -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Identifier Value:</label>
+                    <p class="text-gray-800">{{ item['IDENTIFIER_VAL'] }}</p>
+                  </div>
+              
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap gap-6 p-6">
+                <div *ngFor="let item of addressDetailsArray"
+                     class="bg-white rounded-lg shadow-md p-6 w-full md:w-1/2 lg:w-1/3 hover:shadow-lg transition-shadow duration-300 space-y-3">
+              
+                  <!-- ADDRESS_LINE_1 -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Address Line 1:</label>
+                    <p class="text-gray-800">{{ item['ADDRESS_LINE_1'] }}</p>
+                  </div>
+              
+                  <!-- ADDRESS_LINE_2 -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Address Line 2:</label>
+                    <p class="text-gray-800">{{ item['ADDRESS_LINE_2'] }}</p>
+                  </div>
+              
+                  <!-- ADDRESS_LINE_3 -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Address Line 3:</label>
+                    <p class="text-gray-800">{{ item['ADDRESS_LINE_3'] }}</p>
+                  </div>
+              
+                  <!-- CITY_NAME -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">City:</label>
+                    <p class="text-gray-800">{{ item['CITY_NAME'] }}</p>
+                  </div>
+              
+                  <!-- STATE_CD -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">State:</label>
+                    <p class="text-gray-800">{{ item['STATE_CD'] }}</p>
+                  </div>
+              
+                  <!-- POSTAL_CD -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Postal Code:</label>
+                    <p class="text-gray-800">{{ item['POSTAL_CD'] }}</p>
+                  </div>
+              
+                  <!-- PO_BOX -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">PO Box:</label>
+                    <p class="text-gray-800">{{ item['PO_BOX'] }}</p>
+                  </div>
+              
+                  <!-- BLDG_NAME -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Building Name:</label>
+                    <p class="text-gray-800">{{ item['BLDG_NAME'] }}</p>
+                  </div>
+              
+                  <!-- DEPT_NAME -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Department:</label>
+                    <p class="text-gray-800">{{ item['DEPT_NAME'] }}</p>
+                  </div>
+              
+                  <!-- FLOOR_NUMBER -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Floor:</label>
+                    <p class="text-gray-800">{{ item['FLOOR_NUMBER'] }}</p>
+                  </div>
+              
+                  <!-- STREET_NUMBER -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Street Number:</label>
+                    <p class="text-gray-800">{{ item['STREET_NUMBER'] }}</p>
+                  </div>
+              
+                  <!-- STREET_NAME -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Street Name:</label>
+                    <p class="text-gray-800">{{ item['STREET_NAME'] }}</p>
+                  </div>
+              
+                  <!-- COUNTY_NAME -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">County:</label>
+                    <p class="text-gray-800">{{ item['COUNTY_NAME'] }}</p>
+                  </div>
+              
+                  <!-- COUNTRY_CD -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Country Code:</label>
+                    <p class="text-gray-800">{{ item['COUNTRY_CD'] }}</p>
+                  </div>
+              
+                  <!-- LONGITUDE -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Longitude:</label>
+                    <p class="text-gray-800">{{ item['LONGITUDE'] }}</p>
+                  </div>
+              
+                  <!-- LATITUDE -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Latitude:</label>
+                    <p class="text-gray-800">{{ item['LATITUDE'] }}</p>
+                  </div>
+              
+                  <!-- ADDRESS_TYPE -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-500">Address Type:</label>
+                    <p class="text-gray-800">{{ item['ADDRESS_TYPE'] }}</p>
+                  </div>
+              
+                </div>
+              </div>
+              
+<!--               
+              <div *ngFor="let item of identifierDetailsArray">
+                {{ item ['IDENTIFIER_TYPE_CD']}}
+                {{ item ['IDENTIFIER_VAL']}}
+             
+               
+                
+
+              </div>      -->
 
         </p-tabpanel>
         <p-tabpanel value="1">

@@ -24,6 +24,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DialogModule } from 'primeng/dialog';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-person-view',
   standalone: true,
@@ -34,7 +35,14 @@ import { DialogModule } from 'primeng/dialog';
 })
 export class PersonViewComponent {
   person={};
-  personmdmId=''
+  overViewObj={};
+  personalDetailsObj={};
+  personmdmId='';
+  additionalDetailsArray=[];
+  phoneDetailsArray=[];
+  emailDetailsArray=[];
+  identifierDetailsArray=[];
+  addressDetailsArray=[];
   constructor(public dynamicDialogRef:DynamicDialogRef, 
     public dynamicDialogConfig:DynamicDialogConfig,
     private dialogService:DialogService,
@@ -58,6 +66,8 @@ export class PersonViewComponent {
     
     
   }
+
+ 
   async getOverViewForPerson(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/personOverView';
@@ -66,6 +76,8 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
+            this.overViewObj= response[0];
+ 
             //this.crossRefernceObjForCustomers = response[0];
           } else {
 
@@ -92,7 +104,7 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
-            //this.crossRefernceObjForCustomers = response[0];
+            this. personalDetailsObj = response[0];
           } else {
 
           }
@@ -120,6 +132,7 @@ export class PersonViewComponent {
 
           if (response) {
             //this.crossRefernceObjForCustomers = response[0];
+            this.additionalDetailsArray=response;
           } else {
 
           }
@@ -129,6 +142,7 @@ export class PersonViewComponent {
           rejects(error);
         },
         complete: () => {
+          console.log('additional details are',this.additionalDetailsArray);
           //this.customerByCountryResponse=response;
           //this.processHistoryDataForSystemName(this.customerHistory);
         }
@@ -145,7 +159,8 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
-            //this.crossRefernceObjForCustomers = response[0];
+
+            this.phoneDetailsArray = response;
           } else {
 
           }
@@ -176,7 +191,7 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
-            //this.crossRefernceObjForCustomers = response[0];
+            this.emailDetailsArray = response;
           } else {
 
           }
@@ -202,7 +217,7 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
-            //this.crossRefernceObjForCustomers = response[0];
+            this.addressDetailsArray = response;
           } else {
 
           }
@@ -227,7 +242,7 @@ export class PersonViewComponent {
         next: (response: any) => {
 
           if (response) {
-            //this.crossRefernceObjForCustomers = response[0];
+            this.identifierDetailsArray = response;
           } else {
 
           }

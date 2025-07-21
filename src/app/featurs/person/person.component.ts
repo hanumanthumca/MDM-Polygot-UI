@@ -133,6 +133,24 @@ export class PersonComponent {
     this.rows = event.rows;
  }
 
+ exportExcel() {
+  import("xlsx").then(xlsx => {
+    const worksheet = xlsx.utils.json_to_sheet(this.customers); // or this.dt.filteredValue
+    const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+    const excelBuffer: any = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
+    this.saveAsExcelFile(excelBuffer, "Person Details");
+  });
+}
+saveAsExcelFile(buffer: any, fileName: string): void {
+  import("file-saver").then(FileSaver => {
+    const EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+ //   saveAs(data, fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION);
+    saveAs(data, fileName + "_export" + EXCEL_EXTENSION);
+  });
+}
+
  viewPerson(customer:any){
   let id=customer['PARTY_MDM_ID']
   const viewComponentForCust =this.dialogService.open(PersonViewComponent,{
@@ -256,8 +274,13 @@ export class PersonComponent {
       //   }
       // });
       console.log('Whole query String is  from generated table is',custQueryString);  
-  
-      let finalQueryString='where '+custQueryString
+  let string='person'
+  let stringText1=`${string}`;
+  let stringText=` where p.PARTY_TYPE= 'Person' AND `;
+  let andText=' AND ';
+//let finalString=stringText+stringText1+andText
+let finalString=stringText;
+      let finalQueryString=finalString+custQueryString
    this.getPerosnsDataFromAPI(finalQueryString);
    //
    this.queryTableDisplay=false;
