@@ -73,79 +73,84 @@
                   </div>
                 </div>
               </div>
-
-             Personal Details
+              <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                Personal Details :
+              </h2>
+             
               <div class="p-6"> 
                  
                   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-white rounded-lg shadow-md p-6">
                     
                
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">MARITAL_STATUS_CD</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Marital Status</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['MARITAL_STATUS_CD']}}</div>
                     </div>
                 
                   
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">EDUCATION_LEVEL_CD</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Education Level</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['EDUCATION_LEVEL_CD']}}</div>
                     </div>
                 
              
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">PRIMARY_LANGUAGE</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Primary Language</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['PRIMARY_LANGUAGE']}}</div>
                     </div>
                 
                  
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">IS_EMPLOYEE_IND</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Is Employee</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_EMPLOYEE_IND']}}</div>
                     </div>
                 
                   
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Is VIP </label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_VIP_IND']}}</div>
                     </div>
                 
                     
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">INCOME</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Income</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['INCOME']}}</div>
                     </div>
                 
   
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">HOME_OWNERSHIP</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Home Ownership</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['HOME_OWNERSHIP']}}</div>
                     </div>
                 
                   
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">NUMBER_OF_CHILDREN</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Number Of Children</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['NUMBER_OF_CHILDREN']}}</div>
                     </div>
                     
                     
                     
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">REMARKS</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Remarks</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['REMARKS']}}</div>
                     </div>
 
                     <div class="flex flex-col">
-                      <label class="text-sm font-semibold text-gray-600 mb-1">CRIMINAL_RECORD</label>
+                      <label class="text-sm font-semibold text-gray-600 mb-1">Criminal Record</label>
                       <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['CRIMINAL_RECORD']}}</div>
                     </div>
                     <div class="flex flex-col">
-                        <label class="text-sm font-semibold text-gray-600 mb-1">DEATH_DATE</label>
+                        <label class="text-sm font-semibold text-gray-600 mb-1">Death Date</label>
                         <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['DEATH_DATE']}}</div>
                       </div>
 
                   </div>
                 </div>
-              Alternative Names
+                <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                    Alternative Names :
+                  </h2>
+              
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
                 <div *ngFor="let item of additionalDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
                   
@@ -160,7 +165,9 @@
               
                 </div><br/>
               </div>
-
+              <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+               Phone :
+              </h2>
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
                 <div *ngFor="let item of phoneDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300 space-y-2">
               
@@ -203,7 +210,9 @@
                 </div>
               </div>
 
-            
+              <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                Email :
+               </h2> 
 
               <div class="flex flex-col gap-4 p-6">
                 <div *ngFor="let item of emailDetailsArray" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start">
@@ -228,6 +237,41 @@
               
                 </div>
               </div>
+              <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                Identifier :
+               </h2> 
+               <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg">
+                  <thead class="bg-blue-600">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        S.No
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Identifier Type
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Identifier Value
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-100">
+                    <tr *ngFor="let item of identifierDetailsArray; let i = index" class="hover:bg-blue-50 transition">
+                      <td class="px-6 py-4 text-sm text-gray-700">
+                        {{ i + 1 }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-700">
+                        {{ item['IDENTIFIER_TYPE_CD'] }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-700">
+                        {{ item['IDENTIFIER_VAL'] }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              
               <div class="flex flex-wrap gap-6 p-6">
                 <div *ngFor="let item of identifierDetailsArray"
                      class="bg-white rounded-lg shadow-md p-4 w-full sm:w-1/2 md:w-1/3 hover:shadow-lg transition-shadow duration-300">
@@ -246,7 +290,9 @@
               
                 </div>
               </div>
-              
+              <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
+                Address :
+               </h2> 
               <div class="flex flex-wrap gap-6 p-6">
                 <div *ngFor="let item of addressDetailsArray"
                      class="bg-white rounded-lg shadow-md p-6 w-full md:w-1/2 lg:w-1/3 hover:shadow-lg transition-shadow duration-300 space-y-3">
