@@ -10,6 +10,11 @@
     </p-tablist>
     <p-tabpanels>
         <p-tabpanel value="0">
+            <p-inputSwitch [(ngModel)]="isDisplayOnlyTables" inputId="mySwitch"
+                (onChange)="handleToggleChange($event)"></p-inputSwitch>
+            <label for="mySwitch" style="margin-left: 0.5rem;margin-bottom: -1.5rem;">Show Table Format</label>
+            <!-- <pre>{{ overViewObj | json }}</pre> -->
+
             <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
                 Over View :
               </h2>
@@ -32,7 +37,11 @@
            
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Name Prefix</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['NAME_PREFIX_CD']}}</div>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">
+                        <!-- {{overViewObj['NAME_PREFIX_CD'] || '—'}} -->
+                        <p-select [options]="namePrefixOptions" [(ngModel)]="selectedPrefix" optionLabel="NAME_PREFIX_DESC"
+                            optionValue="NAME_PREFIX_CD" placeholder="Select Name Prefix" class="w-full md:w-14rem" />
+                    </div>
                   </div>
               
                
@@ -44,7 +53,7 @@
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME']}}</div>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME'] || '—' }}</div>
                   </div>
               
                   
@@ -62,14 +71,24 @@
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Gender</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['GENDER_CD']}}</div>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">
+                        <!-- {{overViewObj['GENDER_CD']}} -->
+                        <p-select 
+                        [options]="genderOptions"
+                        [(ngModel)]="selectedGender"
+                        optionLabel="GENDER_DESC"
+                        optionValue="GENDER_CD"
+                        placeholder="Select Gender"
+                        class="w-full md:w-14rem" />
+                    
+                    </div>
                   </div>
                   
                   
                   
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Birth Date</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE']}}</div>
+                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE'] || '' }}</div>
                   </div>
                 </div>
               </div>
@@ -151,7 +170,32 @@
                     Alternative Names :
                   </h2>
               
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+                  <div *ngIf="isDisplayOnlyTables" class="overflow-x-auto p-6">
+                    <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg">
+                      <thead class="bg-blue-600">
+                        <tr>
+                          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            S.No
+                          </th>
+                          <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            Alternative Name
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-100">
+                        <tr *ngFor="let item of additionalDetailsArray; let i = index" class="hover:bg-blue-50 transition">
+                          <td class="px-6 py-4 text-sm text-gray-700">
+                            {{ i + 1 }}
+                          </td>
+                          <td class="px-6 py-4 text-sm text-gray-700">
+                            {{ item['ALTERNATE_NAME'] || '—' }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+              <div *ngIf="!isDisplayOnlyTables" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
                 <div *ngFor="let item of additionalDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
                   
               
@@ -168,10 +212,39 @@
               <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
                Phone :
               </h2>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
-                <div *ngFor="let item of phoneDetailsArray" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300 space-y-2">
+              <div *ngIf="isDisplayOnlyTables" class="overflow-x-auto p-6">
+                <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg">
+                  <thead class="bg-blue-600 text-white">
+                    <tr>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">S.No</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Phone Number</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Extension</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Country Code</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Is Valid</th>
+                      <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Do Not Call</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-100">
+                    <tr *ngFor="let item of phoneDetailsArray; let i = index" class="hover:bg-blue-50 transition">
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ i + 1 }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['PHONE_NUM'] || '—' }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['PHONE_EXT_NUM'] || '—' }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['PHONE_TYPE_CD'] || '—' }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['PHONE_COUNTRY_CD'] || '—' }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['IS_VALID_IND'] ? 'Yes' : 'No' }}</td>
+                      <td class="px-4 py-2 text-sm text-gray-700">{{ item['DO_NOT_CALL_IND'] ? 'Yes' : 'No' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
-                  <!-- PHONE_NUM -->
+              <div *ngIf="!isDisplayOnlyTables" class="flex flex-col gap-4 p-6">
+                <div *ngFor="let item of phoneDetailsArray" 
+                class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start">
+                
+              
+             
                   <div>
                     <label class="block text-sm font-medium text-gray-500">Phone Number:</label>
                     <p class="text-gray-800 font-medium">{{ item['PHONE_NUM'] }}</p>
@@ -214,7 +287,29 @@
                 Email :
                </h2> 
 
-              <div class="flex flex-col gap-4 p-6">
+               <div  *ngIf="isDisplayOnlyTables" class="overflow-x-auto p-6">
+                <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg text-sm">
+                  <thead class="bg-blue-600 text-white">
+                    <tr>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">S.No</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Email Address</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Email Type</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Do Not Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-100">
+                    <tr *ngFor="let item of emailDetailsArray; let i = index" class="hover:bg-blue-50 transition">
+                      <td class="px-4 py-2">{{ i + 1 }}</td>
+                      <td class="px-4 py-2">{{ item['EMAIL_ADDR'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['EMAIL_TYPE_CD'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['DO_NOT_CALL_IND'] ? 'Yes' : 'No' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              
+              <div *ngIf="!isDisplayOnlyTables"  class="flex flex-col gap-4 p-6">
                 <div *ngFor="let item of emailDetailsArray" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start">
               
                   <!-- EMAIL_ADDR -->
@@ -240,7 +335,7 @@
               <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
                 Identifier :
                </h2> 
-               <div class="overflow-x-auto">
+               <div   *ngIf="isDisplayOnlyTables"  class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg">
                   <thead class="bg-blue-600">
                     <tr>
@@ -272,17 +367,18 @@
               </div>
               
               
-              <div class="flex flex-wrap gap-6 p-6">
+              <div *ngIf="!isDisplayOnlyTables" class="flex flex-col gap-6 p-6">
                 <div *ngFor="let item of identifierDetailsArray"
-                     class="bg-white rounded-lg shadow-md p-4 w-full sm:w-1/2 md:w-1/3 hover:shadow-lg transition-shadow duration-300">
+                class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start">
               
                   <!-- IDENTIFIER_TYPE_CD -->
-                  <div class="mb-2">
+                  <div >
                     <label class="block text-sm font-medium text-gray-500">Identifier Type:</label>
                     <p class="text-gray-800 font-semibold">{{ item['IDENTIFIER_TYPE_CD'] }}</p>
                   </div>
               
                   <!-- IDENTIFIER_VAL -->
+
                   <div>
                     <label class="block text-sm font-medium text-gray-500">Identifier Value:</label>
                     <p class="text-gray-800">{{ item['IDENTIFIER_VAL'] }}</p>
@@ -293,9 +389,58 @@
               <h2 class="text-lg font-semibold text-gray-700  tracking-wide mb-2">
                 Address :
                </h2> 
-              <div class="flex flex-wrap gap-6 p-6">
+               <div *ngIf="isDisplayOnlyTables" class="overflow-x-auto p-6">
+                <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg text-sm">
+                  <thead class="bg-blue-600 text-white">
+                    <tr>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">S.No</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Address Line 1</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Address Line 2</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Address Line 3</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">City</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">State</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Postal Code</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">PO Box</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Building Name</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Department</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Floor</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Street Number</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Street Name</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">County</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Country Code</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Longitude</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Latitude</th>
+                      <th class="px-4 py-3 text-left uppercase tracking-wider">Address Type</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-100">
+                    <tr *ngFor="let item of addressDetailsArray; let i = index" class="hover:bg-blue-50 transition">
+                      <td class="px-4 py-2">{{ i + 1 }}</td>
+                      <td class="px-4 py-2">{{ item['ADDRESS_LINE_1'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['ADDRESS_LINE_2'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['ADDRESS_LINE_3'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['CITY_NAME'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['STATE_CD'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['POSTAL_CD'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['PO_BOX'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['BLDG_NAME'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['DEPT_NAME'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['FLOOR_NUMBER'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['STREET_NUMBER'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['STREET_NAME'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['COUNTY_NAME'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['COUNTRY_CD'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['LONGITUDE'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['LATITUDE'] || '—' }}</td>
+                      <td class="px-4 py-2">{{ item['ADDRESS_TYPE'] || '—' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div *ngIf="!isDisplayOnlyTables"  class="flex flex-col gap-4 p-6">
                 <div *ngFor="let item of addressDetailsArray"
-                     class="bg-white rounded-lg shadow-md p-6 w-full md:w-1/2 lg:w-1/3 hover:shadow-lg transition-shadow duration-300 space-y-3">
+                class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-row flex-wrap gap-6 items-start" >
               
                   <!-- ADDRESS_LINE_1 -->
                   <div>

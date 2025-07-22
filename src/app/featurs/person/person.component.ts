@@ -21,6 +21,7 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
 import { TooltipModule } from 'primeng/tooltip';
+import { InputSwitchModule } from 'primeng/inputswitch';
 //import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomerViewComponent } from '../customer-view/customer-view.component';
@@ -28,7 +29,7 @@ import { PersonViewComponent } from '../person-view/person-view.component';
 @Component({
   selector: 'app-person',
   standalone: true,
-  imports: [MenuModule, MenubarModule, FormsModule, TooltipModule,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
+  imports: [MenuModule, MenubarModule, FormsModule, InputSwitchModule,TooltipModule,SidebarModule, DialogModule,TabMenuModule, TabsModule, MultiSelectModule, TableModule, NgFor,CommonModule, ButtonModule],
   providers:[MessageService,DialogService],
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss'
