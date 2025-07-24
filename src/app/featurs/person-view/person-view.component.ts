@@ -49,32 +49,51 @@ export class PersonViewComponent {
   maritalStatusArray=[];
   educationlevels=[];
   yesnoValDropDowns=[];
-  
+  customerHistory: any[]=[];
   namePrefixOptions=[];
   
   genderOptions=[];
- 
+  customerHistorySelectedResult={};
   maritalStatusOptions=[];
   selectedPrefix: string; 
   selectedGender: string;
   selectedEducationLevel: string; 
   selectedMaritalStatus: string; 
   selectedYesNo: string; 
-  
-  
+  selectedIsEmployee: string; 
+  selectedIsVP: string; 
+  selectedCriminalRecord: string; 
+  personHistory: any[]=[];
   yesNoOptions=[];
   educationLevels =[];
-  
-
+  options = [];
+  startDate='';
+  endDate='';
+  noHistoryData=false;
   isDisplayOnlyTables: boolean = true;
-
+  displayHistoryTable=false;
   constructor(public dynamicDialogRef:DynamicDialogRef, 
     public dynamicDialogConfig:DynamicDialogConfig,
     private dialogService:DialogService,
     private mdmService: MDMService
   ){}
   ngOnInit() {
-
+    this. educationLevels = [
+      { EDUCATION_LEVEL_CD: 'PRI', EDUCATION_LEVEL_DESC: 'Primary School' },
+      { EDUCATION_LEVEL_CD: 'SEC', EDUCATION_LEVEL_DESC: 'Secondary School' },
+      { EDUCATION_LEVEL_CD: 'HSC', EDUCATION_LEVEL_DESC: 'High School Graduate' },
+      { EDUCATION_LEVEL_CD: 'BCH', EDUCATION_LEVEL_DESC: 'Bachelor’s Degree' },
+      { EDUCATION_LEVEL_CD: 'MAS', EDUCATION_LEVEL_DESC: 'Master’s Degree' },
+      { EDUCATION_LEVEL_CD: 'PHD', EDUCATION_LEVEL_DESC: 'Doctorate / PhD' }
+    ];
+this.maritalStatusOptions = [
+  { MARITAL_STATUS_CD: 'DIV', MARITAL_STATUS_DESC: 'DIVORCED' },
+  { MARITAL_STATUS_CD: 'MAR', MARITAL_STATUS_DESC: 'MARRIED' },
+  { MARITAL_STATUS_CD: 'SNG', MARITAL_STATUS_DESC: 'SINGLE' },
+  { MARITAL_STATUS_CD: 'WID', MARITAL_STATUS_DESC: 'WIDOWED' },
+  { MARITAL_STATUS_CD: 'UNK', MARITAL_STATUS_DESC: 'Unknown' },
+  { MARITAL_STATUS_CD: 'U', MARITAL_STATUS_DESC: 'UNKNOWN' }
+];
     this.yesNoOptions = [
       { Y_N_CD: 'Y', Y_N_DESC: 'Yes' },
       { Y_N_CD: 'N', Y_N_DESC: 'No' }
@@ -186,7 +205,309 @@ export class PersonViewComponent {
   }
   
   
+  getHistoryDetails() {
+    let  custHistoryQueryString ='';
+    let startTime='00:00:01';
+    let endTime='23:59:59';
+    let startDate=this.startDate;
+    let endDate=this.endDate;
+    let mdmIdForQuery=this.personmdmId;;
+    //let personmdmId= 
+   // let mdmIdForQuery=this.custMdmId;
+    // let startDate='2025-05-15';
+    // let endDate='2025-05-20';
+     let timestampStart = `${startDate} ${startTime}`
+      let timestampEnd = `${endDate} ${endTime}`
+   // custHistoryQueryString= ' WHERE HIST_CREATE_DATE BETWEEN TO_TIMESTAMP_NTZ ('+timestampStart+') AND TO_TIMESTAMP_NTZ ('+timestampEnd+ ') AND CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc;'
+    custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  PARTY_MDM_ID ='${mdmIdForQuery} 'ORDER BY HIST_CREATE_DATE desc `;
+   // custHistoryQueryString= `WHERE HIST_CREATE_DATE BETWEEN '${startDate}' AND '${endDate}' and  CUSTOMER_MDM_ID =769 ORDER BY HIST_CREATE_DATE desc `;
+      
+    
+    this.getPersonHistoryDataByCustomerFromAPI(custHistoryQueryString);
   
+  }
+  async getPersonHistoryDataByCustomerFromAPI(queryForAPI: string): Promise<void> {
+ //   this.loadSpinner=true;
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/historyDataForPersons';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+            this.personHistory = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        //  this.loadSpinner=false;
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processHistoryDataForSystemName(this.personHistory);
+         // this.loadSpinner=false;
+        }
+      })
+    })
+
+  }
+
+  handleClick(value: string) {
+    console.log('Clicked radio value:', value);
+    this.displayHistoryTable=true;
+    let historyDataObject:any[]=[];
+     historyDataObject=this.personHistory;
+    //@ts-ignore
+   // historyDataObject.sort((a, b) => new Date(a['HIST_CREATE_DATE']) - new Date(b['HIST_CREATE_DATE']));
+   //@ts-ignore  
+    historyDataObject.sort((a, b) => new Date(b['HIST_CREATE_DATE']) - new Date(a['HIST_CREATE_DATE']));
+
+ //   events.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    for (let i = 0; i < historyDataObject.length; i++) {
+      
+      
+      if (i + 1 < historyDataObject.length) {
+        historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i + 1]['FIRST_NAME'];
+        historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i + 1]['LAST_NAME'];
+        historyDataObject[i]['FULL_NAME_Old'] = historyDataObject[i + 1]['FULL_NAME'];
+        historyDataObject[i]['MIDDLE_NAME_Old'] = historyDataObject[i + 1]['MIDDLE_NAME'];
+        historyDataObject[i]['NAME_PREFIX_CD_Old'] = historyDataObject[i + 1]['NAME_PREFIX_CD'];
+        historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i + 1]['GENDER_CD'];
+        historyDataObject[i]['TAX_ID_Old'] = historyDataObject[i + 1]['TAX_ID'];
+        historyDataObject[i]['DUNS_NUMBER_Old'] = historyDataObject[i + 1]['DUNS_NUMBER'];
+        historyDataObject[i]['PARTY_ID_Old'] = historyDataObject[i + 1]['PARTY_ID'];
+        historyDataObject[i]['PARTY_MDM_ID_Old'] = historyDataObject[i + 1]['PARTY_MDM_ID'];
+        
+        historyDataObject[i]['BIRTHDATE_Old'] = historyDataObject[i + 1]['BIRTHDATE'];
+        historyDataObject[i]['AGE_Old'] = historyDataObject[i + 1]['AGE'];
+        historyDataObject[i]['EMAIL_Old'] = historyDataObject[i + 1]['EMAIL'];
+        historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i + 1]['LOYALTY_SCORE'];
+        historyDataObject[i]['PHONE_Old'] = historyDataObject[i + 1]['PHONE'];
+        //source columns
+        historyDataObject[i]['UPDATED_BY_Old'] = historyDataObject[i + 1]['UPDATED_BY'];
+        historyDataObject[i]['LAST_UPDATE_DATE_Old'] = historyDataObject[i + 1]['LAST_UPDATE_DATE'];
+        historyDataObject[i]['HIST_CREATE_DATE_Old'] = historyDataObject[i + 1]['HIST_CREATE_DATE'];
+        historyDataObject[i]['CONSOLIDATION_IND_Old'] = historyDataObject[i + 1]['CONSOLIDATION_IND'];
+        historyDataObject[i]['CUSTOMER_MDM_ID_Old'] = historyDataObject[i + 1]['CUSTOMER_MDM_ID'];
+        historyDataObject[i]['CREATED_AT_Old'] = historyDataObject[i + 1]['CREATED_AT'];
+        historyDataObject[i]['CREATED_BY_Old'] = historyDataObject[i + 1]['CREATED_BY'];
+
+      } else {
+        historyDataObject[i]['FIRST_NAME_Old'] = historyDataObject[i]['FIRST_NAME'];
+        historyDataObject[i]['LAST_NAME_Old'] = historyDataObject[i]['LAST_NAME'];
+        historyDataObject[i]['FULL_NAME_Old'] = historyDataObject[i]['FULL_NAME'];
+        historyDataObject[i]['MIDDLE_NAME_Old'] = historyDataObject[i]['MIDDLE_NAME'];
+        historyDataObject[i]['NAME_PREFIX_CD_Old'] = historyDataObject[i]['NAME_PREFIX_CD'];
+        historyDataObject[i]['GENDER_CD_Old'] = historyDataObject[i]['GENDER_CD'];
+        historyDataObject[i]['TAX_ID_Old'] = historyDataObject[i]['TAX_ID'];
+        historyDataObject[i]['DUNS_NUMBER_Old'] = historyDataObject[i]['DUNS_NUMBER'];
+        historyDataObject[i]['PARTY_ID_Old'] = historyDataObject[i]['PARTY_ID'];
+        historyDataObject[i]['PARTY_MDM_ID_Old'] = historyDataObject[i]['PARTY_MDM_ID'];
+        historyDataObject[i]['BIRTHDATE_Old'] = historyDataObject[i]['BIRTHDATE'];
+        historyDataObject[i]['AGE_Old'] = historyDataObject[i]['AGE'];
+        historyDataObject[i]['EMAIL_Old'] = historyDataObject[i]['EMAIL'];
+        historyDataObject[i]['LOYALTY_SCORE_Old'] = historyDataObject[i]['LOYALTY_SCORE'];
+        historyDataObject[i]['PHONE_Old'] = historyDataObject[i]['PHONE'];
+         //source columns
+         historyDataObject[i]['UPDATED_BY_Old'] = historyDataObject[i]['UPDATED_BY'];
+         historyDataObject[i]['LAST_UPDATE_DATE_Old'] = historyDataObject[i]['LAST_UPDATE_DATE'];
+         historyDataObject[i]['HIST_CREATE_DATE_Old'] = historyDataObject[i]['HIST_CREATE_DATE'];
+         historyDataObject[i]['CONSOLIDATION_IND_Old'] = historyDataObject[i]['CONSOLIDATION_IND'];
+         historyDataObject[i]['CUSTOMER_MDM_ID_Old'] = historyDataObject[i]['CUSTOMER_MDM_ID'];
+         historyDataObject[i]['CREATED_AT_Old'] = historyDataObject[i]['CREATED_AT'];
+         historyDataObject[i]['CREATED_BY_Old'] = historyDataObject[i]['CREATED_BY'];
+      }
+    }
+
+    console.log('latest data is', historyDataObject);
+    let resultObj = historyDataObject.find(p => p['HIST_CREATE_DATE'] === value);
+    this.customerHistorySelectedResult = resultObj;
+
+    if (this.customerHistorySelectedResult['DUNS_NUMBER_Old'] === this.customerHistorySelectedResult['DUNS_NUMBER']) {
+      this.customerHistorySelectedResult['duns_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['DUNS_NUMBER_Old'] !== this.customerHistorySelectedResult['DUNS_NUMBER']) {
+      this.customerHistorySelectedResult['duns_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['PARTY_ID_Old'] === this.customerHistorySelectedResult['PARTY_ID']) {
+      this.customerHistorySelectedResult['partyid_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['PARTY_ID_Old'] !== this.customerHistorySelectedResult['PARTY_ID']) {
+      this.customerHistorySelectedResult['partyid_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['PARTY_MDM_ID_Old'] === this.customerHistorySelectedResult['PARTY_MDM_ID']) {
+      this.customerHistorySelectedResult['partymdmid_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['PARTY_MDM_ID_Old'] !== this.customerHistorySelectedResult['PARTY_MDM_ID']) {
+      this.customerHistorySelectedResult['partymdmid_match'] = false;
+    }
+
+
+    if (this.customerHistorySelectedResult['TAX_ID_Old'] === this.customerHistorySelectedResult['TAX_ID']) {
+      this.customerHistorySelectedResult['tax_id_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['TAX_ID_Old'] !== this.customerHistorySelectedResult['TAX_ID']) {
+      this.customerHistorySelectedResult['tax_id_match'] = false;
+    }
+
+
+    if (this.customerHistorySelectedResult['LAST_NAME_Old'] === this.customerHistorySelectedResult['LAST_NAME']) {
+      this.customerHistorySelectedResult['last_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LAST_NAME_Old'] !== this.customerHistorySelectedResult['LAST_NAME']) {
+      this.customerHistorySelectedResult['last_name_match'] = false;
+    }
+    if (this.customerHistorySelectedResult['MIDDLE_NAME_Old'] === this.customerHistorySelectedResult['MIDDLE_NAME']) {
+      this.customerHistorySelectedResult['middle_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['MIDDLE_NAME_Old'] !== this.customerHistorySelectedResult['MIDDLE_NAME']) {
+      this.customerHistorySelectedResult['middle_name_match'] = false;
+    }
+    if (this.customerHistorySelectedResult['FULL_NAME_Old'] === this.customerHistorySelectedResult['FULL_NAME']) {
+      this.customerHistorySelectedResult['full_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['FULL_NAME_Old'] !== this.customerHistorySelectedResult['FULL_NAME']) {
+      this.customerHistorySelectedResult['full_name_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['NAME_PREFIX_CD_Old'] === this.customerHistorySelectedResult['NAME_PREFIX_CD']) {
+      this.customerHistorySelectedResult['name_prefix_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['NAME_PREFIX_CD_Old'] !== this.customerHistorySelectedResult['NAME_PREFIX_CD']) {
+      this.customerHistorySelectedResult['name_prefix_match'] = false;
+    }
+    if (this.customerHistorySelectedResult['FIRST_NAME_Old'] === this.customerHistorySelectedResult['FIRST_NAME']) {
+      this.customerHistorySelectedResult['first_name_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['FIRST_NAME_Old'] !== this.customerHistorySelectedResult['FIRST_NAME']) {
+      this.customerHistorySelectedResult['first_name_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['GENDER_CD_Old'] === this.customerHistorySelectedResult['GENDER_CD']) {
+      this.customerHistorySelectedResult['gender_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['GENDER_CD_Old'] !== this.customerHistorySelectedResult['GENDER_CD']) {
+      this.customerHistorySelectedResult['gender_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['BIRTHDATE_Old'] === this.customerHistorySelectedResult['BIRTHDATE']) {
+      this.customerHistorySelectedResult['birthdate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['BIRTHDATE_Old'] !== this.customerHistorySelectedResult['BIRTHDATE']) {
+      this.customerHistorySelectedResult['birthdate_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['PHONE_Old'] === this.customerHistorySelectedResult['PHONE']) {
+      this.customerHistorySelectedResult['phone_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['PHONE_Old'] !== this.customerHistorySelectedResult['PHONE']) {
+      this.customerHistorySelectedResult['phone_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['EMAIL_Old'] === this.customerHistorySelectedResult['EMAIL']) {
+      this.customerHistorySelectedResult['email_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['EMAIL_Old'] !== this.customerHistorySelectedResult['EMAIL']) {
+      this.customerHistorySelectedResult['email_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['AGE_Old'] === this.customerHistorySelectedResult['AGE']) {
+      this.customerHistorySelectedResult['age_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['AGE_Old'] !== this.customerHistorySelectedResult['AGE']) {
+      this.customerHistorySelectedResult['age_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['LOYALTY_SCORE_Old'] === this.customerHistorySelectedResult['LOYALTY_SCORE']) {
+      this.customerHistorySelectedResult['loyolity_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LOYALTY_SCORE_Old'] !== this.customerHistorySelectedResult['LOYALTY_SCORE']) {
+      this.customerHistorySelectedResult['loyolity_match'] = false;
+    }
+
+
+
+    if (this.customerHistorySelectedResult['UPDATED_BY_Old'] === this.customerHistorySelectedResult['UPDATED_BY']) {
+      this.customerHistorySelectedResult['updatedby_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['UPDATED_BY_Old'] !== this.customerHistorySelectedResult['UPDATED_BY']) {
+      this.customerHistorySelectedResult['updatedby_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['LAST_UPDATE_DATE_Old'] === this.customerHistorySelectedResult['LAST_UPDATE_DATE']) {
+      this.customerHistorySelectedResult['lastupdateddate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['LAST_UPDATE_DATE_Old'] !== this.customerHistorySelectedResult['LAST_UPDATE_DATE']) {
+      this.customerHistorySelectedResult['lastupdateddate_match'] = false;
+    }
+
+
+    if (this.customerHistorySelectedResult['HIST_CREATE_DATE_Old'] === this.customerHistorySelectedResult['HIST_CREATE_DATE']) {
+      this.customerHistorySelectedResult['hisrcreateddate_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['HIST_CREATE_DATE_Old'] !== this.customerHistorySelectedResult['HIST_CREATE_DATE']) {
+      this.customerHistorySelectedResult['hisrcreateddate_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CONSOLIDATION_IND_Old'] === this.customerHistorySelectedResult['CONSOLIDATION_IND']) {
+      this.customerHistorySelectedResult['consolidatedId_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CONSOLIDATION_IND_Old'] !== this.customerHistorySelectedResult['CONSOLIDATION_IND']) {
+      this.customerHistorySelectedResult['consolidatedId_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CUSTOMER_MDM_ID_Old'] === this.customerHistorySelectedResult['CUSTOMER_MDM_ID']) {
+      this.customerHistorySelectedResult['custmdm_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CUSTOMER_MDM_ID_Old'] !== this.customerHistorySelectedResult['CUSTOMER_MDM_ID']) {
+      this.customerHistorySelectedResult['custmdm_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CREATED_AT_Old'] === this.customerHistorySelectedResult['CREATED_AT']) {
+      this.customerHistorySelectedResult['createdat_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CREATED_AT_Old'] !== this.customerHistorySelectedResult['CREATED_AT']) {
+      this.customerHistorySelectedResult['createdat_match'] = false;
+    }
+
+    if (this.customerHistorySelectedResult['CREATED_BY_Old'] === this.customerHistorySelectedResult['CREATED_BY']) {
+      this.customerHistorySelectedResult['createdby_match'] = true;
+    }
+    if (this.customerHistorySelectedResult['CREATED_BY_Old'] !== this.customerHistorySelectedResult['CREATED_BY']) {
+      this.customerHistorySelectedResult['createdby_match'] = false;
+    }
+
+  console.log('customerHistorySelectedResult :', this.customerHistorySelectedResult);
+    // Add any custom logic here
+  }
+  processHistoryDataForSystemName(respose: any) {
+    let resposeData=respose;
+    let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    console.log('history dates are',historyDats);
+    this.options=[];
+    let historyDates=[];
+    historyDats.forEach(function(date) {
+      console.log(date);
+      let dateObj={
+        label: date,
+        value: date, 
+        
+    }
+    historyDates.push(dateObj);
+    });
+    this.options=historyDates;
+    if (this.options.length > 0) {
+      this.noHistoryData=true;
+    } else {
+      this.noHistoryData=false;
+    }
+   
+  }
   async getYesNoVals(queryForAPI: string): Promise<void> {
     let builtString = queryForAPI;
     let apiUrl = 'http://localhost:3000/api/getYesNoVals';
@@ -398,6 +719,12 @@ export class PersonViewComponent {
           rejects(error);
         },
         complete: () => {
+          this.selectedEducationLevel= this.personalDetailsObj['EDUCATION_LEVEL_CD'];
+          this.selectedMaritalStatus= this.personalDetailsObj['MARITAL_STATUS_CD'];
+          
+          this.selectedIsEmployee= this.personalDetailsObj['IS_EMPLOYEE_IND'];
+          this.selectedIsVP= this.personalDetailsObj['IS_VIP_IND'];
+          this.selectedCriminalRecord= this.personalDetailsObj['CRIMINAL_RECORD'];
           //this.customerByCountryResponse=response;
           //this.processHistoryDataForSystemName(this.customerHistory);
         }

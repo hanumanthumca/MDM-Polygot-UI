@@ -25,55 +25,55 @@
              
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Person MDM ID</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_MDM_ID']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_MDM_ID']}}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Party ID</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_ID']}}</div>
+                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_ID']}}</div>
                   </div>
               
            
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Name Prefix</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">
+                    <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
                         <!-- {{overViewObj['NAME_PREFIX_CD'] || '—'}} -->
-                        <p-select [options]="namePrefixOptions" [(ngModel)]="selectedPrefix" optionLabel="NAME_PREFIX_DESC"
+                        <p-select  style="height: 2.6rem; font-size: 0.85rem;"  [options]="namePrefixOptions" [(ngModel)]="selectedPrefix" optionLabel="NAME_PREFIX_DESC"
                             optionValue="NAME_PREFIX_CD" placeholder="Select Name Prefix" class="w-full md:w-14rem" />
-                    </div>
+                    <!-- </div> -->
                   </div>
               
                
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">First Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FIRST_NAME']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FIRST_NAME']}}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME'] || '—' }}</div>
+                    <div  style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME'] || '' }}</div>
                   </div>
               
                   
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Last Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['LAST_NAME']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['LAST_NAME']}}</div>
                   </div>
               
 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Full Name</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FULL_NAME']}}</div>
+                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FULL_NAME']}}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Gender</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">
+                    <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
                         <!-- {{overViewObj['GENDER_CD']}} -->
-                        <p-select 
+                        <p-select   style="height: 2.6rem; font-size: 0.85rem;"
                         [options]="genderOptions"
                         [(ngModel)]="selectedGender"
                         optionLabel="GENDER_DESC"
@@ -81,14 +81,14 @@
                         placeholder="Select Gender"
                         class="w-full md:w-14rem" />
                     
-                    </div>
+                    <!-- </div> -->
                   </div>
                   
                   
                   
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Birth Date</label>
-                    <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE'] || '' }}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE'] || '' }}</div>
                   </div>
                 </div>
               </div>
@@ -103,65 +103,101 @@
                
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Marital Status</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['MARITAL_STATUS_CD']}}</div>
+                      <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
+                        <!-- {{personalDetailsObj['MARITAL_STATUS_CD']}} -->
+                        
+<p-select style="height: 2.6rem; font-size: 0.85rem;" [options]="maritalStatusOptions"
+  [(ngModel)]="selectedMaritalStatus" optionLabel="MARITAL_STATUS_DESC" optionValue="MARITAL_STATUS_CD"
+  placeholder="Select Marital Status" class="text-gray-800 bg-gray-50 w-full md:w-14rem" />
+                    <!-- </div> -->
                     </div>
                 
                   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Education Level</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['EDUCATION_LEVEL_CD']}}</div>
+                      
+                        <p-select style="height: 2.6rem; font-size: 0.85rem;" [options]="educationLevels" [(ngModel)]="selectedEducationLevel"
+                          optionLabel="EDUCATION_LEVEL_DESC" optionValue="EDUCATION_LEVEL_CD" placeholder="Select Education Level"
+                          class="w-full md:w-12rem" />
+                 
+                      <!-- <div style="min-height:39px !important;max-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">
+                      
+                        <p-select 
+                        style="height: 2.2rem; font-size: 0.85rem;"
+                        [options]="educationLevels"
+                        [(ngModel)]="selectedEducationLevel"
+                        optionLabel="EDUCATION_LEVEL_DESC"
+                        optionValue="EDUCATION_LEVEL_CD"
+                        placeholder="Select Education Level"
+                        class="w-full md:w-12rem"/>
+                    </div> -->
                     </div>
                 
              
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Primary Language</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['PRIMARY_LANGUAGE']}}</div>
+                      <div style="min-height:39px !important;max-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['PRIMARY_LANGUAGE']}}</div>
                     </div>
                 
                  
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Is Employee</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_EMPLOYEE_IND']}}</div>
+                      <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
+                    <p-select  style="height: 2.6rem; font-size: 0.85rem;" [options]="yesNoOptions" [(ngModel)]="selectedIsEmployee" optionLabel="Y_N_DESC" optionValue="Y_N_CD"
+                        placeholder="Select Yes or No" class="w-full md:w-14rem" />
+                    <!-- </div> -->
                     </div>
                 
                   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Is VIP </label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['IS_VIP_IND']}}</div>
+                      <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
+                <p-select  style="height: 2.6rem; font-size: 0.85rem;"  [options]="yesNoOptions" [(ngModel)]="selectedIsVP" optionLabel="Y_N_DESC" optionValue="Y_N_CD"
+                    placeholder="Select Yes or No" class="w-full md:w-14rem" />
+                    <!-- </div> -->
                     </div>
                 
                     
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Income</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['INCOME']}}</div>
+                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['INCOME']}}</div>
                     </div>
                 
   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Home Ownership</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['HOME_OWNERSHIP']}}</div>
+                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['HOME_OWNERSHIP']}}</div>
                     </div>
                 
                   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Number Of Children</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['NUMBER_OF_CHILDREN']}}</div>
+                      <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['NUMBER_OF_CHILDREN']}}</div>
                     </div>
                     
                     
                     
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Remarks</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['REMARKS']}}</div>
+                      <div style="min-height:39px !important;"class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['REMARKS']}}</div>
                     </div>
 
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Criminal Record</label>
-                      <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['CRIMINAL_RECORD']}}</div>
+                      <!-- <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200"> -->
+                        <!-- {{personalDetailsObj['CRIMINAL_RECORD']}} -->
+                        <p-select  style="height: 2.6rem; font-size: 0.85rem;"
+                        [options]="yesNoOptions"
+                        [(ngModel)]="selectedCriminalRecord"
+                        optionLabel="Y_N_DESC"
+                        optionValue="Y_N_CD"
+                        placeholder="Select Yes or No"
+                        class="w-full md:w-14rem"/>
+                    <!-- </div> -->
                     </div>
                     <div class="flex flex-col">
                         <label class="text-sm font-semibold text-gray-600 mb-1">Death Date</label>
-                        <div class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['DEATH_DATE']}}</div>
+                        <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['DEATH_DATE']}}</div>
                       </div>
 
                   </div>
@@ -547,19 +583,376 @@
                 </div>
               </div>
               
-<!--               
-              <div *ngFor="let item of identifierDetailsArray">
-                {{ item ['IDENTIFIER_TYPE_CD']}}
-                {{ item ['IDENTIFIER_VAL']}}
-             
-               
-                
-
-              </div>      -->
 
         </p-tabpanel>
         <p-tabpanel value="1">
-            hello 2
+            <div class="w-[45%] bg-white-200 p-4">
+                <div class="flex gap-4">
+                    <!-- First Calendar -->
+                    <div class="flex-1">
+                      <label class="block mb-1 text-sm font-medium text-gray-700">Start Date</label>
+                      <input
+                        type="date"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        [(ngModel)]="startDate"
+                        />
+                    </div>
+                  
+    
+                    <!-- Second Calendar -->
+                    <div class="flex-1">
+                      <label class="block mb-1 text-sm font-medium text-gray-700">End Date</label>
+                      <input
+                        type="date"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        [(ngModel)]="endDate"  />
+                       
+                    </div>
+                    <div class="flex-1" style="margin-top: 20px !important;">
+                      <p-button  style="width: 150px !important;" label="Get History" icon="pi pi-external-link"     (onClick)="getHistoryDetails()" />
+                                      
+                  </div>
+                  </div>
+                </div>
+                <div class="flex" >
+                    <div class="w-[25%] bg-gray-200 p-4">
+                        <div *ngIf="!personHistory">
+                          <span class="text-base" style="color:red;">No data available.</span>
+                        </div>
+      
+                        <div *ngFor="let opt of options" class="flex items-center gap-2 mb-2">
+                          <p-radioButton
+                          class="border border-gray-300 p-1"
+                            name="group1"
+                            [value]="opt.value"
+                            [(ngModel)]="selectedOption"
+                            [inputId]="opt.value"
+                            (onClick)="handleClick(opt.value)"
+                          ></p-radioButton>
+                          <label [for]="opt.value">{{ opt.label }}</label>
+                        </div>
+                        
+                       
+                        
+                      </div>
+                      <div class="w-[75%] bg-white-200 p-4">
+                        <div *ngIf="displayHistoryTable">
+                       
+                     
+                      <p-inputSwitch [(ngModel)]="isSourceColumnsChecked"  inputId="mySwitch"  (onChange)="handleToggleChange($event)" ></p-inputSwitch> 
+                      <label for="mySwitch" style="margin-left: 0.5rem;margin-bottom: -1.5rem;">Show Source Columns</label> 
+                      <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+                          <thead>
+                            <tr class="bg-gray-100">
+                              <!-- <p-checkbox label="Subscribe" [(ngModel)]="isSourceColumnsChecked" styleClass="my-checkbox"></p-checkbox>  -->
+                              <th class="border border-gray-300 px-4 py-2"> Customer</th>
+                              <th class="border border-gray-300 px-4 py-2">Previous Value</th>
+                              <th class="border border-gray-300 px-4 py-2">Current Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        
+                         
+                            <tr  *ngIf=" customerHistorySelectedResult['partyid_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Party ID  </td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['PARTY_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['PARTY_ID']}}</td>
+                            </tr>
+                            <tr *ngIf=" customerHistorySelectedResult['partyid_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Party ID </td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['PARTY_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['PARTY_ID']}}</td>
+                            </tr> 
+                            <tr  *ngIf=" customerHistorySelectedResult['partymdmid_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Party MDM ID  </td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['PARTY_MDM_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['PARTY_MDM_ID']}}</td>
+                            </tr>
+                            <tr *ngIf=" customerHistorySelectedResult['partymdmid_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Party MDM ID </td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['PARTY_MDM_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['PARTY_MDM_ID']}}</td>
+                            </tr> 
+                            
+
+                            <tr  *ngIf=" customerHistorySelectedResult['name_prefix_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Name Prefix </td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['NAME_PREFIX_CD_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['NAME_PREFIX_CD']}}</td>
+                            </tr>
+                            <tr *ngIf=" customerHistorySelectedResult['name_prefix_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Name Prefix</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['NAME_PREFIX_CD_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['NAME_PREFIX_CD']}}</td>
+                            </tr> 
+
+                            <tr  *ngIf=" customerHistorySelectedResult['first_name_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">First Name</td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                            </tr>
+                            <tr *ngIf=" customerHistorySelectedResult['first_name_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">First Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['FIRST_NAME']}}</td>
+                            </tr> 
+                            <tr *ngIf="customerHistorySelectedResult['last_name_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LAST_NAME']}}</td>
+                            </tr>
+                            
+                            <tr *ngIf="customerHistorySelectedResult['last_name_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['LAST_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['LAST_NAME']}}</td>
+                            </tr>
+
+                            <tr *ngIf="customerHistorySelectedResult['middle_name_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Middle Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['MIDDLE_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['MIDDLE_NAME']}}</td>
+                            </tr>
+                            
+                            <tr *ngIf="customerHistorySelectedResult['middle_name_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Middle Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['MIDDLE_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['MIDDLE_NAME']}}</td>
+                            </tr>
+
+                            <tr *ngIf="customerHistorySelectedResult['full_name_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Full Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['FULL_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['FULL_NAME']}}</td>
+                            </tr>
+                            
+                            <tr *ngIf="customerHistorySelectedResult['full_name_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Full Name</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['FULL_NAME_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink;  padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['FULL_NAME']}}</td>
+                            </tr>
+                        
+                        
+                            <tr *ngIf="customerHistorySelectedResult['gender_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Gender</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['gender_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Gender</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['GENDER_CD_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['GENDER_CD']}}</td>
+                            </tr>
+                            
+                            <tr *ngIf="customerHistorySelectedResult['tax_id_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">TAX ID</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['TAX_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['TAX_ID']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['tax_id_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">TAX ID</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['TAX_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['TAX_ID']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['duns_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">DUNS</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['DUNS_NUMBER_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['DUNS_NUMBER']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['duns_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">DUNS</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['DUNS_NUMBER_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['DUNS_NUMBER']}}</td>
+                            </tr>
+                            
+                            <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Birth Date</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['BIRTHDATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['BIRTHDATE']}}</td>
+                            </tr>
+    
+                            <tr *ngIf="customerHistorySelectedResult['birthdate_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2"style="padding-bottom:0.1rem !important">Birth Date</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['BIRTHDATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['BIRTHDATE']}}</td>
+                            </tr>
+                            <!-- <tr *ngIf="customerHistorySelectedResult['age_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Age</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['AGE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['AGE']}}</td>
+                            </tr>
+    
+                            <tr  *ngIf="customerHistorySelectedResult['age_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Age</td>
+                              <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['AGE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['AGE']}}</td>
+                            </tr>  -->
+                            <!-- <tr *ngIf="customerHistorySelectedResult['email_match'] === true" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Email</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['EMAIL_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['EMAIL']}}</td>
+                            </tr>
+    
+                            <tr  *ngIf="customerHistorySelectedResult['email_match'] === false"class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Email</td>
+                              <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['EMAIL_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['EMAIL']}}</td>
+                            </tr> -->
+                            <!-- <tr  *ngIf="customerHistorySelectedResult['phone_match'] === true"  class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Phone</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['PHONE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['PHONE']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['phone_match'] === false"   class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Phone</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['PHONE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">{{customerHistorySelectedResult['PHONE']}}</td>
+                            </tr> -->
+    
+                            <!-- <tr   *ngIf="customerHistorySelectedResult['loyolity_match'] === true"  class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Loyolity Score</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
+                            </tr>
+
+                            <tr *ngIf="customerHistorySelectedResult['loyolity_match'] === false" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Loyolity Score</td>
+                              <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2"  style="background-color: pink; padding-bottom:0.1rem !important;" >{{customerHistorySelectedResult['LOYALTY_SCORE']}}</td>
+                            </tr> -->
+    
+                        <!-- <span *ngIf="isSourceColumnsChecked" > -->
+                            
+                            <tr *ngIf="customerHistorySelectedResult['updatedby_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Updated By </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['UPDATED_BY_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['UPDATED_BY']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['updatedby_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Updated By</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['UPDATED_BY_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['UPDATED_BY']}}</td>
+                            </tr>
+    
+                            
+                            <tr *ngIf="customerHistorySelectedResult['lastupdateddate_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Updated Time </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['LAST_UPDATE_DATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['lastupdateddate_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Last Updated Time</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['LAST_UPDATE_DATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['LAST_UPDATE_DATE']}}</td>
+                            </tr>
+    
+    
+                            <tr *ngIf="customerHistorySelectedResult['hisrcreateddate_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">History Crated Date </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['HIST_CREATE_DATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['HIST_CREATE_DATE']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['hisrcreateddate_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">History Crated Date</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['HIST_CREATE_DATE_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['HIST_CREATE_DATE']}}</td>
+                            </tr>
+    
+    
+    
+                            <tr *ngIf="customerHistorySelectedResult['consolidatedId_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Consolidation Ind </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CONSOLIDATION_IND_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CONSOLIDATION_IND']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['consolidatedId_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Consolidation Ind</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CONSOLIDATION_IND_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CONSOLIDATION_IND']}}</td>
+                            </tr>
+    
+    
+                            <tr *ngIf="customerHistorySelectedResult['custmdm_match'] === true && isSourceColumnsChecked " class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Customer MDM </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CUSTOMER_MDM_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CUSTOMER_MDM_ID']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['custmdm_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Customer MDM</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CUSTOMER_MDM_ID_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CUSTOMER_MDM_ID']}}</td>
+                            </tr>
+    
+                            <tr *ngIf="customerHistorySelectedResult['createdat_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created At </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CREATED_AT_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CREATED_AT']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['createdat_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created At</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CREATED_AT_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CREATED_AT']}}</td>
+                            </tr>
+    
+    
+                            <tr *ngIf="customerHistorySelectedResult['createdby_match'] === true && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created By </td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CREATED_BY_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">
+                                {{customerHistorySelectedResult['CREATED_BY']}}</td>
+                            </tr>
+                            <tr *ngIf="customerHistorySelectedResult['createdby_match'] === false && isSourceColumnsChecked" class="hover:bg-gray-50">
+                              <td class="border border-gray-300 px-4 py-2" style="padding-bottom:0.1rem !important">Created By</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CREATED_BY_Old']}}</td>
+                              <td class="border border-gray-300 px-4 py-2" style="background-color: pink; padding-bottom:0.1rem !important;">
+                                {{customerHistorySelectedResult['CREATED_BY']}}</td>
+                            </tr>
+                          <!-- </span> -->
+                           
+                            <!-- More rows... -->
+                          </tbody>
+                        </table>
+    
+                       
+                        </div>
+                      <!-- <div class="flex items-center">
+                        <p-radiobutton name="pizza" value="Cheese" [(ngModel)]="ingredient" inputId="ingredient1" />
+                        <label for="ingredient1" class="ml-2">Cheese</label>
+                    </div> -->
+                    </div>
+                </div>
         </p-tabpanel>
         <p-tabpanel value="2">
             hello 3
