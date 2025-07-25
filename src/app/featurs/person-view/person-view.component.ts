@@ -72,11 +72,38 @@ export class PersonViewComponent {
   noHistoryData=false;
   isDisplayOnlyTables: boolean = true;
   displayHistoryTable=false;
-  constructor(public dynamicDialogRef:DynamicDialogRef, 
-    public dynamicDialogConfig:DynamicDialogConfig,
-    private dialogService:DialogService,
+  crossRefernceXReferenceObjForPerons=[];
+  erpSourceObjectForTableData={};
+  netSuiteObjectForTableData={};
+  crossRefernceTrustObjForPersons=[];
+  netsuiteArrayForCrossReference=[];
+erpArrayForCrossReference=[];
+uniqueMDMsForNetSuiteForCrossRef=[];
+uniqueMDMsERPsForCrossRef=[];
+firstNameTrstArrayForCross=[];
+lastNameTrstArrayForCross=[];
+middleNameTrstArrayForCross=[];
+fullNameTrstArrayForCross=[];
+orgNameTrstArrayForCross=[];
+genderTrstArrayForCross=[];
+namePrefixTrstArrayForCross=[];
+dunsNumberPrefixTrstArrayForCross=[];
+taxIdTrstArrayForCross=[];
+firstNameTrstArrayForCrossForNetScape=[];
+lastNameTrstArrayForCrossForNetScape=[];
+middleNameTrstArrayForCrossForNetScape=[];
+fullNameTrstArrayForCrossForNetScape=[];
+orgNameTrstArrayForCrossForNetScape=[];
+genderTrstArrayForCrossForNetScape=[];
+namePrefixTrstArrayForCrossForNetScape=[];
+dunsNumberPrefixTrstArrayForCrossForNetScape=[];
+taxIdTrstArrayForCrossForNetScape=[];
+
+  constructor(public dynamicDialogRef: DynamicDialogRef,
+    public dynamicDialogConfig: DynamicDialogConfig,
+    private dialogService: DialogService,
     private mdmService: MDMService
-  ){}
+  ) { }
   ngOnInit() {
     this. educationLevels = [
       { EDUCATION_LEVEL_CD: 'PRI', EDUCATION_LEVEL_DESC: 'Primary School' },
@@ -191,7 +218,7 @@ this.maritalStatusOptions = [
     this.getEducationLevels(personString);
     this.getYesNoVals(personString);
     
-    
+    this.getCrossRefernceXReferenceForPersons(personQueryString);
   }
 
   handleToggleChange(event: any) {
@@ -719,12 +746,12 @@ this.maritalStatusOptions = [
           rejects(error);
         },
         complete: () => {
-          this.selectedEducationLevel= this.personalDetailsObj['EDUCATION_LEVEL_CD'];
-          this.selectedMaritalStatus= this.personalDetailsObj['MARITAL_STATUS_CD'];
+          this.selectedEducationLevel= this.personalDetailsObj['EDUCATION_LEVEL_CD']?? null;
+          this.selectedMaritalStatus= this.personalDetailsObj['MARITAL_STATUS_CD']?? null;
           
-          this.selectedIsEmployee= this.personalDetailsObj['IS_EMPLOYEE_IND'];
-          this.selectedIsVP= this.personalDetailsObj['IS_VIP_IND'];
-          this.selectedCriminalRecord= this.personalDetailsObj['CRIMINAL_RECORD'];
+          this.selectedIsEmployee= this.personalDetailsObj['IS_EMPLOYEE_IND']?? null;
+          this.selectedIsVP= this.personalDetailsObj['IS_VIP_IND']?? null;
+          this.selectedCriminalRecord= this.personalDetailsObj['CRIMINAL_RECORD']?? null;
           //this.customerByCountryResponse=response;
           //this.processHistoryDataForSystemName(this.customerHistory);
         }
@@ -871,6 +898,508 @@ this.maritalStatusOptions = [
 
   }
  
+  async getCrossRefernceXReferenceForPersons(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/crossRefernceXReferenceForPersons';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           this.crossRefernceXReferenceObjForPerons = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          this.processXReferenceForPersons(this.crossRefernceXReferenceObjForPerons);
+         let mdmId = this.personmdmId;
+          let originalMDMId = mdmId;
+          let customerIdsArray=[];
+          if (this.crossRefernceXReferenceObjForPerons.length > 1) {
+
+            let wholeResponse = this.crossRefernceXReferenceObjForPerons;
+            let originalId = '';
+            let originalIds = [];
+        
+            for (let i = 0; i < wholeResponse.length; i++) {
+              //   sourceId=sourceId+','+wholeResponse[i]['SRC_CUSTOMER_MDM_ID'];
+              originalIds.push(wholeResponse[i]['ORIGINAL_MDM_ID']);
+              let obj={};
+              obj={
+                'mdmid':wholeResponse[i]['ORIGINAL_MDM_ID'],
+                'custid':wholeResponse[i]['CUSTOMER_ID'],
+              }
+              // obj.mdmid=wholeResponse[i]['ORIGINAL_MDM_ID'];
+              // obj.custid=wholeResponse[i]['CUSTOMER_ID'];
+
+              customerIdsArray.push(obj);
+            }
+            let integerString = originalIds.join(',');
+            originalMDMId = originalIds.join(',');
+          } else {
+            originalMDMId = this.crossRefernceXReferenceObjForPerons[0]['ORIGINAL_MDM_ID'];
+            let obj={};
+            
+            obj={
+              'mdmid':this.crossRefernceXReferenceObjForPerons[0]['ORIGINAL_MDM_ID'],
+              'custid':this.crossRefernceXReferenceObjForPerons[0]['PARTY_MDM_ID']
+            }
+            customerIdsArray.push( obj);
+           // customerIdsArray.push( this.crossRefernceXReferenceObjForCustomers[0]['CUSTOMER_ID']);
+          }
+
+         // let originalMDMId = this.crossRefernceXReferenceObjForCustomers[0]['ORIGINAL_MDM_ID'];
+     //    this.customerIdsArrayForCrossReference=customerIdsArray;
+         
+          let custQueryString = "WHERE PARTY_MDM_ID IN (" + mdmId + "," + originalMDMId + ")";
+          console.log('new PI CALL', custQueryString);
+          console.log('originalMDMId', originalMDMId);
+          let finalQueryString = custQueryString;
+          this.getCrossRefernceTrustForPersons(finalQueryString);
+        }
+      })
+    })
+
+    
+  }
+  processXReferenceForPersons(respose: any) {
+    let resposeData=respose;
+
+    const uniqueSourceNames=[... new Set(resposeData.map(item =>item['SRC_SYSTEM_NAME']))];
+    let  erpSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'ERP');
+    let  netSuiteSourceObject = resposeData.find(item => item['SRC_SYSTEM_NAME'] === 'NETSUITE');
+  
+    this.erpSourceObjectForTableData=erpSourceObject;
+    this.netSuiteObjectForTableData=netSuiteSourceObject;
+
+    console.log('hello log', this.erpSourceObjectForTableData);
+    // let historyDats = resposeData.map(item => item['HIST_CREATE_DATE']);
+    
+    // // ];
+  }
+
+  async getCrossRefernceTrustForPersons(queryForAPI: string): Promise<void> {
+    let builtString = queryForAPI;
+    let apiUrl = 'http://localhost:3000/api/crossRefernceTrustForPersons';
+    return new Promise((resolve, rejects) => {
+      this.mdmService.getRequestForAPI(apiUrl, "?buildQuery=" + builtString).subscribe({
+        next: (response: any) => {
+
+          if (response) {
+           this.crossRefernceTrustObjForPersons = response;
+          } else {
+
+          }
+          resolve();
+        },
+        error: (error: object) => {
+          rejects(error);
+        },
+        complete: () => {
+          //this.customerByCountryResponse=response;
+          //write logic for building trust obj
+          this.processTrustDataForPersons(this.crossRefernceTrustObjForPersons);
+        }
+      })
+    })
+
+  }
+  processTrustDataForPersons(respose: any) {
+    let resposeDataForTrust = respose;
+    
+    let erpTrustArray = [];
+    let netSuiteTrustArray = [];
+    for (let i = 0; i < resposeDataForTrust.length; i++) {
+      if (resposeDataForTrust[i]['SOURCE_SYSTEM'] === 'ERP') {
+        erpTrustArray.push(resposeDataForTrust[i]);
+      }
+      if (resposeDataForTrust[i]['SOURCE_SYSTEM'] === 'NETSUITE') {
+        netSuiteTrustArray.push(resposeDataForTrust[i]);
+      }
+
+     
+    }
+    console.log('ERP suite trust value size',erpTrustArray.length);
+    console.log('net suite trust value size',netSuiteTrustArray.length);
+    this.netsuiteArrayForCrossReference=netSuiteTrustArray;
+    this.erpArrayForCrossReference=erpTrustArray;
+    this.uniqueMDMsERPsForCrossRef=[... new Set(this.erpArrayForCrossReference.map(item =>item['PARTY_MDM_ID']))];
+    this.uniqueMDMsForNetSuiteForCrossRef=[... new Set(this.netsuiteArrayForCrossReference.map(item =>item['PARTY_MDM_ID']))];
+    let erpArrayProcessedDataForCross=[];
+    let uniqueMdmsArrayForCross=this.uniqueMDMsERPsForCrossRef;
+    let uniqueMdmsNetSuiteArrayForCross=this.uniqueMDMsForNetSuiteForCrossRef;
+    let erpForMatchRef=this.erpArrayForCrossReference;
+    let netSuiteForMatchRef=this.netsuiteArrayForCrossReference;
+    if (this.uniqueMDMsERPsForCrossRef.length > 0) {
+      for (let i = 0; i < uniqueMdmsArrayForCross.length; i++) {
+        console.log('elemnt is', uniqueMdmsArrayForCross[i]);
+    
+        let objId = uniqueMdmsArrayForCross[i];
+        let objSourceData = erpForMatchRef.filter(item => item['PARTY_MDM_ID'] === uniqueMdmsArrayForCross[i]);
+    
+        let formattedObject = {};
+        formattedObject['mdmIds'] = objId;
+        formattedObject['mdmData'] = objSourceData;
+        erpArrayProcessedDataForCross.push(formattedObject);
+    
+      }
+    }
+    console.log('formatted array erpArrayProcessedDataForCross ',erpArrayProcessedDataForCross);
+    //erp source logic
+    if (erpArrayProcessedDataForCross.length > 0) {
+      const names = erpArrayProcessedDataForCross.map(person => person['mdmData']);
+      this.taxIdTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "TAX_ID"))
+        .map(erpData => {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        });
+
+      this.firstNameTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+
+        );
+
+      let lenghtForERP = 0;
+      lenghtForERP = this.firstNameTrstArrayForCross.length;
+      this.lastNameTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LAST_NAME"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+
+        );
+      if (this.lastNameTrstArrayForCross.length === 0 || this.lastNameTrstArrayForCross.length < 1) {
+        this.lastNameTrstArrayForCross = this.createZeroArray(lenghtForERP);
+
+      }
+      this.middleNameTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "MIDDLE_NAME"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+
+        );
+      if (this.middleNameTrstArrayForCross.length === 0 || this.middleNameTrstArrayForCross.length < 1) {
+        this.middleNameTrstArrayForCross = this.createZeroArray(lenghtForERP);
+
+      }
+
+      this.fullNameTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FULL_NAME"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+
+        );
+      if (this.fullNameTrstArrayForCross.length === 0 || this.fullNameTrstArrayForCross.length < 1) {
+        this.fullNameTrstArrayForCross = this.createZeroArray(lenghtForERP);
+
+      }
+
+      this.genderTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+        );
+      if (this.genderTrstArrayForCross.length === 0 || this.genderTrstArrayForCross.length < 1) {
+
+        this.genderTrstArrayForCross = this.createZeroArray(lenghtForERP);
+      }
+
+
+      this.orgNameTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "ORGANIZATION_NAME"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+        );
+      if (this.orgNameTrstArrayForCross.length === 0 || this.orgNameTrstArrayForCross.length < 1) {
+
+        this.orgNameTrstArrayForCross = this.createZeroArray(lenghtForERP);
+      }
+
+      this.namePrefixTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "NAME_PREFIX_CD"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+        );
+      if (this.namePrefixTrstArrayForCross.length === 0 || this.namePrefixTrstArrayForCross.length < 1) {
+
+        this.namePrefixTrstArrayForCross = this.createZeroArray(lenghtForERP);
+      }
+
+
+      this.dunsNumberPrefixTrstArrayForCross = names
+        .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "DUNS_NUMBER"))
+        .map(erpData =>
+        // erpData['TRUST_SCORE']
+        {
+          return {
+            mdmid: erpData['PARTY_MDM_ID'],
+            trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+          };
+        }
+        );
+      if (this.dunsNumberPrefixTrstArrayForCross.length === 0 || this.dunsNumberPrefixTrstArrayForCross.length < 1) {
+
+        this.dunsNumberPrefixTrstArrayForCross = this.createZeroArray(lenghtForERP);
+      }
+      console.log('array generation completed');
+      console.log('array generation completed for erp source');
+    }
+    let netSuiteProcessedDataForCross=[];
+if (this.uniqueMDMsForNetSuiteForCrossRef.length > 0) {
+  for (let i = 0; i < uniqueMdmsNetSuiteArrayForCross.length; i++) {
+    console.log('elemnt is', uniqueMdmsNetSuiteArrayForCross[i]);
+
+    let objId = uniqueMdmsNetSuiteArrayForCross[i];
+    let objSourceData = netSuiteForMatchRef.filter(item => item['PARTY_MDM_ID'] === uniqueMdmsNetSuiteArrayForCross[i]);
+
+    let formattedObject = {};
+    formattedObject['mdmIds'] = objId;
+    formattedObject['mdmData'] = objSourceData;
+    netSuiteProcessedDataForCross.push(formattedObject);
+
+  }
+}
+console.log('formatted array netSuiteProcessedDataForCross ',netSuiteProcessedDataForCross);
+//net source logic
+if(netSuiteProcessedDataForCross.length>0){
+
+  const nameValuesForNet = netSuiteProcessedDataForCross.map(person => person['mdmData']);
+  this.firstNameTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+
+  );
+  let length = this.firstNameTrstArrayForCrossForNetScape.length;
+  this.taxIdTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "TAX_ID"))
+  .map(erpData => {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  });
+  if (this.taxIdTrstArrayForCrossForNetScape.length === 0 || this.taxIdTrstArrayForCrossForNetScape.length < 1) {
+    this.taxIdTrstArrayForCrossForNetScape = this.createZeroArray(length);
+  
+  }
+
+
+// let lenghtForERP = 0;
+// lenghtForERP = this.firstNameTrstArrayForCross.length;
+this.lastNameTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "LAST_NAME"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+
+  );
+if (this.lastNameTrstArrayForCrossForNetScape.length === 0 || this.lastNameTrstArrayForCrossForNetScape.length < 1) {
+  this.lastNameTrstArrayForCrossForNetScape = this.createZeroArray(length);
+
+}
+this.middleNameTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "MIDDLE_NAME"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+
+  );
+if (this.middleNameTrstArrayForCrossForNetScape.length === 0 || this.middleNameTrstArrayForCrossForNetScape.length < 1) {
+  this.middleNameTrstArrayForCrossForNetScape = this.createZeroArray(length);
+
+}
+
+this.fullNameTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FULL_NAME"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+
+  );
+if (this.fullNameTrstArrayForCrossForNetScape.length === 0 || this.fullNameTrstArrayForCrossForNetScape.length < 1) {
+  this.fullNameTrstArrayForCrossForNetScape = this.createZeroArray(length);
+
+}
+
+this.genderTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "GENDER_CD"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+  );
+if (this.genderTrstArrayForCrossForNetScape.length === 0 || this.genderTrstArrayForCrossForNetScape.length < 1) {
+
+  this.genderTrstArrayForCrossForNetScape = this.createZeroArray(length);
+}
+
+
+this.orgNameTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "ORGANIZATION_NAME"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+  );
+if (this.orgNameTrstArrayForCrossForNetScape.length === 0 || this.orgNameTrstArrayForCrossForNetScape.length < 1) {
+
+  this.orgNameTrstArrayForCrossForNetScape = this.createZeroArray(length);
+}
+
+this.namePrefixTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "NAME_PREFIX_CD"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+  );
+if (this.namePrefixTrstArrayForCrossForNetScape.length === 0 || this.namePrefixTrstArrayForCrossForNetScape.length < 1) {
+
+  this.namePrefixTrstArrayForCrossForNetScape = this.createZeroArray(length);
+}
+
+
+this.dunsNumberPrefixTrstArrayForCrossForNetScape = nameValuesForNet
+  .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "DUNS_NUMBER"))
+  .map(erpData =>
+  // erpData['TRUST_SCORE']
+  {
+    return {
+      mdmid: erpData['PARTY_MDM_ID'],
+      trust: parseInt(erpData['TRUST_SCORE'], 10)
+
+    };
+  }
+  );
+if (this.dunsNumberPrefixTrstArrayForCrossForNetScape.length === 0 || this.dunsNumberPrefixTrstArrayForCrossForNetScape.length < 1) {
+
+  this.dunsNumberPrefixTrstArrayForCrossForNetScape = this.createZeroArray(length);
+}
+console.log('array generation completed');
+console.log('array generation completed for erp source');
+
+}
+
+
+  }
+
+  createZeroArray(length) {
+    return new Array(length).fill(
+     { 'mdmid':0,
+        'trust':0}
+    );
+  }
+  get maxValueForFirstNameTrstArray(): number {
+    //return Math.max(...this.firstNameTrstArray);
+    return null;
+  }
+  get maxValueForLastNameTrstArray(): number {
+   // return Math.max(...this.firstNameTrstArray);
+   return null;
+  }
   
 
 }

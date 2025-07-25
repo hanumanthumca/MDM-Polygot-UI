@@ -25,13 +25,13 @@
              
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Person MDM ID</label>
-                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_MDM_ID']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['PARTY_MDM_ID'] || '' }}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Party ID</label>
-                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['PARTY_ID']}}</div>
+                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['PARTY_ID']|| '' }}</div>
                   </div>
               
            
@@ -47,25 +47,25 @@
                
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">First Name</label>
-                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FIRST_NAME']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['FIRST_NAME']|| '' }}</div>
                   </div>
               
                 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Middle Name</label>
-                    <div  style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['MIDDLE_NAME'] || '' }}</div>
+                    <div  style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['MIDDLE_NAME'] || '' }}</div>
                   </div>
               
                   
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Last Name</label>
-                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['LAST_NAME']}}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['LAST_NAME'] || '' }}</div>
                   </div>
               
 
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Full Name</label>
-                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['FULL_NAME']}}</div>
+                    <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['FULL_NAME'] || '' }}</div>
                   </div>
               
                 
@@ -88,7 +88,7 @@
                   
                   <div class="flex flex-col">
                     <label class="text-sm font-semibold text-gray-600 mb-1">Birth Date</label>
-                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj['BIRTHDATE'] || '' }}</div>
+                    <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{overViewObj?.['BIRTHDATE'] || '' }}</div>
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@
              
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Primary Language</label>
-                      <div style="min-height:39px !important;max-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['PRIMARY_LANGUAGE']}}</div>
+                      <div style="min-height:39px !important;max-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['PRIMARY_LANGUAGE'] || ''}}</div>
                     </div>
                 
                  
@@ -160,26 +160,26 @@
                     
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Income</label>
-                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['INCOME']}}</div>
+                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['INCOME'] || ''}}</div>
                     </div>
                 
   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Home Ownership</label>
-                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['HOME_OWNERSHIP']}}</div>
+                      <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['HOME_OWNERSHIP']|| ''}}</div>
                     </div>
                 
                   
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Number Of Children</label>
-                      <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['NUMBER_OF_CHILDREN']}}</div>
+                      <div style="min-height:39px !important;"  class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['NUMBER_OF_CHILDREN']|| ''}}</div>
                     </div>
                     
                     
                     
                     <div class="flex flex-col">
                       <label class="text-sm font-semibold text-gray-600 mb-1">Remarks</label>
-                      <div style="min-height:39px !important;"class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['REMARKS']}}</div>
+                      <div style="min-height:39px !important;"class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['REMARKS']|| ''}}</div>
                     </div>
 
                     <div class="flex flex-col">
@@ -197,7 +197,7 @@
                     </div>
                     <div class="flex flex-col">
                         <label class="text-sm font-semibold text-gray-600 mb-1">Death Date</label>
-                        <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj['DEATH_DATE']}}</div>
+                        <div style="min-height:39px !important;" class="text-gray-800 bg-gray-50 rounded-md px-4 py-2 shadow-sm border border-gray-200">{{personalDetailsObj?.['DEATH_DATE']|| ''}}</div>
                       </div>
 
                   </div>
@@ -645,7 +645,7 @@
                           <thead>
                             <tr class="bg-gray-100">
                               <!-- <p-checkbox label="Subscribe" [(ngModel)]="isSourceColumnsChecked" styleClass="my-checkbox"></p-checkbox>  -->
-                              <th class="border border-gray-300 px-4 py-2"> Customer</th>
+                              <th class="border border-gray-300 px-4 py-2"> Persons </th>
                               <th class="border border-gray-300 px-4 py-2">Previous Value</th>
                               <th class="border border-gray-300 px-4 py-2">Current Value</th>
                             </tr>

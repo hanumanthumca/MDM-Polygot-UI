@@ -56,45 +56,45 @@ export class PersonComponent {
 
     this.groupedTables = [
       {
-          label: 'BO_PARTY',
+          label: 'Person',
           value: 'BO_PARTY',
           items: [
-            { label: 'PARTY_MDM_ID', value: 'p.PARTY_MDM_ID' },
-            { label: 'PARTY_ID', value: 'p.PARTY_ID' },
-            { label: 'FIRST_NAME', value: 'p.FIRST_NAME' },
-            { label: 'MIDDLE_NAME', value: 'p.MIDDLE_NAME' },
-            { label: 'LAST_NAME', value: 'p.LAST_NAME' },
-            { label: 'FULL_NAME', value: 'p.FULL_NAME' },
-            { label: 'BIRTHDATE', value: 'p.BIRTHDATE' },
-            { label: 'GENDER_CD', value: 'p.GENDER_CD' }
+            { label: 'Party MDM ID', value: 'p.PARTY_MDM_ID' },
+            { label: 'Party ID', value: 'p.PARTY_ID' },
+            { label: 'First Name', value: 'p.FIRST_NAME' },
+            { label: 'Middle Name', value: 'p.MIDDLE_NAME' },
+            { label: 'Last Name', value: 'p.LAST_NAME' },
+            { label: 'Full Name', value: 'p.FULL_NAME' },
+            { label: 'Birth Date', value: 'p.BIRTHDATE' },
+            { label: 'Gender', value: 'p.GENDER_CD' }
           ]
       },
       {
-          label: 'BO_ADDRESS',
+          label: 'Person Address',
           value: 'BO_ADDRESS',
         items: [
 
-          { label: 'ADDRESS_LINE_1', value: 'a.ADDRESS_LINE_1' },
-          { label: 'CITY_NAME', value: 'a.CITY_NAME' },
-          { label: 'STATE_CD', value: 'a.STATE_CD' },
-          { label: 'COUNTRY_CD', value: 'a.COUNTRY_CD' },
-          { label: 'POSTAL_CD', value: 'a.POSTAL_CD' },
+          { label: 'Address Line 1', value: 'a.ADDRESS_LINE_1' },
+          { label: 'City', value: 'a.CITY_NAME' },
+          { label: 'State', value: 'a.STATE_CD' },
+          { label: 'Country', value: 'a.COUNTRY_CD' },
+          { label: 'Postal Code', value: 'a.POSTAL_CD' },
         ]
       },
       {
-          label: 'BO_PARTY_PHONE',
+          label: 'Person Phone',
           value: 'BO_PARTY_PHONE',
           items: [
-            { label: 'PHONE_NUM', value: 'ph.PHONE_NUM(Phone Number)' },
-            { label: 'PHONE_TYPE_CD', value: 'ph.PHONE_TYPE_CD(Phone Type)' },
+            { label: 'Phone Number', value: 'ph.PHONE_NUM(Phone Number)' },
+            { label: 'Phone Type', value: 'ph.PHONE_TYPE_CD(Phone Type)' },
            
           ]
       },
       {
-        label: 'BO_PARTY_EMAIL',
+        label: 'Person Email',
         value: 'BO_PARTY_EMAIL',
         items: [
-          { label: 'EMAIL_ADDR', value: 'pe.EMAIL_ADDR' },
+          { label: 'Email ID', value: 'pe.EMAIL_ADDR' },
        
          
         ]
