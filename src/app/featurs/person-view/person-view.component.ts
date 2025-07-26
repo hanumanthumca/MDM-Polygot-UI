@@ -98,6 +98,27 @@ genderTrstArrayForCrossForNetScape=[];
 namePrefixTrstArrayForCrossForNetScape=[];
 dunsNumberPrefixTrstArrayForCrossForNetScape=[];
 taxIdTrstArrayForCrossForNetScape=[];
+maxTrustForFNameForCross=0;
+ maxTrustMDMForFname=0;
+ maxTrustFortaxIDForCross=0;   
+  maxTrustMDMFortaxID=0;
+  maxTrustForLNameForCross=0;
+  maxTrustMDMForLName=0;
+  maxTrustForMiddleNameForCross=0;
+ maxTrustMDMForMiddlename=0;
+ maxTrustForFullNameForCross=0;
+ maxTrustMDMForullname=0;
+ maxTrustForOrgNameForCross=0;
+ maxTrustMDMForOrgname=0;
+ 
+ maxTrustForGenderForCross=0;
+ maxTrustMDMForGender=0;
+ 
+  maxTrustForNPrefixForCross=0;
+ maxTrustMDMForNPrefix=0;
+ 
+  maxTrustForDunsNumberForCross=0;
+ maxTrustMDMForDunsNumber=0;
 
   constructor(public dynamicDialogRef: DynamicDialogRef,
     public dynamicDialogConfig: DynamicDialogConfig,
@@ -1378,6 +1399,101 @@ if (this.dunsNumberPrefixTrstArrayForCrossForNetScape.length === 0 || this.dunsN
 
   this.dunsNumberPrefixTrstArrayForCrossForNetScape = this.createZeroArray(length);
 }
+
+let combinedFirstName = [...this.firstNameTrstArrayForCrossForNetScape, ...this.firstNameTrstArrayForCross];
+this.maxTrustForFNameForCross = Math.max(...combinedFirstName.map(combinedFirstName => combinedFirstName.trust));
+let maxTrustSCoreObjectsForFName=combinedFirstName.filter(combinedCustId => combinedCustId.trust ===   this.maxTrustForFNameForCross);
+this.maxTrustMDMForFname= Math.max(...maxTrustSCoreObjectsForFName.map(maxTrustSCoreObjectsForFName => maxTrustSCoreObjectsForFName.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFNameForCross);
+if (this.maxTrustForFNameForCross === 0 ||combinedFirstName.length < 2 ) {
+  this.maxTrustForFNameForCross = 1000;
+}
+
+
+ //maxTrustForCustIDForCross=0;
+ let combinedtaxId = [...this.taxIdTrstArrayForCrossForNetScape, ...this.taxIdTrstArrayForCross];
+ this.maxTrustFortaxIDForCross = Math.max(...combinedtaxId.map(combinedtaxId => combinedtaxId.trust));
+let maxTrustSCoreObjectsForID=combinedtaxId.filter(combinedCustId => combinedCustId.trust ===   this.maxTrustFortaxIDForCross);
+this.maxTrustMDMFortaxID= Math.max(...maxTrustSCoreObjectsForID.map(maxTrustSCoreObjectsForID => maxTrustSCoreObjectsForID.mdmid));
+console.log('maxTrustForCustIDForCross', this.maxTrustFortaxIDForCross);
+console.log('maxTrustMDM ID ForID ', this.maxTrustMDMFortaxID);
+ if (this.maxTrustFortaxIDForCross === 0 ||combinedtaxId.length < 2 ) {
+   this.maxTrustFortaxIDForCross = 1000;
+ }
+ //maxTrustForLNameForCross=0;
+ 
+ let combinedLName = [...this.lastNameTrstArrayForCrossForNetScape, ...this.lastNameTrstArrayForCross];
+    this.maxTrustForLNameForCross= Math.max(...combinedLName.map(combinedLName => combinedLName.trust));
+    let maxTrustSCoreObjectsForLName=combinedLName.filter(combinedLName => combinedLName.trust ===   this.maxTrustForLNameForCross);
+    this.maxTrustMDMForLName= Math.max(...maxTrustSCoreObjectsForLName.map(maxTrustSCoreObjectsForLName => maxTrustSCoreObjectsForLName.mdmid));
+
+    if (this.maxTrustForLNameForCross === 0 ||combinedLName.length < 2) {
+      this.maxTrustForLNameForCross = 1000;
+    }
+
+
+
+let combinedMiddleName = [...this.middleNameTrstArrayForCrossForNetScape, ...this.middleNameTrstArrayForCross];
+this.maxTrustForMiddleNameForCross = Math.max(...combinedMiddleName.map(combinedMiddleName => combinedMiddleName.trust));
+let maxTrustSCoreObjectsForMiddleName=combinedMiddleName.filter(combinedMiddleName => combinedMiddleName.trust ===   this.maxTrustForMiddleNameForCross);
+this.maxTrustMDMForMiddlename= Math.max(...maxTrustSCoreObjectsForMiddleName.map(maxTrustSCoreObjectsForMiddleName => maxTrustSCoreObjectsForMiddleName.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFNameForCross);
+if (this.maxTrustForMiddleNameForCross === 0 ||combinedMiddleName.length < 2 ) {
+  this.maxTrustForMiddleNameForCross = 1000;
+}
+
+
+let combinedFullName = [...this.fullNameTrstArrayForCrossForNetScape, ...this.fullNameTrstArrayForCross];
+this.maxTrustForFullNameForCross = Math.max(...combinedFullName.map(combinedFullName => combinedFullName.trust));
+let maxTrustSCoreObjectsForFullName=combinedFullName.filter(combinedFullName => combinedFullName.trust ===   this.maxTrustForFullNameForCross);
+this.maxTrustMDMForullname= Math.max(...maxTrustSCoreObjectsForFullName.map(maxTrustSCoreObjectsForFullName => maxTrustSCoreObjectsForFullName.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFullNameForCross);
+if (this.maxTrustForFullNameForCross === 0 ||combinedFullName.length < 2 ) {
+  this.maxTrustForFullNameForCross = 1000;
+}
+
+
+let combinedOrgName = [...this.orgNameTrstArrayForCrossForNetScape, ...this.orgNameTrstArrayForCross];
+this.maxTrustForOrgNameForCross = Math.max(...combinedOrgName.map(combinedOrgName => combinedOrgName.trust));
+let maxTrustSCoreObjectsForOrgName=combinedOrgName.filter(combinedOrgName => combinedOrgName.trust ===   this.maxTrustForOrgNameForCross);
+this.maxTrustMDMForOrgname= Math.max(...maxTrustSCoreObjectsForOrgName.map(maxTrustSCoreObjectsForOrgName => maxTrustSCoreObjectsForOrgName.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFullNameForCross);
+if (this.maxTrustForOrgNameForCross === 0 ||combinedOrgName.length < 2 ) {
+  this.maxTrustForOrgNameForCross = 1000;
+}
+
+
+
+
+let combinedGender = [...this.genderTrstArrayForCrossForNetScape, ...this.genderTrstArrayForCross];
+this.maxTrustForGenderForCross = Math.max(...combinedGender.map(combinedGender => combinedGender.trust));
+let maxTrustSCoreObjectsForGender=combinedGender.filter(combinedGender => combinedGender.trust ===   this.maxTrustForGenderForCross);
+this.maxTrustMDMForGender= Math.max(...maxTrustSCoreObjectsForGender.map(maxTrustSCoreObjectsForGender => maxTrustSCoreObjectsForGender.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFullNameForCross);
+if (this.maxTrustForGenderForCross === 0 ||combinedGender.length < 2 ) {
+  this.maxTrustForGenderForCross = 1000;
+}
+
+
+let combinedNamePrefix = [...this.namePrefixTrstArrayForCrossForNetScape, ...this.namePrefixTrstArrayForCross];
+this.maxTrustForNPrefixForCross = Math.max(...combinedNamePrefix.map(combinedNamePrefix => combinedNamePrefix.trust));
+let maxTrustSCoreObjectsForPrefix=combinedNamePrefix.filter(combinedNamePrefix => combinedNamePrefix.trust ===   this.maxTrustForNPrefixForCross);
+this.maxTrustMDMForNPrefix= Math.max(...maxTrustSCoreObjectsForPrefix.map(maxTrustSCoreObjectsForPrefix => maxTrustSCoreObjectsForPrefix.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFullNameForCross);
+if (this.maxTrustForNPrefixForCross === 0 ||combinedNamePrefix.length < 2 ) {
+  this.maxTrustForNPrefixForCross = 1000;
+}
+
+
+let combinedNameDunsNumber = [...this.dunsNumberPrefixTrstArrayForCrossForNetScape, ...this.dunsNumberPrefixTrstArrayForCross];
+this.maxTrustForDunsNumberForCross = Math.max(...combinedNameDunsNumber.map(combinedNameDunsNumber => combinedNameDunsNumber.trust));
+let maxTrustSCoreObjectsForDunsNumber=combinedNameDunsNumber.filter(combinedNameDunsNumber => combinedNameDunsNumber.trust ===   this.maxTrustForDunsNumberForCross);
+this.maxTrustMDMForDunsNumber= Math.max(...maxTrustSCoreObjectsForDunsNumber.map(maxTrustSCoreObjectsForDunsNumber => maxTrustSCoreObjectsForDunsNumber.mdmid));
+//console.log('maxTrusFname', this.maxTrustForFullNameForCross);
+if (this.maxTrustForDunsNumberForCross === 0 ||combinedNameDunsNumber.length < 2 ) {
+  this.maxTrustForDunsNumberForCross = 1000;
+}
+
 console.log('array generation completed');
 console.log('array generation completed for erp source');
 
