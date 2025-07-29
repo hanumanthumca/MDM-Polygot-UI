@@ -1,0 +1,64 @@
+::ng-deep .p-table th {
+    background-color: #2196f3;
+    color: #2196f3;
+
+  }
+
+  ::ng-deep .p-dailog .p-dailog-header {
+    background-color: #0070b4;
+    color: #fff;
+    padding: .8 rem;
+
+  }
+
+  ::ng-deep  .p-panel-header {
+    background-color: #0070b4 !important;
+  }
+
+  ::ng-deep  .p-panel-content{
+    height:600px !important;
+  }
+.containerForPanel {
+    width: 800px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+.firstForPanel {
+    width: 300px;
+    float: left;
+    height: 300px;
+     
+}
+.secondForPanel {
+    width: 300px;
+    float: left;
+    height: 300px;
+    
+}
+
+:host ::ng-deep .p-inputtext[readonly] {
+  background-color: #f0f0f0; /* Light gray background */
+  color: #808080;           /* Gray text color */
+  border: 1px solid #dcdcdc; /* Light gray border */
+}
+
+
+::ng-deep .custom-dropdown-panel {
+  @apply bg-white border border-gray-300 rounded-md shadow-lg;
+}
+
+::ng-deep .custom-dropdown-panel .p-dropdown-item {
+  @apply px-3 py-2 text-sm text-gray-800 hover:bg-blue-100 cursor-pointer;
+}
+
+::ng-deep .custom-dropdown-panel .p-dropdown-item.p-highlight {
+  @apply bg-blue-500 text-white;
+}
+::ng-deep .p-dropdown .p-dropdown-trigger {
+  @apply text-gray-500;
+}
+
+.max-value {
+  color: red;
+  font-weight: bold;
+}

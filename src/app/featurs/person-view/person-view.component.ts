@@ -1085,6 +1085,8 @@ this.maritalStatusOptions = [
           };
         });
 
+        console.log('whole object',this.crossRefernceXReferenceObjForPerons)
+
       this.firstNameTrstArrayForCross = names
         .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
         .map(erpData =>

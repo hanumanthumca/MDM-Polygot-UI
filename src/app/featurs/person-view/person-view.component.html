@@ -959,6 +959,339 @@
         </p-tabpanel>
         <p-tabpanel value="3">
             hello 4
+            <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="border border-gray-300 px-4 py-2"> MDM ID =  544</th>
+                  <!-- <th class="border border-gray-300 px-4 py-2"> MDM ID = {{matchXrefTargetId}} </th> -->
+                  <th class="border border-gray-300 px-4 py-2">Master record</th>
+                
+                  <th *ngFor="let uniqueMDM of uniqueMDMsERPsForCrossRef" class="border border-gray-300 px-4 py-2">
+                
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>Source:ERP <br /> MDM ID = {{ uniqueMDM }}</span>
+                      <span> &nbsp;<br />Trust Score </span>
+                    </div>
+                  </th>
+                
+                  <th *ngFor="let uniqueMDM of uniqueMDMsForNetSuiteForCrossRef" class="border border-gray-300 px-4 py-2">
+                
+                    <div style="display: flex; justify-content: space-between;">
+                
+                      <span>Source:Net Suite <br /> MDM ID = {{ uniqueMDM }}</span>
+                      <span> &nbsp;<br /> Trust Score </span>
+                    </div>
+                  </th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                 <!-- {{overViewObj?.['FIRST_NAME']|| ''}}
+                  this.overViewObj -->
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">First Name</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['FIRST_NAME']|| ''}}</td>
+                    
+                    <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
+                    
+                  [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust  === maxTrustForFNameForCross && firstNameTrstArrayItem.mdmid === maxTrustMDMForFname ? 'pink' : 'transparent' }"
+                    >
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span>
+                    <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
+                    <span>{{ firstNameTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let firstNameTrstArrayItem of firstNameTrstArrayForCrossForNetScape"  class="border border-gray-300 px-4 py-2" 
+                [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust  === maxTrustForFNameForCross && firstNameTrstArrayItem.mdmid === maxTrustMDMForFname ? 'pink' : 'transparent' }">
+              
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ firstNameTrstArrayItem.trust }} 
+                      <!-- <a  (click)="viewCustomerTrustDetails(firstNameTrstArrayItem,'FIRST_NAME','NETSUITE');" class="text-blue-600 hover:underline">  {{ firstNameTrstArrayItem.trust }}   -->
+              
+                      <!-- </a> -->
+                    </span>
+                  </div>
+              
+                </td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Last Name</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['LAST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['LAST_NAME']|| ''}}</td>
+                    <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArrayForCross"  class="border border-gray-300 px-4 py-2" 
+                  
+                    [ngStyle]="{ 'background-color': lastNameTrstArrayItem.trust  === maxTrustForLNameForCross && lastNameTrstArrayItem.mdmid === maxTrustMDMForLName ? 'pink' : 'transparent' }"
+                 
+                    >
+                  
+                  <div style="display: flex; justify-content: space-between;">
+                    <!-- <span>{{erpSourceObjectForTableData?.['LAST_NAME'] || netSuiteObjectForTableData?.['LAST_NAME']}}</span> -->
+                    <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span>
+                    <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
+                    <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
+                    <span>{{ lastNameTrstArrayItem.trust }}   </span>
+                  </div>
+                </td>
+                <td *ngFor="let lastNameTrstArrayItem of lastNameTrstArrayForCrossForNetScape"  class="border border-gray-300 px-4 py-2" 
+                [ngStyle]="{ 'background-color': lastNameTrstArrayItem.trust  === maxTrustForLNameForCross && lastNameTrstArrayItem.mdmid === maxTrustMDMForLName ? 'pink' : 'transparent' }">
+              
+              <div style="display: flex; justify-content: space-between;">
+                <!-- <span>{{netSuiteObjectForTableData?.['LAST_NAME'] || erpSourceObjectForTableData?.['LAST_NAME']}}</span> -->
+                <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span>
+                <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
+                <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
+                <span>{{ lastNameTrstArrayItem.trust }}   </span>
+                                       </div>
+              </td>
+                 
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Middle Name</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['MIDDLE_NAME']|| ''}}</td>
+                  
+                    <td *ngFor="let middleNameTrstArrayItem of middleNameTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': middleNameTrstArrayItem.trust  === maxTrustForFNameForCross && middleNameTrstArrayItem.mdmid === maxTrustMDMForMiddlename ? 'pink' : 'transparent' }">
+                  
+                      <div style="display: flex; justify-content: space-between;">
+                  
+                        <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                        <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span>
+                        <span style="display:none;">{{middleNameTrstArrayItem.mdmid}}</span>
+                        <span>{{ middleNameTrstArrayItem.trust }} </span>
+                      </div>
+                  
+                    </td>
+                    <td *ngFor="let middleNameTrstArrayItem of middleNameTrstArrayForCrossForNetScape"
+                      class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': middleNameTrstArrayItem.trust  === maxTrustForFNameForCross && middleNameTrstArrayItem.mdmid === maxTrustMDMForMiddlename ? 'pink' : 'transparent' }">
+                  
+                      <div style="display: flex; justify-content: space-between;">
+                        <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span>
+                        <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                        <span style="display:none;">{{middleNameTrstArrayItem.mdmid}}</span>
+                        <span>
+                          {{ middleNameTrstArrayItem.trust }}
+                          <!-- <a  (click)="viewCustomerTrustDetails(firstNameTrstArrayItem,'FIRST_NAME','NETSUITE');" class="text-blue-600 hover:underline">  {{ firstNameTrstArrayItem.trust }}   -->
+                  
+                          <!-- </a> -->
+                        </span>
+                      </div>
+                  
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Full  Name</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['FULL_NAME']|| ''}}</td>
+                    
+                    <td *ngFor="let fullNameTrstArrayItem of fullNameTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': fullNameTrstArrayItem.trust  === maxTrustForFNameForCross && fullNameTrstArrayItem.mdmid === maxTrustMDMForullname ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span>
+                    <span style="display:none;">{{fullNameTrstArrayItem.mdmid}}</span>
+                    <span>{{ fullNameTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let fullNameTrstArrayItem of fullNameTrstArrayForCrossForNetScape"  class="border border-gray-300 px-4 py-2" 
+                [ngStyle]="{ 'background-color': fullNameTrstArrayItem.trust  === maxTrustForFNameForCross && fullNameTrstArrayItem.mdmid === maxTrustMDMForullname ? 'pink' : 'transparent' }">
+              
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{fullNameTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ fullNameTrstArrayItem.trust }} 
+                 
+                    </span>
+                  </div>
+              
+                </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Gender </td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['GENDER_CD']|| ''}}</td>
+                    
+                    <td *ngFor="let genderTrstArrayItem of genderTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['GENDER_CD']|| ''}} </span>
+                    <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
+                    <span>{{ genderTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let genderTrstArrayItem of genderTrstArrayForCrossForNetScape" class="border border-gray-300 px-4 py-2"
+                  [ngStyle]="{ 'background-color': genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender ? 'pink' : 'transparent' }">
+                
+                  <div style="display: flex; justify-content: space-between;">
+                    <span> {{overViewObj?.['GENDER_CD']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ genderTrstArrayItem.trust }}
+                
+                    </span>
+                  </div>
+                
+                </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Name Prefix </td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['NAME_PREFIX_CD']|| ''}}</td>
+                    
+                    <td *ngFor="let prefixTrstArrayItem of namePrefixTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': prefixTrstArrayItem.trust  === maxTrustForNPrefixForCross && prefixTrstArrayItem.mdmid === maxTrustMDMForNPrefix ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span>
+                    <span style="display:none;">{{prefixTrstArrayItem.mdmid}}</span>
+                    <span>{{ prefixTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let prefixTrstArrayItem of namePrefixTrstArrayForCrossForNetScape" class="border border-gray-300 px-4 py-2"
+                  [ngStyle]="{ 'background-color': prefixTrstArrayItem.trust  === maxTrustForNPrefixForCross && prefixTrstArrayItem.mdmid === maxTrustMDMForNPrefix ? 'pink' : 'transparent' }">
+                
+                  <div style="display: flex; justify-content: space-between;">
+                    <span> {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{prefixTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ prefixTrstArrayItem.trust }}
+                
+                    </span>
+                  </div>
+                
+                </td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Organaization  Name</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['ORG_NAME']|| ''}}</td>
+                    
+                    <td *ngFor="let orgNameTrstArrayItem of orgNameTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': orgNameTrstArrayItem.trust  === maxTrustForOrgNameForCross && orgNameTrstArrayItem.mdmid === maxTrustMDMForOrgname ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['ORG_NAME']|| ''}} </span>
+                    <span style="display:none;">{{orgNameTrstArrayItem.mdmid}}</span>
+                    <span>{{ orgNameTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let orgNameTrstArrayItem of orgNameTrstArrayForCrossForNetScape" class="border border-gray-300 px-4 py-2"
+                  [ngStyle]="{ 'background-color': orgNameTrstArrayItem.trust  === maxTrustForOrgNameForCross && orgNameTrstArrayItem.mdmid === maxTrustMDMForOrgname ? 'pink' : 'transparent' }">
+                
+                  <div style="display: flex; justify-content: space-between;">
+                    <span> {{overViewObj?.['ORG_NAME']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{orgNameTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ orgNameTrstArrayItem.trust }}
+                
+                    </span>
+                  </div>
+                
+                </td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">Tax Id</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['TAX_ID']|| ''}}</td>
+                    
+                    <td *ngFor="let taxIdTrstArrayItem of taxIdTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': taxIdTrstArrayItem.trust  === maxTrustFortaxIDForCross && taxIdTrstArrayItem.mdmid === maxTrustMDMFortaxID ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['TAX_ID']|| ''}} </span>
+                    <span style="display:none;">{{taxIdTrstArrayItem.mdmid}}</span>
+                    <span>{{ taxIdTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let taxIdTrstArrayItem of taxIdTrstArrayForCrossForNetScape" class="border border-gray-300 px-4 py-2"
+                  [ngStyle]="{ 'background-color': taxIdTrstArrayItem.trust  === maxTrustFortaxIDForCross && taxIdTrstArrayItem.mdmid === maxTrustMDMFortaxID ? 'pink' : 'transparent' }">
+                
+                  <div style="display: flex; justify-content: space-between;">
+                    <span> {{overViewObj?.['TAX_ID']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{taxIdTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ taxIdTrstArrayItem.trust }}
+                
+                    </span>
+                  </div>
+                
+                </td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2">DNS Number</td>
+                    <!-- <td class="border border-gray-300 px-4 py-2">{{crossRefernceObjForCustomers?.['FIRST_NAME']}}</td> -->
+                    <td class="border border-gray-300 px-4 py-2">{{overViewObj?.['DNS_NMBR']|| ''}}</td>
+                    
+                    <td *ngFor="let dunsNumberTrstArrayItem of dunsNumberPrefixTrstArrayForCross" class="border border-gray-300 px-4 py-2"
+                      [ngStyle]="{ 'background-color': dunsNumberTrstArrayItem.trust  === maxTrustForDunsNumberForCross && dunsNumberTrstArrayItem.mdmid === maxTrustMDMForDunsNumber ? 'pink' : 'transparent' }">
+                    
+                  <div style="display: flex; justify-content: space-between;">
+                    
+                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span>  {{overViewObj?.['DNS_NMBR']|| ''}} </span>
+                    <span style="display:none;">{{dunsNumberTrstArrayItem.mdmid}}</span>
+                    <span>{{ dunsNumberTrstArrayItem.trust }}   </span>
+                  </div>
+              
+                </td>
+                <td *ngFor="let dunsNumberTrstArrayItem of dunsNumberPrefixTrstArrayForCrossForNetScape" class="border border-gray-300 px-4 py-2"
+                  [ngStyle]="{ 'background-color': dunsNumberTrstArrayItem.trust  === maxTrustForDunsNumberForCross && dunsNumberTrstArrayItem.mdmid === maxTrustMDMForDunsNumber ? 'pink' : 'transparent' }">
+                
+                  <div style="display: flex; justify-content: space-between;">
+                    <span> {{overViewObj?.['DNS_NMBR']|| ''}} </span>
+                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <span style="display:none;">{{dunsNumberTrstArrayItem.mdmid}}</span>
+                    <span>
+                      {{ dunsNumberTrstArrayItem.trust }}
+                
+                    </span>
+                  </div>
+                
+                </td>
+                  </tr>
+              </tbody>
+
+            </table>
+           
         </p-tabpanel>
     </p-tabpanels>
 </p-tabs>
