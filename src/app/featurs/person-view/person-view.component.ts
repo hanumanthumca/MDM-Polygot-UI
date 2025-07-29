@@ -989,6 +989,26 @@ this.maritalStatusOptions = [
 
     
   }
+
+  getPropertyValOriginalMdmId(data,mdmId,paramName) {
+    const match = data.find(item => item.ORIGINAL_MDM_ID === mdmId);
+    if (match) {
+      if (match.hasOwnProperty(paramName)) {
+        console.log(match[paramName]);
+        return  match[paramName];
+      } else {
+        console.log(`Field "${paramName}" not found in the record with ORIGINAL_MDM_ID ${mdmId}`);
+        return null;
+      }
+      console.log(match.FIRST_NAME);
+   
+    } else {
+      console.log(`No record found for ORIGINAL_MDM_ID ${mdmId}`);
+    return null;
+    
+    
+    }
+  }
   processXReferenceForPersons(respose: any) {
     let resposeData=respose;
 
@@ -1073,6 +1093,8 @@ this.maritalStatusOptions = [
     }
     console.log('formatted array erpArrayProcessedDataForCross ',erpArrayProcessedDataForCross);
     //erp source logic
+    let originalHistoryData=this.crossRefernceXReferenceObjForPerons;
+
     if (erpArrayProcessedDataForCross.length > 0) {
       const names = erpArrayProcessedDataForCross.map(person => person['mdmData']);
       this.taxIdTrstArrayForCross = names
@@ -1080,6 +1102,7 @@ this.maritalStatusOptions = [
         .map(erpData => {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            taxId:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"TAX_ID"),
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1087,13 +1110,17 @@ this.maritalStatusOptions = [
 
         console.log('whole object',this.crossRefernceXReferenceObjForPerons)
 
+       
+        
       this.firstNameTrstArrayForCross = names
         .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
         .map(erpData =>
         // erpData['TRUST_SCORE']
+        //let fisrtName=
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            fisrtName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"FIRST_NAME"),
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1101,6 +1128,7 @@ this.maritalStatusOptions = [
 
         );
 
+        
       let lenghtForERP = 0;
       lenghtForERP = this.firstNameTrstArrayForCross.length;
       this.lastNameTrstArrayForCross = names
@@ -1110,6 +1138,7 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            lastName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"LAST_NAME"),
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1127,6 +1156,7 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            middleName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"MIDDLE_NAME"),
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1145,6 +1175,8 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            fullName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"FULL_NAME"),
+           
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1163,6 +1195,7 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            gender:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"GENDER_CD"),
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1181,6 +1214,8 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            orgName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"ORGANIZATION_NAME"),
+          
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1198,6 +1233,8 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            namePrefix:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"NAME_PREFIX_CD"),
+          
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1216,6 +1253,8 @@ this.maritalStatusOptions = [
         {
           return {
             mdmid: erpData['PARTY_MDM_ID'],
+            dunsNumber:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"DUNS_NUMBER"),
+          
             trust: parseInt(erpData['TRUST_SCORE'], 10)
 
           };
@@ -1248,6 +1287,7 @@ console.log('formatted array netSuiteProcessedDataForCross ',netSuiteProcessedDa
 if(netSuiteProcessedDataForCross.length>0){
 
   const nameValuesForNet = netSuiteProcessedDataForCross.map(person => person['mdmData']);
+
   this.firstNameTrstArrayForCrossForNetScape = nameValuesForNet
   .flatMap(group => group.filter(erpData => erpData['COLUMN_NAME'] === "FIRST_NAME"))
   .map(erpData =>
@@ -1255,6 +1295,8 @@ if(netSuiteProcessedDataForCross.length>0){
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      fisrtName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"FIRST_NAME"),
+
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1267,6 +1309,8 @@ if(netSuiteProcessedDataForCross.length>0){
   .map(erpData => {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      taxId:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"TAX_ID"),
+ 
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1286,6 +1330,8 @@ this.lastNameTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      lastName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"LAST_NAME"),
+
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1303,6 +1349,8 @@ this.middleNameTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      middleName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"MIDDLE_NAME"),
+ 
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1321,6 +1369,7 @@ this.fullNameTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      fullName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"FULL_NAME"),
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1339,6 +1388,8 @@ this.genderTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      gender:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"GENDER_CD"),
+
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1357,6 +1408,8 @@ this.orgNameTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      orgName:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"ORGANIZATION_NAME"),
+ 
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1374,6 +1427,8 @@ this.namePrefixTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      namePrefix:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"NAME_PREFIX_CD"),
+  
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };
@@ -1392,6 +1447,8 @@ this.dunsNumberPrefixTrstArrayForCrossForNetScape = nameValuesForNet
   {
     return {
       mdmid: erpData['PARTY_MDM_ID'],
+      dunsNumber:this.getPropertyValOriginalMdmId(originalHistoryData,erpData['PARTY_MDM_ID'],"DUNS_NUMBER"),
+          
       trust: parseInt(erpData['TRUST_SCORE'], 10)
 
     };

@@ -958,29 +958,52 @@
             hello 3
         </p-tabpanel>
         <p-tabpanel value="3">
-            hello 4
+           
             <table class="table-auto border-collapse border border-gray-300 w-full text-left">
               <thead>
                 <tr class="bg-gray-100">
                   <th class="border border-gray-300 px-4 py-2"> MDM ID =  544</th>
                   <!-- <th class="border border-gray-300 px-4 py-2"> MDM ID = {{matchXrefTargetId}} </th> -->
                   <th class="border border-gray-300 px-4 py-2">Master record</th>
-                
+                 
                   <th *ngFor="let uniqueMDM of uniqueMDMsERPsForCrossRef" class="border border-gray-300 px-4 py-2">
                 
-                    <div style="display: flex; justify-content: space-between;">
+                    <!-- <div style="display: flex; justify-content: space-between;">
                       <span>Source:ERP <br /> MDM ID = {{ uniqueMDM }}</span>
+                 
                       <span> &nbsp;<br />Trust Score </span>
+                    </div> -->
+                    <div class="flex flex-col min-w-[200px]">
+    
+                      <div class="min-w-[135px]">
+                        Source: ERP
+                      </div>
+                        <div class="flex justify-between mt-1">
+                        <span class="min-w-[120px]">MDM ID = {{ uniqueMDM }}</span>
+                        <span class="min-w-[100px]">Trust Score</span>
+                      </div>
+                  
                     </div>
                   </th>
                 
                   <th *ngFor="let uniqueMDM of uniqueMDMsForNetSuiteForCrossRef" class="border border-gray-300 px-4 py-2">
                 
-                    <div style="display: flex; justify-content: space-between;">
-                
-                      <span>Source:Net Suite <br /> MDM ID = {{ uniqueMDM }}</span>
-                      <span> &nbsp;<br /> Trust Score </span>
+                    <div class="flex flex-col min-w-[200px]">
+    
+                      <div class="min-w-[135px]">
+                        Source: NetSuite
+                      </div>
+                        <div class="flex justify-between mt-1">
+                        <span class="min-w-[120px]">MDM ID = {{ uniqueMDM }}</span>
+                        <span class="min-w-[100px]">Trust Score</span>
+                      </div>
+                  
                     </div>
+                    <!-- <div style="display: flex; justify-content: space-between;min-width: 200px;">
+                    <div style="min-width: 135px;" >Source:Net Suite <br /> </div>  
+                      <span style="min-width: 120px;"> MDM ID = {{ uniqueMDM }}</span>
+                      <span style="min-width: 100px;"> &nbsp; Trust Score </span>
+                    </div> -->
                   </th>
                  
                 </tr>
@@ -1001,7 +1024,8 @@
                   <div style="display: flex; justify-content: space-between;">
                     
                     <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span> -->
+                    <span>  {{ firstNameTrstArrayItem?.fisrtName || ''}}   </span>
                     <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
                     <span>{{ firstNameTrstArrayItem.trust }}   </span>
                   </div>
@@ -1011,7 +1035,8 @@
                 [ngStyle]="{ 'background-color': firstNameTrstArrayItem.trust  === maxTrustForFNameForCross && firstNameTrstArrayItem.mdmid === maxTrustMDMForFname ? 'pink' : 'transparent' }">
               
                   <div style="display: flex; justify-content: space-between;">
-                    <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['FIRST_NAME']|| ''}} </span> -->
+                    <span>  {{ firstNameTrstArrayItem?.fisrtName || ''}}   </span>
                     <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
                     <span style="display:none;">{{firstNameTrstArrayItem.mdmid}}</span>
                     <span>
@@ -1037,7 +1062,8 @@
                   
                   <div style="display: flex; justify-content: space-between;">
                     <!-- <span>{{erpSourceObjectForTableData?.['LAST_NAME'] || netSuiteObjectForTableData?.['LAST_NAME']}}</span> -->
-                    <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span> -->
+                    <span>  {{ lastNameTrstArrayItem?.lastName || ''}}   </span>
                     <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
                     <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
                     <span>{{ lastNameTrstArrayItem.trust }}   </span>
@@ -1048,7 +1074,8 @@
               
               <div style="display: flex; justify-content: space-between;">
                 <!-- <span>{{netSuiteObjectForTableData?.['LAST_NAME'] || erpSourceObjectForTableData?.['LAST_NAME']}}</span> -->
-                <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span>
+                <!-- <span>  {{overViewObj?.['LAST_NAME']|| ''}} </span> -->
+                <span>  {{ lastNameTrstArrayItem?.lastName || ''}}   </span>
                 <!-- <span>{{ lastNameTrstArrayItem }}   </span> -->
                 <span style="display:none;">{{lastNameTrstArrayItem.mdmid}}</span>
                 <span>{{ lastNameTrstArrayItem.trust }}   </span>
@@ -1068,7 +1095,8 @@
                       <div style="display: flex; justify-content: space-between;">
                   
                         <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                        <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span>
+                        <!-- <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span> -->
+                        <span>  {{ middleNameTrstArrayItem?.middleName || ''}}   </span>
                         <span style="display:none;">{{middleNameTrstArrayItem.mdmid}}</span>
                         <span>{{ middleNameTrstArrayItem.trust }} </span>
                       </div>
@@ -1079,7 +1107,8 @@
                       [ngStyle]="{ 'background-color': middleNameTrstArrayItem.trust  === maxTrustForFNameForCross && middleNameTrstArrayItem.mdmid === maxTrustMDMForMiddlename ? 'pink' : 'transparent' }">
                   
                       <div style="display: flex; justify-content: space-between;">
-                        <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span>
+                        <!-- <span> {{overViewObj?.['MIDDLE_NAME']|| ''}} </span> -->
+                        <span>  {{ middleNameTrstArrayItem?.middleName || ''}}   </span>
                         <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
                         <span style="display:none;">{{middleNameTrstArrayItem.mdmid}}</span>
                         <span>
@@ -1104,7 +1133,8 @@
                   <div style="display: flex; justify-content: space-between;">
                     
                     <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span> -->
+                    <span>  {{ fullNameTrstArrayItem?.fullName || ''}}   </span>
                     <span style="display:none;">{{fullNameTrstArrayItem.mdmid}}</span>
                     <span>{{ fullNameTrstArrayItem.trust }}   </span>
                   </div>
@@ -1114,7 +1144,8 @@
                 [ngStyle]="{ 'background-color': fullNameTrstArrayItem.trust  === maxTrustForFNameForCross && fullNameTrstArrayItem.mdmid === maxTrustMDMForullname ? 'pink' : 'transparent' }">
               
                   <div style="display: flex; justify-content: space-between;">
-                    <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['FULL_NAME']|| ''}} </span> -->
+                    <span>  {{ fullNameTrstArrayItem?.fullName || ''}}   </span>
                     <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
                     <span style="display:none;">{{fullNameTrstArrayItem.mdmid}}</span>
                     <span>
@@ -1134,9 +1165,8 @@
                       [ngStyle]="{ 'background-color': genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender ? 'pink' : 'transparent' }">
                     
                   <div style="display: flex; justify-content: space-between;">
-                    
-                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['GENDER_CD']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['GENDER_CD']|| ''}} </span> -->
+                    <span>  {{ genderTrstArrayItem?.gender || ''}}   </span>
                     <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
                     <span>{{ genderTrstArrayItem.trust }}   </span>
                   </div>
@@ -1146,8 +1176,8 @@
                   [ngStyle]="{ 'background-color': genderTrstArrayItem.trust  === maxTrustForGenderForCross && genderTrstArrayItem.mdmid === maxTrustMDMForGender ? 'pink' : 'transparent' }">
                 
                   <div style="display: flex; justify-content: space-between;">
-                    <span> {{overViewObj?.['GENDER_CD']|| ''}} </span>
-                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <!-- <span> {{overViewObj?.['GENDER_CD']|| ''}} </span> -->
+                    <span>  {{ genderTrstArrayItem?.gender || ''}}   </span>
                     <span style="display:none;">{{genderTrstArrayItem.mdmid}}</span>
                     <span>
                       {{ genderTrstArrayItem.trust }}
@@ -1167,8 +1197,8 @@
                     
                   <div style="display: flex; justify-content: space-between;">
                     
-                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span> -->
+                    <span>  {{ prefixTrstArrayItem?.namePrefix || ''}}   </span>
                     <span style="display:none;">{{prefixTrstArrayItem.mdmid}}</span>
                     <span>{{ prefixTrstArrayItem.trust }}   </span>
                   </div>
@@ -1178,8 +1208,8 @@
                   [ngStyle]="{ 'background-color': prefixTrstArrayItem.trust  === maxTrustForNPrefixForCross && prefixTrstArrayItem.mdmid === maxTrustMDMForNPrefix ? 'pink' : 'transparent' }">
                 
                   <div style="display: flex; justify-content: space-between;">
-                    <span> {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span>
-                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <!-- <span> {{overViewObj?.['NAME_PREFIX_CD']|| ''}} </span> -->
+                    <span>  {{ prefixTrstArrayItem?.namePrefix || ''}}   </span>
                     <span style="display:none;">{{prefixTrstArrayItem.mdmid}}</span>
                     <span>
                       {{ prefixTrstArrayItem.trust }}
@@ -1199,9 +1229,8 @@
                       [ngStyle]="{ 'background-color': orgNameTrstArrayItem.trust  === maxTrustForOrgNameForCross && orgNameTrstArrayItem.mdmid === maxTrustMDMForOrgname ? 'pink' : 'transparent' }">
                     
                   <div style="display: flex; justify-content: space-between;">
-                    
-                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['ORG_NAME']|| ''}} </span>
+                    <span>  {{ orgNameTrstArrayItem?.orgName || ''}}   </span>
+                    <!-- <span>  {{overViewObj?.['ORG_NAME']|| ''}} </span> -->
                     <span style="display:none;">{{orgNameTrstArrayItem.mdmid}}</span>
                     <span>{{ orgNameTrstArrayItem.trust }}   </span>
                   </div>
@@ -1211,8 +1240,8 @@
                   [ngStyle]="{ 'background-color': orgNameTrstArrayItem.trust  === maxTrustForOrgNameForCross && orgNameTrstArrayItem.mdmid === maxTrustMDMForOrgname ? 'pink' : 'transparent' }">
                 
                   <div style="display: flex; justify-content: space-between;">
-                    <span> {{overViewObj?.['ORG_NAME']|| ''}} </span>
-                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <!-- <span> {{overViewObj?.['ORG_NAME']|| ''}} </span> -->
+                    <span>  {{ orgNameTrstArrayItem?.orgName || ''}}   </span>
                     <span style="display:none;">{{orgNameTrstArrayItem.mdmid}}</span>
                     <span>
                       {{ orgNameTrstArrayItem.trust }}
@@ -1233,8 +1262,8 @@
                     
                   <div style="display: flex; justify-content: space-between;">
                     
-                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['TAX_ID']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['TAX_ID']|| ''}} </span> -->
+                    <span>  {{ taxIdTrstArrayItem?.taxId || ''}}   </span>
                     <span style="display:none;">{{taxIdTrstArrayItem.mdmid}}</span>
                     <span>{{ taxIdTrstArrayItem.trust }}   </span>
                   </div>
@@ -1244,8 +1273,8 @@
                   [ngStyle]="{ 'background-color': taxIdTrstArrayItem.trust  === maxTrustFortaxIDForCross && taxIdTrstArrayItem.mdmid === maxTrustMDMFortaxID ? 'pink' : 'transparent' }">
                 
                   <div style="display: flex; justify-content: space-between;">
-                    <span> {{overViewObj?.['TAX_ID']|| ''}} </span>
-                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <!-- <span> {{overViewObj?.['TAX_ID']|| ''}} </span> -->
+                    <span>  {{ taxIdTrstArrayItem?.taxId || ''}}   </span>
                     <span style="display:none;">{{taxIdTrstArrayItem.mdmid}}</span>
                     <span>
                       {{ taxIdTrstArrayItem.trust }}
@@ -1265,9 +1294,8 @@
                       [ngStyle]="{ 'background-color': dunsNumberTrstArrayItem.trust  === maxTrustForDunsNumberForCross && dunsNumberTrstArrayItem.mdmid === maxTrustMDMForDunsNumber ? 'pink' : 'transparent' }">
                     
                   <div style="display: flex; justify-content: space-between;">
-                    
-                    <!-- <span>{{erpSourceObjectForTableData?.['FIRST_NAME'] || netSuiteObjectForTableData?.['FIRST_NAME'] }}</span> -->
-                    <span>  {{overViewObj?.['DNS_NMBR']|| ''}} </span>
+                    <!-- <span>  {{overViewObj?.['DNS_NMBR']|| ''}} </span> -->
+                    <span>  {{ dunsNumberTrstArrayItem?.dunsNumber || ''}}   </span>
                     <span style="display:none;">{{dunsNumberTrstArrayItem.mdmid}}</span>
                     <span>{{ dunsNumberTrstArrayItem.trust }}   </span>
                   </div>
@@ -1277,8 +1305,8 @@
                   [ngStyle]="{ 'background-color': dunsNumberTrstArrayItem.trust  === maxTrustForDunsNumberForCross && dunsNumberTrstArrayItem.mdmid === maxTrustMDMForDunsNumber ? 'pink' : 'transparent' }">
                 
                   <div style="display: flex; justify-content: space-between;">
-                    <span> {{overViewObj?.['DNS_NMBR']|| ''}} </span>
-                    <!-- <span>{{netSuiteObjectForTableData?.['FIRST_NAME'] || erpSourceObjectForTableData?.['FIRST_NAME'] }}</span> -->
+                    <!-- <span> {{overViewObj?.['DNS_NMBR']|| ''}} </span> -->
+                    <span>  {{ dunsNumberTrstArrayItem?.dunsNumber || ''}}   </span>
                     <span style="display:none;">{{dunsNumberTrstArrayItem.mdmid}}</span>
                     <span>
                       {{ dunsNumberTrstArrayItem.trust }}
