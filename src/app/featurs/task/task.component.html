@@ -1,0 +1,83 @@
+<br/>
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab style="border-bottom: 2px solid blue" value="0">My Assigned Tasks &nbsp;&nbsp;&nbsp;</p-tab>
+        <p-tab value="1"> My Closed Tasks  &nbsp;&nbsp;&nbsp;</p-tab>
+        <!-- <p-tab value="2">Cross Reference_old &nbsp;&nbsp;&nbsp;</p-tab> 
+        <p-tab value="3">Match Reference _old &nbsp;&nbsp;&nbsp;</p-tab>  -->
+        <p-tab value="2">Available Tasks &nbsp;&nbsp;&nbsp;</p-tab> 
+        <p-tab value="3">All Assigned Tasks &nbsp;&nbsp;&nbsp;</p-tab> 
+
+        <p-tab value="4">All Closed Tasks &nbsp;&nbsp;&nbsp;</p-tab> 
+        <p-tab value="5">All  Tasks &nbsp;&nbsp;&nbsp;</p-tab> 
+        <p-tab value="6">Tasks Created By Me &nbsp;&nbsp;&nbsp;</p-tab> 
+        <!-- <p-tab value="3">All Assigned Tasks &nbsp;&nbsp;&nbsp;</p-tab>  -->
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">
+            Assigned Tasks 
+            <div class="card">
+                <p-splitter [panelSizes]="[21, 79]" [style]="{ height: '330px' }" styleClass="mb-5">
+                
+                    <ng-template pTemplate>
+                        <div class="h-full overflow-y-auto pr-2">
+                            <div class="flex flex-col items-start gap-3">
+                                <br/>
+                                <div *ngFor="let category of categories" class="field-checkbox flex items-start gap-2">
+                                    <p-checkbox [(ngModel)]="selectedCategories" [value]="category" inputId="{{ category.id }}"
+                                    (onChange)="onCheckboxClick(category)"
+                                    >
+                                    </p-checkbox>
+                
+                                    <label [for]="category.id" class="ml-1 leading-tight">
+                                        <span class="font-semibold text-xs text-gray-800">{{ category.name }}</span><br />
+                                        <span class="text-sm text-gray-500">Organaisation: Merge</span><br/>
+                                        <span class="text-sm text-gray-500">Priority: Normal</span><br/>
+                                        <span class="text-sm text-gray-500">Due by: 2020-07-08</span><br/>
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                
+                    <ng-template pTemplate>
+                        <div class="col flex items-center justify-center h-full">
+                            Details Panel -- {{selectedMdmId.name }}
+                        </div>
+                    </ng-template>
+                </p-splitter>
+
+            </div>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+            <div class="flex flex-col gap-2">
+                <div *ngFor="let category of categories" class="field-checkbox">
+                  <p-checkbox
+                    [(ngModel)]="selectedCategories"
+                    [value]="category"
+                    inputId="{{ category.id }}">
+                  </p-checkbox>
+                  <label [for]="category.id" class="ml-2">{{ category.name }}</label>
+                </div>
+              </div>
+              
+        </p-tabpanel>
+        <p-tabpanel value="2">
+            Available Tasks
+        </p-tabpanel>
+        <p-tabpanel value="3">
+            All Assigned Tasks 
+        </p-tabpanel>
+
+        <p-tabpanel value="4">
+            All Closed Tasks
+        </p-tabpanel>
+        <p-tabpanel value="5">
+            All  Tasks
+        </p-tabpanel>
+        <p-tabpanel value="6">
+            Tasks Created By Me
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

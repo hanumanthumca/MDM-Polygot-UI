@@ -8,10 +8,12 @@ import { QuerisComponent } from './featurs/queris/queris.component';
 import { JobTriggerComponent } from './featurs/job-trigger/job-trigger.component';
 import { DashboardsComponent } from './featurs/dashboards/dashboards.component';
 import { PersonComponent } from './featurs/person/person.component';
+import { TaskComponent } from './featurs/task/task.component';
 export const routes: Routes = [
     {path:'home',component:HomeComponent},
     {path:'taskManager',component:TaskManagerComponent},
     {path:'personSearch',component:PersonComponent},
+    {path:'tasks',component:TaskComponent},
     {path:'query',component:QuerisComponent},
     {path:'scheduleJobs',component:JobTriggerComponent},
     {path:'dashboards',component:DashboardsComponent},
